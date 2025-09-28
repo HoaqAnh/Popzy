@@ -1,38 +1,35 @@
-import { useState } from "react";
-import reactLogo from "@/assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useEffect } from "react";
+import { SEO_CONFIG } from "@/config/seo";
+import { AppRouter } from "@/routes";
 
 const App = () => {
-  const [count, setCount] = useState(0);
+  useEffect(() => {
+    document.title = SEO_CONFIG.title;
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button
-          onClick={() => {
-            setCount((count) => count + 1);
-          }}
-        >
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/pages/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+    const setMetaByName = (name: string, content: string) => {
+      const element = document.querySelector(`meta[name="${name}"]`);
+      if (element) {
+        element.setAttribute("content", content);
+      }
+    };
+
+    const setMetaByProperty = (property: string, content: string) => {
+      const element = document.querySelector(`meta[property="${property}"]`);
+      if (element) {
+        element.setAttribute("content", content);
+      }
+    };
+
+    setMetaByName("description", SEO_CONFIG.description);
+    setMetaByName("keywords", SEO_CONFIG.keywords.join(", "));
+    setMetaByProperty("og:title", SEO_CONFIG.title);
+    setMetaByProperty("og:description", SEO_CONFIG.description);
+    setMetaByProperty("og:site_name", SEO_CONFIG.siteName);
+    setMetaByName("twitter:title", SEO_CONFIG.title);
+    setMetaByName("twitter:description", SEO_CONFIG.description);
+  }, []);
+
+  return <AppRouter />;
 };
 
 export default App;
