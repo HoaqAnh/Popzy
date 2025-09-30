@@ -1,0 +1,59 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+}
+.logoDot {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #2563eb; /* xanh dương */
+}
+.brandText {
+  font-weight: 700;
+  color: #111;
+  letter-spacing: .2px;
+}
+.nav {
+  display: none;
+  gap: 16px;
+}
+.nav a {
+  color: #111;
+  text-decoration: none;
+  font-weight: 500;
+}
+.active {
+  color: #2563eb;
+}
+.authBtn {
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #111;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ≥768px hiển thị menu giữa */
+@media (min-width: 768px) {
+  .nav { display: inline-flex; }
+}
