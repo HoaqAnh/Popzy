@@ -16,9 +16,10 @@
 .content {
   position: relative;
   z-index: 1;
-  padding: 24px 16px 32px;
-  max-width: 1200px;
+  padding: 48px 24px;
   margin: 0 auto;
+  width: 1200px;
+  max-width: 100%;
 }
 .title {
   color: #fff;
