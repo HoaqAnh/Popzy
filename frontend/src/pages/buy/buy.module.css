@@ -1,0 +1,15 @@
+.buy {
+  padding-top: 1rem;
+}
+.searchBoxContainer {
+  background-color: var(--background);
+  z-index: 10;
+}
+.searchBox {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: var(--secondary);
+  border-radius: 12px;
+  box-shadow: var(--shadow-realistic);
+}

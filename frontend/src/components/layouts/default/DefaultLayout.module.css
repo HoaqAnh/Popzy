@@ -5,8 +5,14 @@
   background: #fff;
   border-bottom: 1px solid #eee;
 }
+.main {
+  background-color: var(--background);
+  height: 91vh;
+}
 .inner {
   max-width: 1200px;
+  height: 9vh;
+  height: 9dvh;
   margin: 0 auto;
   padding: 10px 16px;
   display: flex;
@@ -24,12 +30,12 @@
   width: 24px;
   height: 24px;
   border-radius: 6px;
-  background: #2563eb; /* xanh dương */
+  background: #2563eb;
 }
 .brandText {
   font-weight: 700;
   color: #111;
-  letter-spacing: .2px;
+  letter-spacing: 0.2px;
 }
 .nav {
   display: none;
@@ -53,7 +59,8 @@
   white-space: nowrap;
 }
 
-/* ≥768px hiển thị menu giữa */
 @media (min-width: 768px) {
-  .nav { display: inline-flex; }
+  .nav {
+    display: inline-flex;
+  }
 }
