@@ -4,8 +4,14 @@
 
 /* Search Header */
 .searchHeader {
-  margin: 8px 12px;
+  position: sticky;
+  top: 8vh;
+  z-index: 50;
+  background: var(--background);
+  padding: 8px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
 .searchRow {
   display: flex;
   flex-wrap: wrap;
@@ -122,6 +128,7 @@
 
 /* Main listing */
 .mainContainer {
+  margin-top: 1rem;
   display: grid;
   gap: 12px;
 }
@@ -242,6 +249,7 @@
     flex-direction: column;
     max-width: 500px;
     margin: 0 auto;
+    margin-top: 1rem;
   }
 }
 

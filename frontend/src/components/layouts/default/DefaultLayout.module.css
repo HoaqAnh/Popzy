@@ -1,13 +1,14 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 40;
+  z-index: 10;
   background: #fff;
   border-bottom: 1px solid #eee;
+  height: 8vh;
 }
 .main {
   background-color: var(--background);
-  height: 91vh;
+  height: 92vh;
 }
 .inner {
   max-width: 1200px;
