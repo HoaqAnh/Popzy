@@ -19,16 +19,27 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
                 isActive ? styles.active : undefined
               }
             >
-              Mua
+              Thông tin nhà đất
             </NavLink>
+
             <NavLink
               to="/sell"
               className={({ isActive }) =>
                 isActive ? styles.active : undefined
               }
             >
-              Bán
+              Đăng tin
             </NavLink>
+
+            <NavLink
+              to="/messages"
+              className={({ isActive }) =>
+                isActive ? styles.active : undefined
+              }
+            >
+              Tin nhắn
+            </NavLink>
+
             <NavLink
               to="/support"
               className={({ isActive }) =>

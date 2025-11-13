@@ -2,45 +2,6 @@ import type { Post } from "@/types/realestate";
 
 export const posts: Post[] = [
   {
-    id: "p1",
-    title: "Booking F3 Sun Feliza Suites Cầu Giấy - CK 20.5%",
-    price: 2_950_000_000,
-    areaM2: 95,
-    beds: 3,
-    baths: 2,
-    address: { district: "Cầu Giấy", city: "Hà Nội" },
-    images: [
-      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1200&auto=format&fit=crop",
-    ],
-    description:
-      "Sau thành công của các tòa trước, Sun Property ra mắt tòa F3 với 392 sản phẩm cao cấp, tiện ích chuẩn quốc tế.",
-    userId: "u1",
-    likes: 1250,
-    marketPrice: 2_850_000_000,
-    priceHistoryPercent: 3.5,
-  },
-  {
-    id: "p2",
-    title: "Vinhomes Ocean Park Gia Lâm - Studio/1-3PN chính chủ",
-    price: 2_750_000_000,
-    areaM2: 43,
-    beds: 1,
-    baths: 1,
-    address: { district: "Gia Lâm", city: "Hà Nội" },
-    images: [
-      "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1200&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=1200&auto=format&fit=crop",
-    ],
-    description:
-      "Căn hộ studio 28-36m², giá chỉ từ 2 tỷ, nội thất cao cấp, miễn phí trung gian.",
-    userId: "u2",
-    likes: 980,
-    marketPrice: 2_800_000_000,
-    priceHistoryPercent: -1.8,
-  },
-  {
     id: "p3",
     title: "Biệt thự ven Hồ Tây đẳng cấp, sân vườn rộng",
     price: 35_000_000_000,
@@ -183,5 +144,44 @@ export const posts: Post[] = [
     likes: 240,
     marketPrice: 3_200_000_000,
     priceHistoryPercent: 3.1,
+  },
+  {
+    id: "p1",
+    title: "Booking F3 Sun Feliza Suites Cầu Giấy - CK 20.5%",
+    price: 2_950_000_000,
+    areaM2: 95,
+    beds: 3,
+    baths: 2,
+    address: { district: "Cầu Giấy", city: "Hà Nội" },
+    images: [
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1501183638710-841dd1904471?q=80&w=1200&auto=format&fit=crop",
+    ],
+    description:
+      "Sau thành công của các tòa trước, Sun Property ra mắt tòa F3 với 392 sản phẩm cao cấp, tiện ích chuẩn quốc tế.",
+    userId: "u1",
+    likes: 1250,
+    marketPrice: 2_850_000_000,
+    priceHistoryPercent: 3.5,
+  },
+  {
+    id: "p2",
+    title: "Vinhomes Ocean Park Gia Lâm - Studio/1-3PN chính chủ",
+    price: 2_750_000_000,
+    areaM2: 43,
+    beds: 1,
+    baths: 1,
+    address: { district: "Gia Lâm", city: "Hà Nội" },
+    images: [
+      "https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=1200&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=1200&auto=format&fit=crop",
+    ],
+    description:
+      "Căn hộ studio 28-36m², giá chỉ từ 2 tỷ, nội thất cao cấp, miễn phí trung gian.",
+    userId: "u2",
+    likes: 980,
+    marketPrice: 2_800_000_000,
+    priceHistoryPercent: -1.8,
   },
 ];
