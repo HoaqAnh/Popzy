@@ -21,4 +21,6 @@ export type Post = {
   description: string;
   userId: string;
   likes: number;
+  marketPrice: number;
+  priceHistoryPercent: number;
 };

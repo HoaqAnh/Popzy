@@ -1,11 +1,16 @@
 import styles from "./Hero.module.css";
+import { homeMockData } from "@/mocks/home";
 
 export default function Hero() {
   return (
     <section className={styles.hero}>
-      <div className={styles.bg} />
+      <div
+        className={styles.bg}
+        style={{ backgroundImage: `url(${homeMockData.heroImageUrl})` }}
+      />
+
       <div className={styles.content}>
-        <h1 className={styles.title}>Agents. Tours. Loans. Homes.</h1>
+        <h1 className={styles.title}>Giao dịch bất động sản. Việt Nam.</h1>
         <div className={styles.searchBar}>
           <input
             className={styles.input}

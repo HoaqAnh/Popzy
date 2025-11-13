@@ -26,9 +26,11 @@
   overflow: hidden;
   border: 1px solid #eee;
 }
-.img {
+.cardImage {
   height: 160px;
-  background: repeating-linear-gradient(45deg, #e5e7eb 0 6px, #f3f4f6 6px 12px);
+  width: 100%;
+  object-fit: cover;
+  background: var(--muted);
 }
 .meta {
   padding: 10px 12px 14px;
