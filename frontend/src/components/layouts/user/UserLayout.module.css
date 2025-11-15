@@ -5,10 +5,12 @@
   background: var(--background);
   border-bottom: 1px solid var(--border);
   height: 8vh;
+  height: 8dvh;
 }
 .main {
   background-color: var(--background);
   min-height: 92vh;
+  min-height: 92dvh;
 }
 .inner {
   max-width: 1200px;

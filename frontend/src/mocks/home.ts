@@ -28,5 +28,5 @@ export const homeMockData = {
   ],
 
   authImageUrl:
-    "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1950&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?q=80&w=1950&auto=format&fit=crop",
 };

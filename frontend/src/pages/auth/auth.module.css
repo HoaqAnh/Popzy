@@ -8,16 +8,15 @@
 .formCol {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 32px 24px;
+  align-items: center;
+  padding: 0;
 }
 
 .formContent {
   width: 100%;
-  max-width: 380px;
+  max-width: 280px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
 
 .imageCol {
@@ -29,34 +28,35 @@
 .brand {
   display: inline-flex;
   align-items: center;
+  justify-content: start;
   gap: 8px;
+  margin-bottom: 1.7rem;
   text-decoration: none;
-  margin-bottom: 24px;
 }
-.logoDot {
-  width: 24px;
-  height: 24px;
+.logo {
+  width: 3rem;
+  height: 3rem;
   border-radius: 6px;
-  background: #2563eb;
+  background: transparent;
 }
 .brandText {
-  font-weight: 700;
-  color: #111;
-  letter-spacing: 0.2px;
-  font-size: 18px;
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 2.4rem;
+  letter-spacing: 1px;
 }
 
 .title {
-  font-size: 28px;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: bold;
   color: var(--foreground);
-  margin: 0;
+  margin-bottom: 4rem;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 1rem;
 }
 .formGroup label {
   font-weight: 600;
@@ -81,10 +81,10 @@
   font-weight: 700;
   border-radius: 8px;
   border: none;
-  background: #2563eb;
-  color: #fff;
+  background: var(--ring);
+  color: var(--primary-foreground);
   cursor: pointer;
-  margin-top: 8px;
+  margin: 1rem 0;
 }
 
 .createLink {
@@ -93,7 +93,7 @@
   color: var(--muted-foreground);
 }
 .createLink a {
-  color: #2563eb;
+  color: var(--ring);
   font-weight: 600;
   text-decoration: none;
 }
@@ -108,6 +108,7 @@
   color: var(--muted-foreground);
   font-size: 12px;
   font-weight: 600;
+  margin: 1.5rem 0;
 }
 .separator::before,
 .separator::after {
@@ -139,17 +140,18 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   gap: 10px;
 }
 .socialBtn:hover {
   background: var(--secondary);
 }
+.icon {
+  width: 24px;
+  height: 24px;
+}
 
 @media (min-width: 768px) {
-  .pageWrapper {
-    grid-template-columns: 40% 60%;
-  }
   .formCol {
     align-items: center;
   }

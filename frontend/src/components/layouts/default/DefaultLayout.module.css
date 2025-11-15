@@ -2,13 +2,15 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: #fff;
-  border-bottom: 1px solid #eee;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
   height: 8vh;
+  height: 8dvh;
 }
 .main {
   background-color: var(--background);
   min-height: 92vh;
+  min-height: 92dvh;
 }
 .inner {
   max-width: 1200px;
@@ -44,7 +46,7 @@
   gap: 16px;
 }
 .nav a {
-  color: #111;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 500;
   transition: all 0.15s ease-out;
@@ -52,7 +54,7 @@
 }
 
 .nav a:hover {
-  color: #2563eb;
+  color: var(--ring);
 }
 
 .nav a:active {
@@ -61,16 +63,15 @@
 }
 
 .active {
-  color: #2563eb;
+  color: var(--ring);
   font-weight: 700;
-  border-bottom: 2px solid #2563eb;
+  border-bottom: 2px solid var(--ring);
 }
 .authBtn {
-  /* border: 1px solid #ddd; */
   padding: 8px 12px;
   border-radius: 8px;
   text-decoration: none;
-  color: #111;
+  color: var(--primary);
   font-weight: 500;
   white-space: nowrap;
 }
