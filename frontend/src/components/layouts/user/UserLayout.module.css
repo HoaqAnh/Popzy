@@ -2,8 +2,8 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  background: #fff;
-  border-bottom: 1px solid #eee;
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
   height: 8vh;
 }
 .main {
@@ -27,23 +27,24 @@
   gap: 8px;
   text-decoration: none;
 }
-.logoDot {
-  width: 24px;
-  height: 24px;
+.logo {
+  width: 38px;
+  height: 38px;
   border-radius: 6px;
-  background: #2563eb;
+  background: transparent;
 }
 .brandText {
   font-weight: 700;
-  color: #111;
-  letter-spacing: 0.2px;
+  color: var(--primary);
+  font-size: 24px;
+  letter-spacing: 1px;
 }
 .nav {
   display: none;
   gap: 16px;
 }
 .nav a {
-  color: #111;
+  color: var(--primary);
   text-decoration: none;
   font-weight: 500;
   transition: all 0.15s ease-out;
@@ -51,7 +52,7 @@
 }
 
 .nav a:hover {
-  color: #2563eb;
+  color: var(--ring);
 }
 
 .nav a:active {
@@ -60,9 +61,9 @@
 }
 
 .active {
-  color: #2563eb;
+  color: var(--ring);
   font-weight: 700;
-  border-bottom: 2px solid #2563eb;
+  border-bottom: 2px solid var(--ring);
 }
 .auth {
   display: flex;
@@ -73,7 +74,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #eee;
+  background: var(--foreground);
   display: flex;
   align-items: center;
   justify-content: center;

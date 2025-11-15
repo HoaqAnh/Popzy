@@ -1,5 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import styles from "./DefaultLayout.module.css";
+import Logo from "@/assets/Popzy.svg";
 
 const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -7,7 +8,7 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
       <header className={styles.header}>
         <div className={styles.inner}>
           <Link to="/" className={styles.brand}>
-            <span className={styles.logoDot} />
+            <img src={Logo} alt="Popzy" className={styles.logo} />
             <span className={styles.brandText}>Popzy</span>
           </Link>
 

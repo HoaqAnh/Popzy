@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./UserLayout.module.css";
+import Logo from "@/assets/Popzy.svg";
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -8,7 +9,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
       <header className={styles.header}>
         <div className={styles.inner}>
           <Link to="/" className={styles.brand}>
-            <span className={styles.logoDot} />
+            <img src={Logo} alt="Popzy" className={styles.logo}/>
             <span className={styles.brandText}>Popzy</span>
           </Link>
 
