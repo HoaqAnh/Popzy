@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
-// import DefaultLayout from "@/components/layouts/default/DefaultLayout";
-import UserLayout from "@/components/layouts/user/UserLayout";
+import LayoutProvider from "@/components/layouts/LayoutProvider";
 import AuthGate from "@/pages/auth/authGate.tsx";
 
 const Buy = lazy(() => import("@/pages/buy/buy"));
@@ -21,47 +20,19 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <UserLayout>
-                <Home />
-              </UserLayout>
-            }
-          />
-
-          <Route
-            path="/buy"
-            element={
-              <UserLayout>
-                <Buy />
-              </UserLayout>
-            }
-          />
-
           <Route path="/auth/login" element={<LoginPage />} />
 
-          <Route
-            path="/sell"
-            element={
-              <AuthGate>
-                <UserLayout>
-                  <Sell />
-                </UserLayout>
-              </AuthGate>
-            }
-          />
+          <Route element={<LayoutProvider />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/buy" element={<Buy />} />
 
-          <Route
-            path="/messages"
-            element={
-              <AuthGate>
-                <UserLayout>
-                  <MessagesPage />
-                </UserLayout>
-              </AuthGate>
-            }
-          />
+            <Route element={<AuthGate />}>
+              <Route path="/sell" element={<Sell />} />
+              <Route path="/messages" element={<MessagesPage />} />
+            </Route>
+          </Route>
+
+          {/* 404 */}
         </Routes>
       </Suspense>
     </BrowserRouter>

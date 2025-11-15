@@ -31,7 +31,7 @@ export default function LoginPage() {
       navigate("/");
     } else {
       alert(
-        "Email hoặc mật khẩu không đúng. (Thử: test@popzy.com / password123)"
+        "Email hoặc mật khẩu không đúng. (TK: test@popzy.com | MK: 123)"
       );
     }
   };

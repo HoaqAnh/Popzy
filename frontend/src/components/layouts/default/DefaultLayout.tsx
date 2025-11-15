@@ -51,7 +51,7 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
           </nav>
 
           <div className={styles.auth}>
-            <Link to="/auth" className={styles.authBtn}>
+            <Link to="/auth/login" className={styles.authBtn}>
               Đăng nhập / Đăng ký
             </Link>
           </div>

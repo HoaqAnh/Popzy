@@ -1,7 +1,7 @@
 const MOCK_USER = {
   email: "test@popzy.com",
-  password: "password123",
-  name: "Nguyễn Văn A",
+  password: "123",
+  name: "Test User",
 };
 
 const JWT_KEY = "popzy-auth-token";
