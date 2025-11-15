@@ -1,0 +1,363 @@
+.buyPage {
+  width: 100%;
+}
+
+/* Search Header */
+.searchHeader {
+  position: sticky;
+  top: 8vh;
+  z-index: 50;
+  background: var(--background);
+  padding: 8px 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.searchRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.searchbox {
+  flex: 1;
+  display: flex;
+  border: 1px solid var(--border-color, #e5e7eb);
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.searchbox input {
+  flex: 1;
+  border: 0;
+  padding: 12px 12px;
+  padding-right: 0;
+  font-size: 14px;
+  outline: none;
+}
+.iconBtn {
+  position: relative;
+  border: 0;
+  background: transparent;
+  width: 3rem;
+  height: 100%;
+  cursor: pointer;
+  font-size: 18px;
+}
+.iconBtn svg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  color: var(--foreground);
+}
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.dropdown {
+  position: relative;
+}
+.dropdownBtn {
+  border: 1px solid var(--border-color, #e5e7eb);
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.open .dropdownBtn {
+  border-color: #cbd5e1;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+.dropdownPanel {
+  position: absolute;
+  inset: auto auto auto 0;
+  top: calc(100% + 6px);
+  min-width: 220px;
+  background: #fff;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 10px 30px rgba(2, 8, 23, 0.08);
+  z-index: 30;
+}
+.menu {
+  display: grid;
+  gap: 8px;
+}
+.grid2 {
+  grid-template-columns: 1fr 1fr;
+}
+.menu label {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+}
+.menu input[type="number"] {
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 8px;
+  padding: 8px;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.activeBtn {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+.muted {
+  color: #64748b;
+  font-size: 12px;
+}
+.saveBtn {
+  border: 0;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 600;
+}
+/* .buyLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 1rem auto 0;
+  padding: 0 16px;
+} */
+.cardWrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+/* Main listing */
+.mainContainer {
+  margin-top: 1rem;
+  display: grid;
+  gap: 12px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(2, 8, 23, 0.06);
+}
+.thumb {
+  position: relative;
+  display: grid;
+}
+.thumb img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+.photoCount {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.cardBody {
+  padding: 12px;
+}
+.title {
+  margin: 0 0 6px;
+  font-size: 16px;
+  line-height: 1.35;
+}
+.meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: #334155;
+  font-weight: 500;
+}
+.price {
+  color: #dc2626;
+}
+.dot {
+  width: 3px;
+  height: 3px;
+  background: #94a3b8;
+  border-radius: 999px;
+}
+.addr {
+  margin-top: 6px;
+  color: #475569;
+  font-size: 13px;
+}
+.desc {
+  margin: 8px 0 10px;
+  color: #334155;
+  font-size: 14px;
+}
+/* .footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+} */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+.footerRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.footerBtn {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 1px solid var(--border);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.footerBtn:hover {
+  border-color: #cbd5e1;
+}
+.user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: #334155;
+}
+.name {
+  font-size: 14px;
+}
+.like {
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Empty state */
+.emptyState {
+  padding: 24px;
+  text-align: center;
+  color: #64748b;
+}
+.cardActions {
+  display: flex;
+  gap: 8px;
+}
+
+.cardBtn {
+  flex: 1; /* Hai nút chia đều không gian */
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid var(--border);
+  text-decoration: none; /* Trong trường hợp dùng thẻ <Link> */
+  display: block; /* Trong trường hợp dùng thẻ <Link> */
+}
+
+.btnPrimary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+
+.btnSecondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+/* Responsive ≥425px */
+@media (min-width: 425px) {
+  .searchbox {
+    min-width: 15rem;
+  }
+}
+
+/* Responsive ≥768px */
+/* @media (min-width: 768px) {
+  .thumb img {
+    height: 220px;
+  }
+  .mainContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 1rem;
+  }
+} */
+
+/* Responsive ≥1024px */
+/* @media (min-width: 1024px) {
+  .thumb img {
+    height: 240px;
+  }
+  .mainContainer {
+    max-width: 800px;
+  }
+} */
+
+/* Responsive ≥768px */
+@media (min-width: 768px) {
+  .thumb img {
+    height: 220px;
+  }
+  .mainContainer {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 1rem;
+  }
+}
+
+/* Responsive ≥1024px */
+@media (min-width: 1024px) {
+  .thumb img {
+    height: 240px;
+  }
+  
+  /* SỬA LẠI LAYOUT DESKTOP */
+  .mainContainer {
+    max-width: 1200px; /* Layout rộng hơn để chứa sidebar */
+    padding: 0 16px;
+  }
+
+  /* Chia .cardWrapper thành 2 cột */
+  .cardWrapper {
+    grid-template-columns: 2.5fr 1fr; /* Cột chính 2.5 phần, sidebar 1 phần */
+    gap: 24px;
+    align-items: flex-start;
+  }
+}
