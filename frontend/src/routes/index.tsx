@@ -1,12 +1,13 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import DefaultLayout from "@/components/layouts/default/DefaultLayout";
+// import DefaultLayout from "@/components/layouts/default/DefaultLayout";
 import UserLayout from "@/components/layouts/user/UserLayout";
+import AuthGate from "@/pages/auth/authGate.tsx";
 
 const Buy = lazy(() => import("@/pages/buy/buy"));
 const Sell = lazy(() => import("@/pages/sell/sell"));
 const Home = lazy(() => import("@/pages/home/home"));
-const AuthPage = lazy(() => import("@/pages/auth/auth"));
+const LoginPage = lazy(() => import("@/pages/auth/login/login"));
 const MessagesPage = lazy(() => import("@/pages/messages/messages"));
 
 const PageLoader = () => (
@@ -20,14 +21,6 @@ export const AppRouter = () => {
     <BrowserRouter>
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          {/* <Route
-            path="/"
-            element={
-              <DefaultLayout>
-                <Home />
-              </DefaultLayout>
-            }
-          /> */}
           <Route
             path="/"
             element={
@@ -36,6 +29,7 @@ export const AppRouter = () => {
               </UserLayout>
             }
           />
+
           <Route
             path="/buy"
             element={
@@ -44,23 +38,30 @@ export const AppRouter = () => {
               </UserLayout>
             }
           />
+
+          <Route path="/auth/login" element={<LoginPage />} />
+
           <Route
             path="/sell"
             element={
-              <UserLayout>
-                <Sell />
-              </UserLayout>
+              <AuthGate>
+                <UserLayout>
+                  <Sell />
+                </UserLayout>
+              </AuthGate>
             }
           />
+
           <Route
             path="/messages"
             element={
-              <UserLayout>
-                <MessagesPage />
-              </UserLayout>
+              <AuthGate>
+                <UserLayout>
+                  <MessagesPage />
+                </UserLayout>
+              </AuthGate>
             }
           />
-          <Route path="/auth" element={<AuthPage />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
