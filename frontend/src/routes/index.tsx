@@ -9,6 +9,9 @@ const Home = lazy(() => import("@/pages/home/home"));
 const LoginPage = lazy(() => import("@/pages/auth/login/login"));
 const RegisterPage = lazy(() => import("@/pages/auth/register/register"));
 const MessagesPage = lazy(() => import("@/pages/messages/messages"));
+const ForgotPasswordPage = lazy(
+  () => import("@/pages/auth/forgot-password/ForgotPassword")
+);
 
 const PageLoader = () => (
   <div style={{ display: "grid", placeItems: "center", height: "100vh" }}>
@@ -23,6 +26,10 @@ export const AppRouter = () => {
         <Routes>
           <Route path="/auth/login" element={<LoginPage />} />
           <Route path="/auth/register" element={<RegisterPage />} />
+          <Route
+            path="/auth/forgot-password"
+            element={<ForgotPasswordPage />}
+          />
 
           <Route element={<LayoutProvider />}>
             <Route path="/" element={<Home />} />

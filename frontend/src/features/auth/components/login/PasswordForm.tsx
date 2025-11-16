@@ -66,7 +66,7 @@ export const PasswordForm = ({
         </div>
 
         <div className={styles.forgotLink}>
-          <a href="#">Quên mật khẩu?</a>
+          <Link to="/auth/forgot-password">Quên mật khẩu?</Link>
         </div>
 
         <button type="submit" className={styles.continueBtn}>

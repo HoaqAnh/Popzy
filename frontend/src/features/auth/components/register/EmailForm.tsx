@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./RegisterEmailForm.module.css";
+import styles from "./EmailForm.module.css";
 import GoogleIcon from "@/assets/Google.svg";
 import FacebookIcon from "@/assets/Facebook.svg";
 import AppleIcon from "@/assets/Apple.svg";

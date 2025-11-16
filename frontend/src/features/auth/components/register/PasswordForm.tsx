@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import styles from "./RegisterPasswordForm.module.css";
+import styles from "./PasswordForm.module.css";
 
 type PasswordFormProps = {
   email: string;
@@ -24,7 +24,7 @@ export const RegisterPasswordForm = ({
   return (
     <>
       <h1 className={styles.title}>Tạo tài khoản</h1>
-      <p className={styles.text}>
+      <p className={styles.subtitle}>
         Để tạo tài khoản, bạn hãy nhập mật khẩu của bạn.
       </p>
       <form onSubmit={handleSubmit}>
