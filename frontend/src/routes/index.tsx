@@ -7,6 +7,7 @@ const Buy = lazy(() => import("@/pages/buy/buy"));
 const Sell = lazy(() => import("@/pages/sell/sell"));
 const Home = lazy(() => import("@/pages/home/home"));
 const LoginPage = lazy(() => import("@/pages/auth/login/login"));
+const RegisterPage = lazy(() => import("@/pages/auth/register/register"));
 const MessagesPage = lazy(() => import("@/pages/messages/messages"));
 
 const PageLoader = () => (
@@ -21,6 +22,7 @@ export const AppRouter = () => {
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/auth/login" element={<LoginPage />} />
+          <Route path="/auth/register" element={<RegisterPage />} />
 
           <Route element={<LayoutProvider />}>
             <Route path="/" element={<Home />} />

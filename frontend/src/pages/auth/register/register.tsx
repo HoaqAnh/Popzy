@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./login.module.css";
+import styles from "./register.module.css";
 import { homeMockData } from "@/mocks/home";
 import Logo from "@/assets/Popzy.svg";
-import { EmailForm } from "@/features/auth/components/login/EmailForm";
-import { PasswordForm } from "@/features/auth/components/login/PasswordForm";
-import { login } from "@/mocks/mockAuth";
+import { RegisterEmailForm } from "@/features/auth/components/register/RegisterEmailForm";
+import { RegisterPasswordForm } from "@/features/auth/components/register/RegisterPasswordForm";
 
 type AuthStep = "email" | "password";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const navigate = useNavigate();
   const [step, setStep] = useState<AuthStep>("email");
   const [email, setEmail] = useState("");
@@ -24,16 +23,11 @@ export default function LoginPage() {
   };
 
   const handlePasswordSubmit = (password: string) => {
-    const success = login(email, password);
-
-    if (success) {
-      alert("Đăng nhập thành công!");
-      navigate("/");
-    } else {
-      alert(
-        "Email hoặc mật khẩu không đúng. (TK: test@popzy.com | MK: 123)"
-      );
-    }
+    console.log("Đăng ký với:", email, password);
+    alert(
+      "Tạo tài khoản thành công! (Mock)\nBạn sẽ được chuyển đến trang đăng nhập."
+    );
+    navigate("/auth/login");
   };
 
   return (
@@ -45,12 +39,14 @@ export default function LoginPage() {
             <span className={styles.brandText}>Popzy</span>
           </Link>
 
-          {step === "email" && <EmailForm onSubmit={handleEmailSubmit} />}
+          {step === "email" && (
+            <RegisterEmailForm onSubmit={handleEmailSubmit} />
+          )}
 
           {step === "password" && (
-            <PasswordForm
+            <RegisterPasswordForm
               email={email}
-              onLogin={handlePasswordSubmit}
+              onRegister={handlePasswordSubmit}
               onEditEmail={handleEditEmail}
             />
           )}
