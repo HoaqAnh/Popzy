@@ -17,7 +17,7 @@ type Conversation = {
   timestamp: string;
 };
 
-export default function MessagesPage() {
+const MessagesPage = () => {
   const [activeConvoId, setActiveConvoId] = useState<string>("c1");
   const activeMessages = messages[activeConvoId as keyof typeof messages] || [];
   const activeConvo = conversations.find((c) => c.id === activeConvoId);
@@ -95,4 +95,6 @@ export default function MessagesPage() {
       </main>
     </div>
   );
-}
+};
+
+export default MessagesPage;

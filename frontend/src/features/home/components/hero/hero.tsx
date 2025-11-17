@@ -1,7 +1,7 @@
 import styles from "./Hero.module.css";
 import { homeMockData } from "@/mocks/home";
 
-export default function Hero() {
+const Hero = () => {
   return (
     <section className={styles.hero}>
       <div
@@ -22,4 +22,6 @@ export default function Hero() {
       </div>
     </section>
   );
-}
+};
+
+export default Hero;

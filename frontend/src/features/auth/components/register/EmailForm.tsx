@@ -9,7 +9,7 @@ type EmailFormProps = {
   onSubmit: (email: string) => void;
 };
 
-export const RegisterEmailForm = ({ onSubmit }: EmailFormProps) => {
+const RegisterEmailForm = ({ onSubmit }: EmailFormProps) => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -62,3 +62,5 @@ export const RegisterEmailForm = ({ onSubmit }: EmailFormProps) => {
     </>
   );
 };
+
+export default RegisterEmailForm;

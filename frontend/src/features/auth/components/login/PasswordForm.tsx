@@ -8,11 +8,7 @@ type PasswordFormProps = {
   onEditEmail: () => void;
 };
 
-export const PasswordForm = ({
-  email,
-  onLogin,
-  onEditEmail,
-}: PasswordFormProps) => {
+const PasswordForm = ({ email, onLogin, onEditEmail }: PasswordFormProps) => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
@@ -79,3 +75,5 @@ export const PasswordForm = ({
     </>
   );
 };
+
+export default PasswordForm;

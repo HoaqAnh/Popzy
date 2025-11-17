@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./ForgotPassword.module.css";
 import { homeMockData } from "@/mocks/home";
 import Logo from "@/assets/Popzy.svg";
-import { ForgotPasswordEmailForm } from "@/features/auth/components/forgot-password/EmailForm";
-import { ForgotPasswordOTPForm } from "@/features/auth/components/forgot-password/OTPForm";
-import { ForgotPasswordResetForm } from "@/features/auth/components/forgot-password/ResetForm";
+import ForgotPasswordEmailForm from "@/features/auth/components/forgot-password/EmailForm";
+import ForgotPasswordOTPForm from "@/features/auth/components/forgot-password/OTPForm";
+import ForgotPasswordResetForm from "@/features/auth/components/forgot-password/ResetForm";
+
 type Step = "email" | "otp" | "reset";
 const MOCK_OTP = "123456";
 
-export default function ForgotPasswordPage() {
+const ForgotPasswordPage = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
@@ -76,4 +77,6 @@ export default function ForgotPasswordPage() {
       />
     </div>
   );
-}
+};
+
+export default ForgotPasswordPage;

@@ -2,7 +2,7 @@ import styles from "./FeatureTiles.module.css";
 import { Link } from "react-router-dom";
 import { homeMockData } from "@/mocks/home";
 
-export default function FeatureTiles() {
+const FeatureTiles = () => {
   const tiles = [
     {
       title: "Mua nhà",
@@ -48,4 +48,6 @@ export default function FeatureTiles() {
       </div>
     </section>
   );
-}
+};
+
+export default FeatureTiles;

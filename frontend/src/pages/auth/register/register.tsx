@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
 import { homeMockData } from "@/mocks/home";
 import Logo from "@/assets/Popzy.svg";
-import { RegisterEmailForm } from "@/features/auth/components/register/EmailForm";
-import { RegisterPasswordForm } from "@/features/auth/components/register/PasswordForm";
+import RegisterEmailForm from "@/features/auth/components/register/EmailForm";
+import RegisterPasswordForm from "@/features/auth/components/register/PasswordForm";
 
 type AuthStep = "email" | "password";
 
-export default function RegisterPage() {
+const RegisterPage = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState<AuthStep>("email");
   const [email, setEmail] = useState("");
@@ -60,4 +60,6 @@ export default function RegisterPage() {
       />
     </div>
   );
-}
+};
+
+export default RegisterPage;

@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import styles from "./login.module.css";
 import { homeMockData } from "@/mocks/home";
-import Logo from "@/assets/Popzy.svg";
-import { EmailForm } from "@/features/auth/components/login/EmailForm";
-import { PasswordForm } from "@/features/auth/components/login/PasswordForm";
 import { login } from "@/mocks/mockAuth";
+import Logo from "@/assets/Popzy.svg";
+import EmailForm from "@/features/auth/components/login/EmailForm";
+import PasswordForm from "@/features/auth/components/login/PasswordForm";
+import styles from "./login.module.css";
 
 type AuthStep = "email" | "password";
 
-export default function LoginPage() {
+const LoginPage = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState<AuthStep>("email");
   const [email, setEmail] = useState("");
@@ -30,9 +30,7 @@ export default function LoginPage() {
       alert("Đăng nhập thành công!");
       navigate("/");
     } else {
-      alert(
-        "Email hoặc mật khẩu không đúng. (TK: test@popzy.com | MK: 123)"
-      );
+      alert("Email hoặc mật khẩu không đúng. (TK: test@popzy.com | MK: 123)");
     }
   };
 
@@ -64,4 +62,6 @@ export default function LoginPage() {
       />
     </div>
   );
-}
+};
+
+export default LoginPage;

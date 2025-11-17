@@ -19,7 +19,7 @@ const PageLoader = () => (
   </div>
 );
 
-export const AppRouter = () => {
+const AppRouter = () => {
   return (
     <BrowserRouter>
       <Suspense fallback={<PageLoader />}>
@@ -47,3 +47,5 @@ export const AppRouter = () => {
     </BrowserRouter>
   );
 };
+
+export default AppRouter;

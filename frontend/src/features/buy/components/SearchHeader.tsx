@@ -1,7 +1,7 @@
 import styles from "@/pages/buy/buy.module.css";
 import { useState } from "react";
 
-export const SearchHeader = () => {
+const SearchHeader = () => {
   return (
     <section className={styles.searchHeader} aria-label="Search Page Header">
       <div className={styles.searchRow}>
@@ -110,3 +110,5 @@ const Dropdown = ({
     </div>
   );
 };
+
+export default SearchHeader;

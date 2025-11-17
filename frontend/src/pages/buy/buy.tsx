@@ -1,8 +1,8 @@
 import styles from "./Buy.module.css";
 import { posts } from "@/mocks/posts";
 import { users } from "@/mocks/users";
-import { SearchHeader } from "@/features/buy/components/SearchHeader";
-import { ListingCard } from "@/features/buy/components/ListingCard";
+import SearchHeader from "@/features/buy/components/SearchHeader";
+import ListingCard from "@/features/buy/components/ListingCard";
 
 const Buy = () => {
   const data = posts;

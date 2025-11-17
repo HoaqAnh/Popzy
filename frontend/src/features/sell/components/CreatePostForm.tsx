@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./CreatePostForm.module.css";
 
-export const CreatePostForm = () => {
+const CreatePostForm = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -141,3 +141,5 @@ export const CreatePostForm = () => {
     </section>
   );
 };
+
+export default CreatePostForm;

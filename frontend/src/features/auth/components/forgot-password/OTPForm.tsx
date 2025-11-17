@@ -8,7 +8,7 @@ type OTPFormProps = {
   error: string;
 };
 
-export const ForgotPasswordOTPForm = ({
+const ForgotPasswordOTPForm = ({
   email,
   onSubmit,
   onResend,
@@ -53,3 +53,5 @@ export const ForgotPasswordOTPForm = ({
     </>
   );
 };
+
+export default ForgotPasswordOTPForm;

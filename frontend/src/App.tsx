@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { SEO_CONFIG } from "@/config/seo";
-import { AppRouter } from "@/routes";
+import AppRouter from "@/routes";
 
 const App = () => {
   useEffect(() => {

@@ -1,6 +1,6 @@
 import styles from "./sell.module.css";
-import { CreatePostForm } from "@/features/sell/components/CreatePostForm";
-import { MyPostsList } from "@/features/sell/components/MyPostsList";
+import CreatePostForm from "@/features/sell/components/CreatePostForm";
+import MyPostsList from "@/features/sell/components/MyPostsList";
 
 const Sell = () => {
   return (

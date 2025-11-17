@@ -5,7 +5,7 @@ type ResetFormProps = {
   onSubmit: (password: string) => void;
 };
 
-export const ForgotPasswordResetForm = ({ onSubmit }: ResetFormProps) => {
+const ForgotPasswordResetForm = ({ onSubmit }: ResetFormProps) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -93,3 +93,5 @@ export const ForgotPasswordResetForm = ({ onSubmit }: ResetFormProps) => {
     </>
   );
 };
+
+export default ForgotPasswordResetForm;

@@ -6,7 +6,7 @@ type EmailFormProps = {
   onSubmit: (email: string) => void;
 };
 
-export const ForgotPasswordEmailForm = ({ onSubmit }: EmailFormProps) => {
+const ForgotPasswordEmailForm = ({ onSubmit }: EmailFormProps) => {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -44,3 +44,5 @@ export const ForgotPasswordEmailForm = ({ onSubmit }: EmailFormProps) => {
     </>
   );
 };
+
+export default ForgotPasswordEmailForm;

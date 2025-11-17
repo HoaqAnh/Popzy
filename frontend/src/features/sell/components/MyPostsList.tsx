@@ -2,7 +2,7 @@ import styles from "./MyPostsList.module.css";
 import { myPosts } from "@/mocks/myPosts";
 import { formatPrice } from "@/utils/format";
 
-export const MyPostsList = () => {
+const MyPostsList = () => {
   return (
     <section className={styles.listSection}>
       <h1 className={styles.title}>Bài đăng của tôi</h1>
@@ -39,3 +39,5 @@ export const MyPostsList = () => {
     </section>
   );
 };
+
+export default MyPostsList;

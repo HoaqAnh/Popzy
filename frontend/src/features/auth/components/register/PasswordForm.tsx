@@ -8,7 +8,7 @@ type PasswordFormProps = {
   onEditEmail: () => void;
 };
 
-export const RegisterPasswordForm = ({
+const RegisterPasswordForm = ({
   email,
   onRegister,
   onEditEmail,
@@ -78,3 +78,5 @@ export const RegisterPasswordForm = ({
     </>
   );
 };
+
+export default RegisterPasswordForm;

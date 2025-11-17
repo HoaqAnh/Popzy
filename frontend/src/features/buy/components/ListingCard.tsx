@@ -3,7 +3,7 @@ import type { Post, User } from "@/types/realestate";
 import { formatPrice } from "@/utils/format";
 import { ListingSidebar } from "./ListingSidebar";
 
-export const ListingCard = ({ post, user }: { post: Post; user: User }) => {
+const ListingCard = ({ post, user }: { post: Post; user: User }) => {
   const img = post.images[0] ?? "https://picsum.photos/seed/house/600/400";
 
   return (
@@ -55,3 +55,5 @@ export const ListingCard = ({ post, user }: { post: Post; user: User }) => {
     </div>
   );
 };
+
+export default ListingCard;

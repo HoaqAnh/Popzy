@@ -1,7 +1,7 @@
 import styles from "./CardRow.module.css";
 import { homeMockData } from "@/mocks/home";
 
-export default function CardRow() {
+const CardRow = () => {
   return (
     <section className={styles.wrap}>
       <div className={styles.head}>
@@ -27,4 +27,6 @@ export default function CardRow() {
       </div>
     </section>
   );
-}
+};
+
+export default CardRow;
