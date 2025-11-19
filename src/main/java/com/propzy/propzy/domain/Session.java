@@ -36,13 +36,9 @@ public class Session {
     @Column(length = 64)
     private String ip;
 
-    // Refresh token cho phiên này (đăng nhập đa thiết bị)
     @Column(name = "refresh_token", columnDefinition = "TEXT", nullable = false)
     private String refreshToken;
 
-    // (tuỳ) có thể lưu access token hash/identifier nếu cần revoke nhanh
-    // @Column(name = "access_token_hash", length = 128)
-    // private String accessTokenHash;
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
@@ -50,9 +46,6 @@ public class Session {
     @Column(name = "expires_at", nullable = false)
     private Instant expiresAt;
 
-    // (tuỳ) để tracking realtime/last seen
-    // @Column(name = "last_active")
-    // private Instant lastActive;
 
     @PrePersist
     public void beforeCreate() {

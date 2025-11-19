@@ -46,6 +46,10 @@ public class User {
     @Column(name = "image_url", columnDefinition = "TEXT")
     private String imageUrl;
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @JsonBackReference(value = "post_user")
+    private List<Post> posts = new ArrayList<>();
 
     @PrePersist
     public void beforeCreate() {
