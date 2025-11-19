@@ -1,0 +1,54 @@
+.sellerCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+.sellerHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sellerAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--input);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--muted-foreground);
+}
+.sellerName {
+  font-weight: 700;
+  font-size: 16px;
+}
+.sellerRole {
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+.contactBtns {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.contactBtn {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--secondary);
+  color: var(--foreground);
+}
+.contactBtn.primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}

@@ -7,3 +7,21 @@ export function formatPrice(p: number): string {
   }
   return p.toLocaleString("vi-VN") + " đ";
 }
+
+export function getAvatarLabel(name: string): string {
+  if (!name) return "U";
+  return name.charAt(0).toUpperCase();
+}
+
+export function timeSince(date: string): string {
+  const seconds = Math.floor(
+    (new Date().getTime() - new Date(date).getTime()) / 1000
+  );
+  let interval = seconds / 31536000;
+  if (interval > 1) return Math.floor(interval) + " năm trước";
+  interval = seconds / 2592000;
+  if (interval > 1) return Math.floor(interval) + " tháng trước";
+  interval = seconds / 86400;
+  if (interval > 1) return Math.floor(interval) + " ngày trước";
+  return "Vừa đăng";
+}

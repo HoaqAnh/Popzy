@@ -4,6 +4,7 @@ import LayoutProvider from "@/components/layouts/LayoutProvider";
 import AuthGate from "@/pages/auth/authGate.tsx";
 
 const Buy = lazy(() => import("@/pages/buy/buy"));
+const DetailPage = lazy(() => import("@/pages/buy/detail"));
 const Sell = lazy(() => import("@/pages/sell/sell"));
 const Home = lazy(() => import("@/pages/home/home"));
 const LoginPage = lazy(() => import("@/pages/auth/login/login"));
@@ -34,7 +35,8 @@ const AppRouter = () => {
           <Route element={<LayoutProvider />}>
             <Route path="/" element={<Home />} />
             <Route path="/buy" element={<Buy />} />
-
+            <Route path="/buy/:id" element={<DetailPage />} />
+            
             <Route element={<AuthGate />}>
               <Route path="/sell" element={<Sell />} />
               <Route path="/messages" element={<MessagesPage />} />

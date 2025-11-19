@@ -1,0 +1,37 @@
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--foreground);
+}
+.descContent {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+  margin-bottom: 8px;
+  white-space: pre-line;
+}
+.readMoreBtn {
+  background: none;
+  border: none;
+  color: var(--ring);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+.postStats {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--muted-foreground);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.statStrong {
+  color: var(--foreground);
+  font-weight: 600;
+}

@@ -1,0 +1,42 @@
+.attrGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.attrItem {
+  background: var(--secondary);
+  padding: 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: var(--foreground);
+  font-weight: 500;
+}
+.attrKey {
+  display: flex;
+  align-items: center;
+  flex: 2;
+}
+.attrKey p {
+  margin-left: 1rem;
+}
+.attrValue {
+  flex: 1;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.attrIcon {
+  color: var(--muted-foreground);
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+}
+
+@media (min-width: 768px) {
+  .attrGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+}

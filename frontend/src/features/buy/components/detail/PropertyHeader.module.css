@@ -1,0 +1,29 @@
+.price {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--foreground);
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.mainSpecs {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+.mainSpecs span {
+  font-weight: 700;
+}
+.address {
+  color: var(--muted-foreground);
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--muted-foreground);
+}
