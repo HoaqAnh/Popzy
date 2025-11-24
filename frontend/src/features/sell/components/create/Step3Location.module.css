@@ -1,0 +1,95 @@
+.wrapper {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--foreground);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--muted-foreground);
+  line-height: 1.5;
+  margin-bottom: 32px;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+}
+
+.label {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--foreground);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.selectWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--input);
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: #fff;
+  appearance: none;
+  cursor: pointer;
+  color: var(--foreground);
+}
+
+.select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.select:disabled {
+  background-color: var(--secondary);
+  color: var(--muted-foreground);
+  cursor: not-allowed;
+}
+
+.selectWrapper .arrow {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.inputError {
+  border-color: var(--destructive) !important;
+}
+
+.inputError:focus {
+  box-shadow: 0 0 0 3px rgba(239, 67, 67, 0.1);
+}
+
+.errorMsg {
+  color: var(--destructive);
+  font-size: 13px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

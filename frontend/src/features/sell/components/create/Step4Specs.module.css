@@ -1,0 +1,159 @@
+.wrapper {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--foreground);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: var(--muted-foreground);
+  line-height: 1.5;
+  margin-bottom: 32px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--foreground);
+  margin-bottom: 8px;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--input);
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+  background-color: #fff;
+}
+
+.input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.hasSuffix {
+  padding-right: 50px;
+}
+
+.suffix {
+  position: absolute;
+  right: 14px;
+  color: var(--muted-foreground);
+  font-size: 14px;
+  font-weight: 500;
+  pointer-events: none;
+}
+
+.counterWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--input);
+  border-radius: 8px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.counterBtn {
+  width: 48px;
+  height: 44px;
+  border: none;
+  background-color: #f8fafc;
+  color: var(--foreground);
+  font-size: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background-color 0.2s;
+  border-right: 1px solid var(--border);
+}
+
+.counterBtn:last-child {
+  border-right: none;
+  border-left: 1px solid var(--border);
+}
+
+.counterBtn:hover {
+  background-color: #e2e8f0;
+  color: #2563eb;
+}
+
+.counterBtn:active {
+  background-color: #cbd5e1;
+}
+
+.counterInput {
+  flex: 1;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--foreground);
+  outline: none;
+  appearance: textfield;
+  background: transparent;
+}
+
+.counterInput::-webkit-outer-spin-button,
+.counterInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputError {
+  border-color: var(--destructive) !important;
+}
+
+.inputError:focus {
+  box-shadow: 0 0 0 3px rgba(239, 67, 67, 0.1);
+}
+
+.errorMsg {
+  color: var(--destructive);
+  font-size: 13px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
