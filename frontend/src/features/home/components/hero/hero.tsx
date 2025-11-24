@@ -8,7 +8,8 @@ const Hero = () => {
         className={styles.bg}
         style={{ backgroundImage: `url(${homeMockData.heroImageUrl})` }}
       />
-
+      <div className={styles.overlay} />
+      
       <div className={styles.content}>
         <h1 className={styles.title}>Giao dịch bất động sản. Việt Nam.</h1>
         <div className={styles.searchBar}>
