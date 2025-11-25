@@ -28,22 +28,24 @@ const Step4Specs = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.title}>Provide Key Details About Your Property</h1>
+      <h1 className={styles.title}>
+        Cung cấp thông tin chi tiết quan trọng về bất động sản của bạn
+      </h1>
       <p className={styles.subtitle}>
-        This essential information helps potential buyers quickly understand the
-        basics of your property.
+        Thông tin thiết yếu này giúp người mua tiềm năng nhanh chóng hiểu được
+        những điều cơ bản về bất động sản của bạn.
       </p>
 
       <div className={styles.row}>
         <div className={styles.formGroup}>
           <label htmlFor="area" className={styles.label}>
-            Area (Diện tích)
+            Diện tích (Area)
           </label>
           <div className={styles.inputWrapper}>
             <input
               id="area"
               type="number"
-              placeholder="Enter the total area"
+              placeholder="Nhập tổng diện tích"
               className={`${styles.input} ${styles.hasSuffix} ${
                 errors.area ? styles.inputError : ""
               }`}
@@ -69,7 +71,7 @@ const Step4Specs = () => {
             <input
               id="price"
               type="number"
-              placeholder="Enter the selling price"
+              placeholder="Nhập giá bán"
               className={`${styles.input} ${styles.hasSuffix} ${
                 errors.price ? styles.inputError : ""
               }`}
@@ -90,7 +92,7 @@ const Step4Specs = () => {
 
       <div className={styles.row}>
         <div className={styles.formGroup}>
-          <label className={styles.label}>Number of Bedrooms</label>
+          <label className={styles.label}>Số phòng ngủ</label>
           <div className={styles.counterWrapper}>
             <button
               type="button"
@@ -120,7 +122,7 @@ const Step4Specs = () => {
         </div>
 
         <div className={styles.formGroup}>
-          <label className={styles.label}>Number of Bathrooms</label>
+          <label className={styles.label}>Số phòng tắm</label>
           <div className={styles.counterWrapper}>
             <button
               type="button"

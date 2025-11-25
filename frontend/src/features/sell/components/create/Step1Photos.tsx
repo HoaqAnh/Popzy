@@ -3,6 +3,7 @@ import { useFormContext } from "react-hook-form";
 import styles from "./Step1Photos.module.css";
 import { type PhotoItem } from "@/types/listing";
 import { mockInitialPhotos } from "@/mocks/listing";
+import { UploadIcon } from "@/components/common/icon";
 
 const Step1Photos = () => {
   const { setValue, getValues } = useFormContext();
@@ -51,10 +52,12 @@ const Step1Photos = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.title}>Showcase Your Property with Photos</h1>
+      <h1 className={styles.title}>
+        Trực quan bất động sản của bạn bằng hình ảnh
+      </h1>
       <p className={styles.subtitle}>
-        Upload at least 5 high-quality photos. The first photo will be your
-        cover image. You can reorder photos by dragging them.
+        Tải lên ít nhất 5 ảnh chất lượng cao. Ảnh đầu tiên sẽ là ảnh bìa. Bạn có
+        thể sắp xếp lại ảnh bằng cách kéo chúng.
       </p>
 
       <label className={styles.uploadBox}>
@@ -66,31 +69,18 @@ const Step1Photos = () => {
           onChange={handleFiles}
         />
         <div className={styles.uploadIcon}>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-            <polyline points="17 8 12 3 7 8" />
-            <line x1="12" y1="3" x2="12" y2="15" />
-          </svg>
+          <UploadIcon />
         </div>
         <span className={styles.uploadTextStrong}>
-          Drag & drop photos here or click to browse files
+          Kéo và thả ảnh vào đây hoặc nhấp để duyệt các tệp
         </span>
         <span className={styles.uploadTextLight}>
-          JPG, PNG. Max 10MB per photo.
+          JPG, PNG. Tối đa 10MB cho mỗi bức ảnh.
         </span>
         <span className={styles.browseBtn}>Browse Files</span>
       </label>
 
-      <h3 className={styles.listTitle}>Uploaded Photos ({photos.length})</h3>
+      <h3 className={styles.listTitle}>Ảnh đã tải lên ({photos.length})</h3>
       <div className={styles.photoGrid}>
         {photos.map((photo) => (
           <div
@@ -105,15 +95,17 @@ const Step1Photos = () => {
             ) : (
               <div className={styles.errorPlaceholder}>
                 <div className={styles.errorIcon}>!</div>
-                <span className={styles.errorText}>Upload Failed</span>
-                <span className={styles.errorSub}>File is too large.</span>
-                <button className={styles.retryBtn}>Try Again</button>
+                <span className={styles.errorText}>
+                  Tải lên không thành công
+                </span>
+                <span className={styles.errorSub}>Tệp quá lớn.</span>
+                <button className={styles.retryBtn}>Thử lại</button>
               </div>
             )}
 
             {photo.isCover && (
               <div className={styles.coverBadge}>
-                <span className={styles.starIcon}>★</span> Cover
+                <span className={styles.starIcon}>★</span> Ảnh bìa
               </div>
             )}
 
@@ -125,7 +117,7 @@ const Step1Photos = () => {
                     style={{ width: "60%" }}
                   />
                 </div>
-                <span className={styles.loadingText}>Uploading...</span>
+                <span className={styles.loadingText}>Đang tải lên...</span>
               </div>
             )}
 

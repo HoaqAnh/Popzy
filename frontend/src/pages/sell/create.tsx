@@ -88,10 +88,12 @@ const CreateListingPage = () => {
       <header className={styles.header}>
         <div className={styles.progressRow}>
           <span className={styles.stepLabel}>
-            Step {step}/{totalSteps}: {getStepName(step)}
+            Bước {step}/{totalSteps}: {getStepName(step)}
           </span>
           <span className={styles.nextLabel}>
-            {step < totalSteps ? `Next: ${getStepName(step + 1)}` : "Finish"}
+            {step < totalSteps
+              ? `Tiếp tục: ${getStepName(step + 1)}`
+              : "Hoàn thành"}
           </span>
         </div>
         <div className={styles.progressBarBg}>
@@ -115,10 +117,10 @@ const CreateListingPage = () => {
 
       <footer className={styles.footer}>
         <button onClick={handleBack} className={styles.backBtn}>
-          Back
+          Quay lại
         </button>
         <button onClick={handleNext} className={styles.nextBtn}>
-          {step === totalSteps ? "Publish Listing" : "Continue"}
+          {step === totalSteps ? "Xuất bản tin" : "Tiếp tục"}
         </button>
       </footer>
     </div>
@@ -128,17 +130,17 @@ const CreateListingPage = () => {
 function getStepName(step: number) {
   switch (step) {
     case 1:
-      return "Photos";
+      return "Hình ảnh";
     case 2:
-      return "Details";
+      return "Chi tiết";
     case 3:
-      return "Location";
+      return "Vị trí";
     case 4:
-      return "Specs";
+      return "Thông tin quan trọng";
     case 5:
-      return "Features";
+      return "Thông tin tùy chọn";
     case 6:
-      return "Review";
+      return "Xem lại";
     default:
       return "";
   }

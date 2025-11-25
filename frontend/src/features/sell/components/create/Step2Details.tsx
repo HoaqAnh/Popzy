@@ -14,15 +14,15 @@ const Step2Details = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.title}>Describe Your Property</h1>
+      <h1 className={styles.title}>Mô tả bất động sản của bạn</h1>
       <p className={styles.subtitle}>
-        Provide a compelling title and description to attract potential buyers.
+        Cung cấp tiêu đề và mô tả hấp dẫn để thu hút người mua tiềm năng.
       </p>
 
       <div className={styles.formGroup}>
         <div className={styles.labelRow}>
           <label htmlFor="title" className={styles.label}>
-            Property Title
+            Tiêu đề bản tin
           </label>
           <span className={styles.helpIcon} title="Help info">
             ?
@@ -46,7 +46,7 @@ const Step2Details = () => {
 
         <div className={styles.inputFooter}>
           <span className={styles.hint}>
-            Tip: Include key features like 'Newly Renovated' or 'Ocean View'.
+            Mẹo: Bao gồm các thông tin như 'Mới cải tạo' hoặc 'Tầm nhìn ra biển'.
           </span>
           <span className={styles.counter}>{titleValue.length}/100</span>
         </div>
@@ -58,7 +58,7 @@ const Step2Details = () => {
       <div className={styles.formGroup}>
         <div className={styles.labelRow}>
           <label htmlFor="description" className={styles.label}>
-            Property Description
+            Mô tả bản tin
           </label>
           <span className={styles.helpIcon} title="Help info">
             ?
@@ -136,7 +136,7 @@ const Step2Details = () => {
         <div className={styles.inputFooter}>
           <span className={styles.hint}></span>
           <span className={styles.counter}>
-            {descValue.length}/2000 characters
+            {descValue.length}/2000 ký tự
           </span>
         </div>
         {errors.description && (

@@ -25,15 +25,15 @@ const Step3Location = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h1 className={styles.title}>Where is your property located?</h1>
+      <h1 className={styles.title}>Bất động sản của bạn ở đâu?</h1>
       <p className={styles.subtitle}>
-        Start by selecting the city and then the district. This helps buyers
-        find your listing easily.
+        Bắt đầu bằng cách chọn thành phố và sau đó là quận/huyện. Điều này giúp
+        người mua dễ dàng tìm thấy danh sách bất động sản của bạn.
       </p>
 
       <div className={styles.formGroup}>
         <label htmlFor="city" className={styles.label}>
-          City / Province (Tỉnh / Thành phố)
+          Thành phố
         </label>
         <div className={styles.selectWrapper}>
           <select
@@ -46,7 +46,7 @@ const Step3Location = () => {
               onChange: handleCityChange,
             })}
           >
-            <option value="">Select City / Province</option>
+            <option value="">Chọn Thành phố</option>
             {cities.map((city) => (
               <option key={city.code} value={city.code}>
                 {city.name}
@@ -62,7 +62,7 @@ const Step3Location = () => {
 
       <div className={styles.formGroup}>
         <label htmlFor="district" className={styles.label}>
-          District / Ward (Quận / Huyện)
+          Quận / Huyện (District / Ward)
         </label>
         <div className={styles.selectWrapper}>
           <select
@@ -75,7 +75,7 @@ const Step3Location = () => {
               required: "Vui lòng chọn Quận / Huyện",
             })}
           >
-            <option value="">Select District / Ward</option>
+            <option value="">Chọn Quận / Huyện</option>
             {currentDistricts.map((dist) => (
               <option key={dist.code} value={dist.code}>
                 {dist.name}

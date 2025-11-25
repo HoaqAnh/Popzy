@@ -24,22 +24,24 @@ const Step6Review = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Review Your Listing</h1>
+        <h1 className={styles.title}>Xem lại bản tin của bạn</h1>
         <p className={styles.subtitle}>
-          Make sure everything looks perfect before publishing.
+          Hãy đảm bảo mọi thứ trông hoàn hảo trước khi xuất bản.
         </p>
       </div>
 
       <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>Images</h3>
+        <h3 className={styles.sectionTitle}>Hình ảnh</h3>
         <div className={styles.imagePreview}>
           <div className={styles.coverWrapper}>
             {coverPhoto ? (
               <img src={coverPhoto} alt="Cover" className={styles.coverImg} />
             ) : (
-              <div className={styles.noImage}>No images uploaded</div>
+              <div className={styles.noImage}>
+                Không có hình ảnh nào được tải lên
+              </div>
             )}
-            <span className={styles.coverBadge}>Cover Image</span>
+            <span className={styles.coverBadge}>Ảnh bìa</span>
           </div>
 
           {otherPhotos.length > 0 && (
@@ -71,11 +73,11 @@ const Step6Review = () => {
         <hr className={styles.divider} />
 
         <div className={styles.gridInfo}>
-          <InfoItem label="Area" value={`${values.area} m²`} />
-          <InfoItem label="Bedrooms" value={values.bedrooms} />
-          <InfoItem label="Bathrooms" value={values.bathrooms} />
+          <InfoItem label="Diện tích" value={`${values.area} m²`} />
+          <InfoItem label="Phòng ngủ" value={values.bedrooms} />
+          <InfoItem label="Phòng tắm" value={values.bathrooms} />
           <InfoItem
-            label="Floors"
+            label="Tầng"
             value={values.floors ? `${values.floors} tầng` : "--"}
           />
         </div>
@@ -85,24 +87,27 @@ const Step6Review = () => {
         <h3 className={styles.cardTitle}>Property Details</h3>
         <div className={styles.gridDetails}>
           <InfoItem
-            label="Frontage"
+            label="Mặt tiền"
             value={values.frontage ? `${values.frontage}m` : "--"}
           />
           <InfoItem
-            label="Access Road"
+            label="Đường vào"
             value={values.accessRoad ? `${values.accessRoad}m` : "--"}
           />
-          <InfoItem label="Direction" value={values.houseDirection || "--"} />
-          <InfoItem label="Balcony" value={values.balconyDirection || "--"} />
-          <InfoItem label="Legal" value={values.legalStatus || "--"} />
-          <InfoItem label="Furniture" value={values.furniture || "--"} />
+          <InfoItem label="Hướng nhà" value={values.houseDirection || "--"} />
+          <InfoItem
+            label="Hướng ban công"
+            value={values.balconyDirection || "--"}
+          />
+          <InfoItem label="Pháp lý" value={values.legalStatus || "--"} />
+          <InfoItem label="Nội thất" value={values.furniture || "--"} />
         </div>
 
         <hr className={styles.divider} />
 
-        <h3 className={styles.cardTitle}>Description</h3>
+        <h3 className={styles.cardTitle}>Mô tả</h3>
         <p className={styles.descriptionText}>
-          {values.description || "No description provided."}
+          {values.description || "Không có mô tả nào được cung cấp."}
         </p>
       </div>
     </div>
