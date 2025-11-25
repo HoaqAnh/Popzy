@@ -29,7 +29,7 @@ const Step4Specs = () => {
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.title}>
-        Cung cấp thông tin chi tiết quan trọng về bất động sản của bạn
+        Cung cấp thông tin chi tiết về bất động sản của bạn
       </h1>
       <p className={styles.subtitle}>
         Thông tin thiết yếu này giúp người mua tiềm năng nhanh chóng hiểu được
@@ -39,7 +39,7 @@ const Step4Specs = () => {
       <div className={styles.row}>
         <div className={styles.formGroup}>
           <label htmlFor="area" className={styles.label}>
-            Diện tích (Area)
+            Diện tích
           </label>
           <div className={styles.inputWrapper}>
             <input
@@ -65,7 +65,7 @@ const Step4Specs = () => {
 
         <div className={styles.formGroup}>
           <label htmlFor="price" className={styles.label}>
-            Selling Price (Mức giá)
+            Mức giá
           </label>
           <div className={styles.inputWrapper}>
             <input

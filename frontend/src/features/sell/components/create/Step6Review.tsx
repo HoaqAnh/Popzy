@@ -31,7 +31,6 @@ const Step6Review = () => {
       </div>
 
       <div className={styles.section}>
-        <h3 className={styles.sectionTitle}>Hình ảnh</h3>
         <div className={styles.imagePreview}>
           <div className={styles.coverWrapper}>
             {coverPhoto ? (
@@ -59,8 +58,8 @@ const Step6Review = () => {
         </div>
       </div>
 
-      <div className={styles.infoCard}>
-        <div className={styles.cardHeader}>
+      <div className={styles.section}>
+        <div className={styles.sectionHeader}>
           <div>
             <h2 className={styles.listingTitle}>{values.title}</h2>
             <p className={styles.listingAddress}>
@@ -80,12 +79,6 @@ const Step6Review = () => {
             label="Tầng"
             value={values.floors ? `${values.floors} tầng` : "--"}
           />
-        </div>
-      </div>
-
-      <div className={styles.infoCard}>
-        <h3 className={styles.cardTitle}>Property Details</h3>
-        <div className={styles.gridDetails}>
           <InfoItem
             label="Mặt tiền"
             value={values.frontage ? `${values.frontage}m` : "--"}
@@ -102,10 +95,9 @@ const Step6Review = () => {
           <InfoItem label="Pháp lý" value={values.legalStatus || "--"} />
           <InfoItem label="Nội thất" value={values.furniture || "--"} />
         </div>
-
-        <hr className={styles.divider} />
-
-        <h3 className={styles.cardTitle}>Mô tả</h3>
+      </div>
+      <div className={styles.section}>
+        <h3 className={styles.sectionTitle}>Mô tả chi tiết</h3>
         <p className={styles.descriptionText}>
           {values.description || "Không có mô tả nào được cung cấp."}
         </p>

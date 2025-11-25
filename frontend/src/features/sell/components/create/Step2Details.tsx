@@ -45,14 +45,11 @@ const Step2Details = () => {
         />
 
         <div className={styles.inputFooter}>
-          <span className={styles.hint}>
-            Mẹo: Bao gồm các thông tin như 'Mới cải tạo' hoặc 'Tầm nhìn ra biển'.
-          </span>
+          {errors.title && (
+            <p className={styles.errorMsg}>{errors.title.message}</p>
+          )}
           <span className={styles.counter}>{titleValue.length}/100</span>
         </div>
-        {errors.title && (
-          <p className={styles.errorMsg}>{errors.title.message}</p>
-        )}
       </div>
 
       <div className={styles.formGroup}>
@@ -134,14 +131,11 @@ const Step2Details = () => {
         </div>
 
         <div className={styles.inputFooter}>
-          <span className={styles.hint}></span>
-          <span className={styles.counter}>
-            {descValue.length}/2000 ký tự
-          </span>
+          {errors.description && (
+            <p className={styles.errorMsg}>{errors.description.message}</p>
+          )}
+          <span className={styles.counter}>{descValue.length}/2000 ký tự</span>
         </div>
-        {errors.description && (
-          <p className={styles.errorMsg}>{errors.description.message}</p>
-        )}
       </div>
     </div>
   );

@@ -17,7 +17,7 @@
 }
 
 .formGroup {
-  margin-bottom: 24px;
+  margin-top: 24px;
 }
 
 .labelRow {
@@ -80,11 +80,6 @@
   color: var(--muted-foreground);
 }
 
-.hint {
-  flex: 1;
-  margin-right: 16px;
-}
-
 .counter {
   font-variant-numeric: tabular-nums;
 }
@@ -92,7 +87,6 @@
 .errorMsg {
   color: var(--destructive);
   font-size: 13px;
-  margin-top: 4px;
   font-weight: 500;
 }
 
