@@ -62,7 +62,7 @@ const Step3Location = () => {
 
       <div className={styles.formGroup}>
         <label htmlFor="district" className={styles.label}>
-          Quận / Huyện (District / Ward)
+          Quận / Huyện
         </label>
         <div className={styles.selectWrapper}>
           <select

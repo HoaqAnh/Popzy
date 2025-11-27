@@ -33,7 +33,7 @@ const Step2Details = () => {
           id="title"
           type="text"
           className={`${styles.input} ${errors.title ? styles.inputError : ""}`}
-          placeholder="e.g., Spacious 3-Bedroom Family Home with Garden"
+          placeholder="Nhập tiêu đề bản tin của bạn tại đây"
           maxLength={100}
           {...register("title", {
             required: "Vui lòng nhập tiêu đề bài đăng",
@@ -48,7 +48,7 @@ const Step2Details = () => {
           {errors.title && (
             <p className={styles.errorMsg}>{errors.title.message}</p>
           )}
-          <span className={styles.counter}>{titleValue.length}/100</span>
+          <span className={styles.counter}>{titleValue.length}/100 ký tự</span>
         </div>
       </div>
 
@@ -117,7 +117,7 @@ const Step2Details = () => {
           <textarea
             id="description"
             className={styles.textarea}
-            placeholder="Start describing your property..."
+            placeholder="Mô tả bản tin của bạn tại đây"
             rows={8}
             maxLength={2000}
             {...register("description", {

@@ -30,7 +30,7 @@ const Step6Review = () => {
         </p>
       </div>
 
-      <div className={styles.section}>
+      <section>
         <div className={styles.imagePreview}>
           <div className={styles.coverWrapper}>
             {coverPhoto ? (
@@ -56,9 +56,9 @@ const Step6Review = () => {
             </div>
           )}
         </div>
-      </div>
+      </section>
 
-      <div className={styles.section}>
+      <section>
         <div className={styles.sectionHeader}>
           <div>
             <h2 className={styles.listingTitle}>{values.title}</h2>
@@ -95,13 +95,16 @@ const Step6Review = () => {
           <InfoItem label="Pháp lý" value={values.legalStatus || "--"} />
           <InfoItem label="Nội thất" value={values.furniture || "--"} />
         </div>
-      </div>
-      <div className={styles.section}>
+      </section>
+
+      <hr className={styles.divider} />
+
+      <section>
         <h3 className={styles.sectionTitle}>Mô tả chi tiết</h3>
         <p className={styles.descriptionText}>
           {values.description || "Không có mô tả nào được cung cấp."}
         </p>
-      </div>
+      </section>
     </div>
   );
 };
