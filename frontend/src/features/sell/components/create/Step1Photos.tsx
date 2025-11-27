@@ -5,37 +5,129 @@ import { type PhotoItem } from "@/types/listing";
 import { mockInitialPhotos } from "@/mocks/listing";
 import { UploadIcon } from "@/components/common/icon";
 
+const MAX_SIZE_MB = 10;
+const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+
 const Step1Photos = () => {
-  const { setValue, getValues } = useFormContext();
+  const { setValue, getValues, trigger } = useFormContext();
 
   const [photos, setPhotos] = useState<PhotoItem[]>(() => {
     const existing = getValues("images");
     return existing && existing.length > 0 ? existing : mockInitialPhotos;
   });
 
+  const [isDragging, setIsDragging] = useState(false);
+
   useEffect(() => {
     setValue("images", photos);
-  }, [photos, setValue]);
-
-  const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const newFiles = Array.from(e.target.files).map((file) => ({
-        id: URL.createObjectURL(file),
-        url: URL.createObjectURL(file),
-        status: "success" as const,
-        file: file,
-        isCover: photos.length === 0,
-      }));
-
-      setPhotos((prev) => [...prev, ...newFiles]);
+    if (photos.length > 0) {
+      trigger("images");
     }
+  }, [photos, setValue, trigger]);
+
+  useEffect(() => {
+    return () => {
+      photos.forEach((photo) => {
+        if (photo.file && photo.url.startsWith("blob:")) {
+          URL.revokeObjectURL(photo.url);
+        }
+      });
+    };
+  }, []);
+
+  const isDuplicateFile = (file: File, currentPhotos: PhotoItem[]) => {
+    return currentPhotos.some(
+      (photo) =>
+        photo.file &&
+        photo.file.name === file.name &&
+        photo.file.size === file.size &&
+        photo.file.lastModified === file.lastModified
+    );
   };
 
-  const removePhoto = (id: string) => {
+  const validateFile = (file: File): boolean => {
+    if (file.size > MAX_SIZE_BYTES) return false;
+    if (!file.type.startsWith("image/")) return false;
+    return true;
+  };
+
+  const processFiles = (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+
+    const fileArray = Array.from(files);
+
+    const uniqueFiles = fileArray.filter(
+      (file) => !isDuplicateFile(file, photos)
+    );
+
+    if (uniqueFiles.length < fileArray.length) {
+      console.log("Đã bỏ qua một số file trùng lặp.");
+    }
+
+    if (uniqueFiles.length === 0) return;
+
+    const newPhotos: PhotoItem[] = uniqueFiles.map((file) => {
+      const isValid = validateFile(file);
+      return {
+        id: crypto.randomUUID(),
+        url: URL.createObjectURL(file),
+        status: isValid ? "success" : "error",
+        file: file,
+        isCover: false,
+      };
+    });
+
+    setPhotos((prev) => {
+      const combined = [...prev, ...newPhotos];
+      const hasCover = combined.some((p) => p.isCover);
+      if (!hasCover && combined.length > 0) {
+        const firstValid = combined.find((p) => p.status === "success");
+        if (firstValid) firstValid.isCover = true;
+      }
+      return combined;
+    });
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    processFiles(e.target.files);
+    e.target.value = "";
+  };
+
+  const handleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isDragging) setIsDragging(true);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    processFiles(e.dataTransfer.files);
+  };
+
+  const removePhoto = (id: string, url: string) => {
+    if (url.startsWith("blob:")) {
+      URL.revokeObjectURL(url);
+    }
     setPhotos((prev) => {
       const newList = prev.filter((p) => p.id !== id);
-      if (prev.find((p) => p.id === id)?.isCover && newList.length > 0) {
-        newList[0].isCover = true;
+      const wasCover = prev.find((p) => p.id === id)?.isCover;
+      if (wasCover && newList.length > 0) {
+        const firstValid = newList.find((p) => p.status === "success");
+        if (firstValid) firstValid.isCover = true;
       }
       return newList;
     });
@@ -56,26 +148,33 @@ const Step1Photos = () => {
         Trực quan bất động sản của bạn bằng hình ảnh
       </h1>
       <p className={styles.subtitle}>
-        Tải lên ít nhất 5 ảnh chất lượng cao. Ảnh đầu tiên sẽ là ảnh bìa. Bạn có
-        thể sắp xếp lại ảnh bằng cách kéo chúng.
+        Tải lên ít nhất 5 ảnh chất lượng cao. Ảnh đầu tiên sẽ là ảnh bìa.
       </p>
 
-      <label className={styles.uploadBox}>
+      <label
+        className={`${styles.uploadBox} ${isDragging ? styles.activeDrop : ""}`}
+        onDragEnter={handleDragEnter}
+        onDragLeave={handleDragLeave}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+      >
         <input
           type="file"
           multiple
-          accept="image/*"
+          accept="image/png, image/jpeg, image/jpg, image/webp"
           className={styles.hiddenInput}
-          onChange={handleFiles}
+          onChange={handleInputChange}
         />
         <div className={styles.uploadIcon}>
           <UploadIcon />
         </div>
         <span className={styles.uploadTextStrong}>
-          Kéo và thả ảnh vào đây hoặc nhấp để duyệt các tệp
+          {isDragging
+            ? "Thả ảnh vào đây ngay!"
+            : "Kéo và thả ảnh vào đây hoặc nhấp để duyệt các tệp"}
         </span>
         <span className={styles.uploadTextLight}>
-          JPG, PNG. Tối đa 10MB cho mỗi bức ảnh.
+          JPG, PNG. Tối đa {MAX_SIZE_MB}MB cho mỗi bức ảnh.
         </span>
         <span className={styles.browseBtn}>Browse Files</span>
       </label>
@@ -95,15 +194,21 @@ const Step1Photos = () => {
             ) : (
               <div className={styles.errorPlaceholder}>
                 <div className={styles.errorIcon}>!</div>
-                <span className={styles.errorText}>
-                  Tải lên không thành công
-                </span>
-                <span className={styles.errorSub}>Tệp quá lớn.</span>
-                <button className={styles.retryBtn}>Thử lại</button>
+                <span className={styles.errorText}>Tải lên thất bại</span>
+                <span className={styles.errorSub}>File quá lớn</span>
+                <button
+                  className={styles.retryBtn}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removePhoto(photo.id, photo.url);
+                  }}
+                >
+                  Xóa
+                </button>
               </div>
             )}
 
-            {photo.isCover && (
+            {photo.isCover && photo.status === "success" && (
               <div className={styles.coverBadge}>
                 <span className={styles.starIcon}>★</span> Ảnh bìa
               </div>
@@ -125,7 +230,7 @@ const Step1Photos = () => {
               className={styles.deleteBtn}
               onClick={(e) => {
                 e.stopPropagation();
-                removePhoto(photo.id);
+                removePhoto(photo.id, photo.url);
               }}
               type="button"
             >
