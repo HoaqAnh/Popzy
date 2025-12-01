@@ -1,13 +1,7 @@
 package com.propzy.propzy.service;
 
-import com.propzy.propzy.domain.Image;
-import com.propzy.propzy.domain.Post;
-import com.propzy.propzy.domain.User;
-import com.propzy.propzy.domain.Video;
-import com.propzy.propzy.repository.ImageRepository;
-import com.propzy.propzy.repository.PostRepository;
-import com.propzy.propzy.repository.UserRepository;
-import com.propzy.propzy.repository.VideoRepository;
+import com.propzy.propzy.domain.*;
+import com.propzy.propzy.repository.*;
 import com.propzy.propzy.util.SecurityUtil;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +14,14 @@ public class PostService {
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
     private final VideoRepository videoRepository;
+    private final PropertyRepository propertyRepository;
     public PostService(PostRepository postRepository, UserRepository userRepository,
-                       ImageRepository imageRepository, VideoRepository videoRepository) {
+                       ImageRepository imageRepository, VideoRepository videoRepository, PropertyRepository propertyRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.imageRepository = imageRepository;
         this.videoRepository = videoRepository;
+        this.propertyRepository = propertyRepository;
     }
     public Post create(Post request) {
 
@@ -42,6 +38,12 @@ public class PostService {
         // Lưu post trước
         postRepository.save(post);
 
+        if(request.getProperties()!=null)
+        {
+            Properties properties = request.getProperties();
+            properties.setPost(post);
+            this.propertyRepository.save(request.getProperties());
+        }
         // Thêm images
         if (request.getImages() != null) {
             for (Image url : request.getImages()) {
