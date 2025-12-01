@@ -2,13 +2,18 @@ import styles from "@/pages/buy/buy.module.css";
 import type { Post, User } from "@/types/realestate";
 import { formatPrice } from "@/utils/format";
 import { ListingSidebar } from "./ListingSidebar";
+import { useNavigate } from "react-router-dom";
 
 const ListingCard = ({ post, user }: { post: Post; user: User }) => {
   const img = post.images[0] ?? "https://picsum.photos/seed/house/600/400";
-
+  const navigator = useNavigate();
   return (
     <div className={styles.cardWrapper}>
-      <article className={styles.card} role="article">
+      <article
+        className={styles.card}
+        role="article"
+        onClick={() => navigator(`${post.id}`)}
+      >
         <div className={styles.thumb}>
           <img src={img} alt={post.title} loading="lazy" />
           <div className={styles.photoCount}>{post.images.length}</div>
@@ -32,19 +37,24 @@ const ListingCard = ({ post, user }: { post: Post; user: User }) => {
           <div className={styles.footer}>
             <div className={styles.user}>
               <div className={styles.avatar} aria-hidden>
-                <span>{user.name.charAt(0).toUpperCase()}</span>
+                <span>{user.fullname.charAt(0).toUpperCase()}</span>
               </div>
-              <span className={styles.name}>{user.name}</span>
+              <span className={styles.name}>{user.fullname}</span>
             </div>
 
             <div className={styles.footerRight}>
               <button className={styles.footerBtn}>Liên hệ</button>
-              <button className={styles.footerBtn}>Xem thêm</button>
+              <button
+                className={styles.footerBtn}
+                onClick={() => navigator(`${post.id}`)}
+              >
+                Xem thêm
+              </button>
               <button className={styles.like} title="Yêu thích">
-                ❤️{" "}
-                {new Intl.NumberFormat("vi-VN", { notation: "compact" }).format(
-                  post.likes
-                )}
+                ❤️
+                {new Intl.NumberFormat("vi-VN", {
+                  notation: "compact",
+                }).format(post.likes)}
               </button>
             </div>
           </div>

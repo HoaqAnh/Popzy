@@ -146,11 +146,16 @@
 }
 
 .card {
-  background: #fff;
-  border: 1px solid #e5e7eb;
+  background: var(--card);
+  border: 1px solid var(--border);
   border-radius: 14px;
   overflow: hidden;
+  cursor: pointer;
   box-shadow: 0 1px 2px rgba(2, 8, 23, 0.06);
+}
+.card:hover {
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.1);
+  transform: scale(100.5%);
 }
 .thumb {
   position: relative;
@@ -323,7 +328,7 @@
   .thumb img {
     height: 240px;
   }
-  
+
   .mainContainer {
     max-width: 950px;
     padding: 0 16px;
