@@ -276,7 +276,7 @@
 }
 
 .cardBtn {
-  flex: 1; /* Hai nút chia đều không gian */
+  flex: 1;
   padding: 10px 12px;
   border-radius: 10px;
   font-weight: 600;
@@ -284,8 +284,8 @@
   cursor: pointer;
   text-align: center;
   border: 1px solid var(--border);
-  text-decoration: none; /* Trong trường hợp dùng thẻ <Link> */
-  display: block; /* Trong trường hợp dùng thẻ <Link> */
+  text-decoration: none;
+  display: block;
 }
 
 .btnPrimary {
@@ -307,30 +307,6 @@
 }
 
 /* Responsive ≥768px */
-/* @media (min-width: 768px) {
-  .thumb img {
-    height: 220px;
-  }
-  .mainContainer {
-    display: flex;
-    flex-direction: column;
-    max-width: 500px;
-    margin: 0 auto;
-    margin-top: 1rem;
-  }
-} */
-
-/* Responsive ≥1024px */
-/* @media (min-width: 1024px) {
-  .thumb img {
-    height: 240px;
-  }
-  .mainContainer {
-    max-width: 800px;
-  }
-} */
-
-/* Responsive ≥768px */
 @media (min-width: 768px) {
   .thumb img {
     height: 220px;
@@ -348,15 +324,13 @@
     height: 240px;
   }
   
-  /* SỬA LẠI LAYOUT DESKTOP */
   .mainContainer {
-    max-width: 1200px; /* Layout rộng hơn để chứa sidebar */
+    max-width: 950px;
     padding: 0 16px;
   }
 
-  /* Chia .cardWrapper thành 2 cột */
   .cardWrapper {
-    grid-template-columns: 2.5fr 1fr; /* Cột chính 2.5 phần, sidebar 1 phần */
+    grid-template-columns: 2fr 1fr;
     gap: 24px;
     align-items: flex-start;
   }

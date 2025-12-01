@@ -1,8 +1,10 @@
 import styles from "./SellHero.module.css";
 import { homeMockData } from "@/mocks/home";
 import { AddIcon } from "@/components/common/icon";
+import { useNavigate } from "react-router-dom";
 
 const SellHero = () => {
+  const navigator = useNavigate();
   return (
     <section className={styles.hero}>
       <div className={styles.container}>
@@ -22,7 +24,10 @@ const SellHero = () => {
             Đưa tin đăng của bạn đến với hàng ngàn khách hàng tiềm năng. Quy
             trình đăng tin của chúng tôi nhanh chóng, đơn giản và hiệu quả.
           </p>
-          <button className={styles.ctaBtn}>
+          <button
+            className={styles.ctaBtn}
+            onClick={() => navigator("create")}
+          >
             <AddIcon />
             Bắt đầu đăng tin
           </button>
