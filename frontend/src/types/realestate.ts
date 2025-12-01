@@ -1,9 +1,14 @@
 export type User = {
   id: string;
-  name: string;
-  avatar?: string;
+  fullname: string;
+  age?: number;
   phone?: string;
   email?: string;
+  imageUrl?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  createdBy?: string;
+  updatedBy?: string;
 };
 
 export type Address = {
