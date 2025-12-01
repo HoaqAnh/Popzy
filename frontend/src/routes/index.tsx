@@ -11,6 +11,7 @@ const Home = lazy(() => import("@/pages/home/home"));
 const LoginPage = lazy(() => import("@/pages/auth/login/login"));
 const RegisterPage = lazy(() => import("@/pages/auth/register/register"));
 const MessagesPage = lazy(() => import("@/pages/messages/messages"));
+const ProfileSettingsPage = lazy(() => import("@/pages/profile/settings"));
 const ForgotPasswordPage = lazy(
   () => import("@/pages/auth/forgot-password/ForgotPassword")
 );
@@ -41,6 +42,10 @@ const AppRouter = () => {
             <Route element={<AuthGate />}>
               <Route path="/sell" element={<Sell />} />
               <Route path="/messages" element={<MessagesPage />} />
+              <Route
+                path="/profile/settings"
+                element={<ProfileSettingsPage />}
+              />
             </Route>
           </Route>
 
