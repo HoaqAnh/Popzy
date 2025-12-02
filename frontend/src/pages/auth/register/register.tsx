@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
 import { homeMockData } from "@/mocks/home";
 import Logo from "@/assets/Popzy.svg";
-import { register } from "@/mocks/mockAuth";
+import { useRegister } from "@/features/auth/hooks/useRegister";
 import RegisterEmailForm from "@/features/auth/components/register/EmailForm";
 import type { Step1FormValues } from "@/types/realestate";
 import RegisterPasswordForm from "@/features/auth/components/register/PasswordForm";
@@ -12,8 +12,9 @@ type AuthStep = "info" | "password";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState<AuthStep>("info");
+  const { register, isLoading, error } = useRegister();
 
+  const [step, setStep] = useState<AuthStep>("info");
   const [formData, setFormData] = useState<Step1FormValues>({
     email: "",
     phone: "",
@@ -28,17 +29,20 @@ const RegisterPage = () => {
     setStep("info");
   };
 
-  const handleRegisterSubmit = (password: string) => {
+  const handleRegisterSubmit = async (password: string, fullname: string) => {
     const finalPayload = {
       ...formData,
       password,
+      fullname,
     };
 
-    const success = register(finalPayload);
+    const result = await register(finalPayload);
 
-    if (success) {
+    if (result.success) {
       alert("Đăng ký thành công! Đang chuyển hướng...");
-      navigate("/");
+      navigate("/auth/login");
+    } else {
+      alert(result.error || "Đăng ký thất bại. Vui lòng thử lại.");
     }
   };
 
@@ -50,6 +54,10 @@ const RegisterPage = () => {
             <img src={Logo} alt="Popzy" className={styles.logo} />
             <span className={styles.brandText}>Popzy</span>
           </Link>
+
+          {error && (
+            <div style={{ color: "red", marginBottom: "1rem" }}>{error}</div>
+          )}
 
           {step === "info" && (
             <RegisterEmailForm
@@ -65,6 +73,12 @@ const RegisterPage = () => {
               onRegister={handleRegisterSubmit}
               onBack={handleBackToInfo}
             />
+          )}
+
+          {isLoading && (
+            <p style={{ textAlign: "center", marginTop: "10px" }}>
+              Đang xử lý...
+            </p>
           )}
         </div>
       </main>
