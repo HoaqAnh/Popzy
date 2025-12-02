@@ -41,3 +41,12 @@ export type Post = {
   created_at?: string;
   views?: number;
 };
+
+export type Step1FormValues = {
+  email: string;
+  phone: string;
+};
+
+export type Step2FormValues = {
+  password: string;
+};

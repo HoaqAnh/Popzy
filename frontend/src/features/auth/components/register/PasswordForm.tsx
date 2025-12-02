@@ -1,53 +1,90 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import styles from "./PasswordForm.module.css";
+import type { Step2FormValues } from "@/types/realestate";
+import { EyeIcon } from "@/components/common/icon";
 
 type PasswordFormProps = {
   email: string;
+  phone: string;
   onRegister: (password: string) => void;
-  onEditEmail: () => void;
+  onBack: () => void;
 };
 
 const RegisterPasswordForm = ({
   email,
+  phone,
   onRegister,
-  onEditEmail,
+  onBack,
 }: PasswordFormProps) => {
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onRegister(password);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Step2FormValues>();
+
+  const onSubmit = (data: Step2FormValues) => {
+    onRegister(data.password);
   };
 
   return (
     <>
-      <h1 className={styles.title}>Tạo tài khoản</h1>
-      <p className={styles.subtitle}>
-        Để tạo tài khoản, bạn hãy nhập mật khẩu của bạn.
-      </p>
-      <form onSubmit={handleSubmit}>
-        <div className={styles.emailDisplay}>
-          <input type="email" value={email} readOnly disabled />
-          <button
-            type="button"
-            onClick={onEditEmail}
-            className={styles.editBtn}
-          >
-            Edit
-          </button>
+      <h1 className={styles.title}>Thiết lập mật khẩu</h1>
+      <p className={styles.subtitle}>Hoàn tất đăng ký cho tài khoản của bạn.</p>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.formGroup}>
+          <label htmlFor="email">Email và số điện thoại</label>
+          <div className={styles.emailDisplay}>
+            <div style={{ flexGrow: 1, overflow: "hidden" }}>
+              <input
+                value={email}
+                readOnly
+                disabled
+                style={{
+                  borderRadius: "8px 8px 0 0",
+                  borderBottom: "1px solid var(--border)",
+                }}
+              />
+            </div>
+            <button type="button" onClick={onBack} className={styles.editBtn}>
+              Sửa
+            </button>
+          </div>
+        </div>
+        <div className={styles.formGroup}>
+          <div className={styles.emailDisplay}>
+            <div style={{ flexGrow: 1, overflow: "hidden" }}>
+              <input
+                value={phone}
+                readOnly
+                disabled
+                style={{ borderRadius: "0 0 0 8px" }}
+              />
+            </div>
+            <button type="button" onClick={onBack} className={styles.editBtn}>
+              Sửa
+            </button>
+          </div>
         </div>
 
         <div className={styles.formGroup}>
+          <label htmlFor="password">Mật khẩu</label>
           <div className={styles.passwordWrapper}>
             <input
               id="password"
               type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="Mật khẩu"
+              placeholder="Nhập mật khẩu"
+              {...register("password", {
+                required: "Vui lòng nhập mật khẩu",
+                minLength: {
+                  value: 6,
+                  message: "Mật khẩu phải có ít nhất 6 ký tự",
+                },
+              })}
             />
             <button
               type="button"
@@ -55,23 +92,28 @@ const RegisterPasswordForm = ({
               onClick={() => setShowPassword(!showPassword)}
               aria-label={showPassword ? "Ẩn mật khẩu" : "Hiện mật khẩu"}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="20px"
-                viewBox="0 -960 960 960"
-                width="20px"
-                fill="currentColor"
-              >
-                <path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Z" />
-              </svg>
+              <EyeIcon />
             </button>
           </div>
+          {errors.password && (
+            <p
+              style={{
+                color: "var(--destructive)",
+                fontSize: "13px",
+                marginTop: "4px",
+                fontWeight: 500,
+              }}
+            >
+              {errors.password.message}
+            </p>
+          )}
         </div>
 
         <button type="submit" className={styles.continueBtn}>
-          Tạo tài khoản
+          Hoàn tất đăng ký
         </button>
       </form>
+
       <div className={styles.createLink}>
         Đã có tài khoản Popzy? <Link to="/auth/login">Đăng nhập</Link>
       </div>

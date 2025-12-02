@@ -19,8 +19,14 @@ export const logout = () => {
   localStorage.removeItem(JWT_KEY);
 };
 
-
 export const isAuthenticated = (): boolean => {
   const token = localStorage.getItem(JWT_KEY);
   return !!token;
+};
+
+export const register = (data: any): boolean => {
+  console.log("Mock Register Data:", data);
+  const mockToken = `mock-jwt-token-for-${data.email}`;
+  localStorage.setItem(JWT_KEY, mockToken);
+  return true;
 };

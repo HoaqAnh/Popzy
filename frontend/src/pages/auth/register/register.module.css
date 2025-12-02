@@ -9,7 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 0;
+  padding: 24px 0;
 }
 
 .formContent {
@@ -50,13 +50,13 @@
   .formCol {
     align-items: center;
   }
-  .imageCol {
-    display: block;
-  }
 }
 
 @media (min-width: 1024px) {
   .pageWrapper {
     grid-template-columns: 480px 1fr;
+  }
+  .imageCol {
+    display: block;
   }
 }

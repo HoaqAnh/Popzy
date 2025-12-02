@@ -3,31 +3,43 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./register.module.css";
 import { homeMockData } from "@/mocks/home";
 import Logo from "@/assets/Popzy.svg";
+import { register } from "@/mocks/mockAuth";
 import RegisterEmailForm from "@/features/auth/components/register/EmailForm";
+import type { Step1FormValues } from "@/types/realestate";
 import RegisterPasswordForm from "@/features/auth/components/register/PasswordForm";
 
-type AuthStep = "email" | "password";
+type AuthStep = "info" | "password";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
-  const [step, setStep] = useState<AuthStep>("email");
-  const [email, setEmail] = useState("");
+  const [step, setStep] = useState<AuthStep>("info");
 
-  const handleEmailSubmit = (submittedEmail: string) => {
-    setEmail(submittedEmail);
+  const [formData, setFormData] = useState<Step1FormValues>({
+    email: "",
+    phone: "",
+  });
+
+  const handleInfoSubmit = (data: Step1FormValues) => {
+    setFormData(data);
     setStep("password");
   };
 
-  const handleEditEmail = () => {
-    setStep("email");
+  const handleBackToInfo = () => {
+    setStep("info");
   };
 
-  const handlePasswordSubmit = (password: string) => {
-    console.log("Đăng ký với:", email, password);
-    alert(
-      "Tạo tài khoản thành công! (Mock)\nBạn sẽ được chuyển đến trang đăng nhập."
-    );
-    navigate("/auth/login");
+  const handleRegisterSubmit = (password: string) => {
+    const finalPayload = {
+      ...formData,
+      password,
+    };
+
+    const success = register(finalPayload);
+
+    if (success) {
+      alert("Đăng ký thành công! Đang chuyển hướng...");
+      navigate("/");
+    }
   };
 
   return (
@@ -39,15 +51,19 @@ const RegisterPage = () => {
             <span className={styles.brandText}>Popzy</span>
           </Link>
 
-          {step === "email" && (
-            <RegisterEmailForm onSubmit={handleEmailSubmit} />
+          {step === "info" && (
+            <RegisterEmailForm
+              defaultValues={formData}
+              onSubmit={handleInfoSubmit}
+            />
           )}
 
           {step === "password" && (
             <RegisterPasswordForm
-              email={email}
-              onRegister={handlePasswordSubmit}
-              onEditEmail={handleEditEmail}
+              email={formData.email}
+              phone={formData.phone}
+              onRegister={handleRegisterSubmit}
+              onBack={handleBackToInfo}
             />
           )}
         </div>
