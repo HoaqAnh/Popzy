@@ -15,8 +15,28 @@ export interface RegisterResponse {
   data: User;
 }
 
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+
+export interface LoginResponseData {
+  userLogin: User;
+  access_token: string;
+}
+
+export interface LoginResponse {
+  statusCode: number;
+  error: string | null;
+  message: string;
+  data: LoginResponseData;
+}
+
 export const authService = {
   register(data: RegisterRequest) {
     return axiosClient.post<RegisterResponse>("/auth/register", data);
+  },
+  login(data: LoginRequest) {
+    return axiosClient.post<LoginResponse>("/auth/login", data);
   },
 };

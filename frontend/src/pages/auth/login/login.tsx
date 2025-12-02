@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { homeMockData } from "@/mocks/home";
-import { login } from "@/mocks/mockAuth";
+import { useLogin } from "@/features/auth/hooks/useLogin";
 import Logo from "@/assets/Popzy.svg";
 import EmailForm from "@/features/auth/components/login/EmailForm";
 import PasswordForm from "@/features/auth/components/login/PasswordForm";
@@ -10,7 +10,8 @@ import styles from "./login.module.css";
 type AuthStep = "email" | "password";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
+  const { login, isLoading, error } = useLogin();
+
   const [step, setStep] = useState<AuthStep>("email");
   const [email, setEmail] = useState("");
 
@@ -23,15 +24,8 @@ const LoginPage = () => {
     setStep("email");
   };
 
-  const handlePasswordSubmit = (password: string) => {
-    const success = login(email, password);
-
-    if (success) {
-      alert("Đăng nhập thành công!");
-      navigate("/");
-    } else {
-      alert("Email hoặc mật khẩu không đúng. (TK: test@popzy.com | MK: 123)");
-    }
+  const handlePasswordSubmit = async (password: string) => {
+    await login({ email, password });
   };
 
   return (
@@ -43,6 +37,22 @@ const LoginPage = () => {
             <span className={styles.brandText}>Popzy</span>
           </Link>
 
+          {error && (
+            <div
+              style={{
+                color: "var(--destructive)",
+                marginBottom: "16px",
+                fontSize: "14px",
+                textAlign: "center",
+                padding: "8px",
+                backgroundColor: "#fee2e2",
+                borderRadius: "6px",
+              }}
+            >
+              {error}
+            </div>
+          )}
+
           {step === "email" && <EmailForm onSubmit={handleEmailSubmit} />}
 
           {step === "password" && (
@@ -51,6 +61,19 @@ const LoginPage = () => {
               onLogin={handlePasswordSubmit}
               onEditEmail={handleEditEmail}
             />
+          )}
+
+          {isLoading && (
+            <p
+              style={{
+                textAlign: "center",
+                marginTop: "12px",
+                fontSize: "14px",
+                color: "var(--muted-foreground)",
+              }}
+            >
+              Đang đăng nhập...
+            </p>
           )}
         </div>
       </main>
