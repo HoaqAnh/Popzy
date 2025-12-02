@@ -32,8 +32,14 @@
 .formColumn {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 14px;
   max-width: 100%;
+}
+
+@media (min-width: 768px) {
+  .formColumn {
+    gap: 24px;
+  }
 }
 
 .formGroup {
@@ -63,28 +69,4 @@
 .input:focus {
   border-color: var(--ring);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 24px;
-  padding-top: 24px;
-  border-top: 1px solid transparent;
-}
-
-.saveBtn {
-  background-color: var(--ring);
-  color: var(--input);
-  border: none;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.saveBtn:hover {
-  background-color: #1d4ed8;
 }

@@ -4,19 +4,15 @@ import styles from "./settings.module.css";
 const ProfileSettingsPage = () => {
   return (
     <div className={styles.pageWrapper}>
-      <div className={styles.container}>
-        <header className={styles.header}>
-          <h1 className={styles.pageTitle}>Profile Settings</h1>
-          <p className={styles.pageDesc}>
-            Manage your personal information and security settings.
-          </p>
-        </header>
-
-        <main>
-          <PersonalInfo />
-          <Security />
-        </main>
-      </div>
+      <main className={styles.main}>
+        <PersonalInfo />
+        <Security />
+        <div className={styles.actions}>
+          <button type="button" className={styles.saveBtn}>
+            Lưu thay đổi
+          </button>
+        </div>
+      </main>
     </div>
   );
 };

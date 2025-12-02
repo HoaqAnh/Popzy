@@ -93,12 +93,13 @@
 .inputGrid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 24px;
+  gap: 14px;
 }
 
 @media (min-width: 768px) {
   .inputGrid {
     grid-template-columns: 1fr 1fr;
+    gap: 24px;
   }
 }
 
