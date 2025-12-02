@@ -6,7 +6,7 @@ import ListingCard from "@/features/buy/components/ListingCard";
 
 const Buy = () => {
   return (
-    <div className={styles.buyPage}>
+    <div className={styles.pageWrapper}>
       <SearchHeader />
       <main className={styles.mainContainer} aria-live="polite">
         {posts.map((post) => (

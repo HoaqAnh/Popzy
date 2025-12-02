@@ -11,15 +11,12 @@ export const ListingSidebar = ({ post }: { post: Post }) => {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.card}>
-        <h4 className={styles.title}>Giá trị dự đoán</h4>
-
-        {/* Giá thị trường */}
+        <h4 className={styles.title}>{post.title}</h4>
         <div className={styles.item}>
           <span className={styles.label}>Giá trị thị trường</span>
           <span className={styles.value}>{formatPrice(marketPrice)}</span>
         </div>
 
-        {/* So sánh giá đăng */}
         <div className={styles.item}>
           <span className={styles.label}>So với giá đăng</span>
           <span
@@ -31,7 +28,6 @@ export const ListingSidebar = ({ post }: { post: Post }) => {
           </span>
         </div>
 
-        {/* % Tăng trưởng */}
         <div className={styles.item}>
           <span className={styles.label}>Tăng trưởng (tháng)</span>
           <span

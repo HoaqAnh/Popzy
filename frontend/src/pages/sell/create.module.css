@@ -3,12 +3,10 @@
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  background-color: var(--background);
 }
 
 .header {
   padding: 12px 24px;
-  background: var(--background);
   position: sticky;
   top: 0;
   z-index: 10;

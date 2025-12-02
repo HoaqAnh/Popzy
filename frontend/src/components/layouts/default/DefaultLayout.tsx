@@ -57,7 +57,7 @@ const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
         </div>
       </header>
-      <main className={styles.main}>{children}</main>
+      <main>{children}</main>
     </>
   );
 };

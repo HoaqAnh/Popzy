@@ -3,19 +3,19 @@ import styles from "./messages.module.css";
 import { conversations, messages } from "@/mocks/messages";
 import { users } from "@/mocks/users";
 
-type Message = {
-  id: string;
-  senderId: string;
-  text: string;
-  timestamp: string;
-};
-type Conversation = {
-  id: string;
-  userId: string;
-  name: string;
-  lastMessage: string;
-  timestamp: string;
-};
+// type Message = {
+//   id: string;
+//   senderId: string;
+//   text: string;
+//   timestamp: string;
+// };
+// type Conversation = {
+//   id: string;
+//   userId: string;
+//   name: string;
+//   lastMessage: string;
+//   timestamp: string;
+// };
 
 const MessagesPage = () => {
   const [activeConvoId, setActiveConvoId] = useState<string>("c1");
@@ -61,9 +61,9 @@ const MessagesPage = () => {
             {/* Header của khung chat */}
             <header className={styles.chatHeader}>
               <div className={styles.avatar}>
-                {activeUser.name.charAt(0).toUpperCase()}
+                {activeUser.fullname.charAt(0).toUpperCase()}
               </div>
-              <h3>{activeUser.name}</h3>
+              <h3>{activeUser.fullname}</h3>
             </header>
 
             {/* Danh sách tin nhắn */}

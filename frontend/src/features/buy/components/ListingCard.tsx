@@ -1,4 +1,4 @@
-import styles from "@/pages/buy/buy.module.css";
+import styles from "./ListingCard.module.css";
 import type { Post, User } from "@/types/realestate";
 import { formatPrice } from "@/utils/format";
 import { ListingSidebar } from "./ListingSidebar";
@@ -25,9 +25,9 @@ const ListingCard = ({ post, user }: { post: Post; user: User }) => {
             <span className={styles.dot} />
             <span>{post.areaM2} m²</span>
             <span className={styles.dot} />
-            <span>{post.beds} PN</span>
+            <span>{post.beds} Phòng ngủ</span>
             <span className={styles.dot} />
-            <span>{post.baths} PT</span>
+            <span>{post.baths} Phòng tắm</span>
           </div>
           <div className={styles.addr}>
             {post.address.district}, {post.address.city}
@@ -36,9 +36,13 @@ const ListingCard = ({ post, user }: { post: Post; user: User }) => {
 
           <div className={styles.footer}>
             <div className={styles.user}>
-              <div className={styles.avatar} aria-hidden>
-                <span>{user.fullname.charAt(0).toUpperCase()}</span>
-              </div>
+              <img
+                src={
+                  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200"
+                }
+                alt="Avatar"
+                className={styles.avatar}
+              />
               <span className={styles.name}>{user.fullname}</span>
             </div>
 
