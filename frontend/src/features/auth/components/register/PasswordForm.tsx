@@ -8,7 +8,7 @@ import { EyeIcon } from "@/components/common/icon";
 type PasswordFormProps = {
   email: string;
   phone: string;
-  onRegister: (password: string) => void;
+  onRegister: (password: string, fullname: string) => void;
   onBack: () => void;
 };
 
@@ -27,17 +27,17 @@ const RegisterPasswordForm = ({
   } = useForm<Step2FormValues>();
 
   const onSubmit = (data: Step2FormValues) => {
-    onRegister(data.password);
+    onRegister(data.password, data.fullname);
   };
 
   return (
     <>
-      <h1 className={styles.title}>Thiết lập mật khẩu</h1>
-      <p className={styles.subtitle}>Hoàn tất đăng ký cho tài khoản của bạn.</p>
+      <h1 className={styles.title}>Hoàn tất đăng ký</h1>
+      <p className={styles.subtitle}>Điền thông tin cá nhân và mật khẩu.</p>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formGroup}>
-          <label htmlFor="email">Email và số điện thoại</label>
+          <label>Email và số điện thoại</label>
           <div className={styles.emailDisplay}>
             <div style={{ flexGrow: 1, overflow: "hidden" }}>
               <input
@@ -69,6 +69,34 @@ const RegisterPasswordForm = ({
               Sửa
             </button>
           </div>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="fullname">Họ và tên</label>
+          <input
+            id="fullname"
+            type="text"
+            placeholder="Nhập tên của bạn"
+            {...register("fullname", {
+              required: "Vui lòng nhập họ và tên",
+              minLength: {
+                value: 2,
+                message: "Tên phải có ít nhất 2 ký tự",
+              },
+            })}
+          />
+          {errors.fullname && (
+            <p
+              style={{
+                color: "var(--destructive)",
+                fontSize: "13px",
+                marginTop: "4px",
+                fontWeight: 500,
+              }}
+            >
+              {errors.fullname.message}
+            </p>
+          )}
         </div>
 
         <div className={styles.formGroup}>

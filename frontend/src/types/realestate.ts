@@ -48,5 +48,6 @@ export type Step1FormValues = {
 };
 
 export type Step2FormValues = {
+  fullname: string;
   password: string;
 };
