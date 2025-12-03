@@ -40,5 +40,4 @@ public class UserService {
         userDTO.setFullname(UserDTO.getFullname());
         return userDTO;
     }
-
 }

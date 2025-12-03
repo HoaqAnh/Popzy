@@ -1,6 +1,7 @@
 package com.propzy.propzy.controller;
 
 import com.propzy.propzy.domain.Post;
+import com.propzy.propzy.domain.response.PostDTO;
 import com.propzy.propzy.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,7 +34,7 @@ public class PostController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Post>> getAll() {
+    public ResponseEntity<List<PostDTO>> getAll() {
         return ResponseEntity.ok(postService.getAll());
     }
 

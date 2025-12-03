@@ -1,6 +1,7 @@
 package com.propzy.propzy.service;
 
 import com.propzy.propzy.domain.*;
+import com.propzy.propzy.domain.response.PostDTO;
 import com.propzy.propzy.repository.*;
 import com.propzy.propzy.util.SecurityUtil;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -113,8 +115,33 @@ public class PostService {
                 .orElseThrow(() -> new RuntimeException("Post not found"));
     }
 
-    public List<Post> getAll() {
-        return postRepository.findAll();
+    public List<PostDTO> getAll() {
+        List<Post> postList = postRepository.findAll(
+                Sort.by(Sort.Direction.DESC, "createAt")
+        );
+        List<PostDTO> postDTOList = new ArrayList<>();
+        for (Post post : postList) {
+            Properties properties = post.getProperties();
+            User user = post.getUser();
+            PostDTO postDTO = PostDTO.builder()
+                    //Post
+                    .name(post.getName())
+                    .description(post.getDescription())
+                    .price(post.getPrice())
+                    //Properties
+                    .area(properties.getArea())
+                    .bedrooms(properties.getBedrooms())
+                    .bathroom(properties.getBathroom())
+                    .district(properties.getDistrict())
+                    .city(properties.getCity())
+                    //User
+                    .fullname(user.getFullname())
+                    .imageUrl(user.getImageUrl())
+                    .build();
+            postDTOList.add(postDTO);
+        }
+
+        return postDTOList;
     }
 
     public void delete(Integer id) {
