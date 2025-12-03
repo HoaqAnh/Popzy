@@ -1,9 +1,10 @@
 export type PhotoItem = {
   id: string;
   url: string;
+  publicId?: string;
   status: "success" | "uploading" | "error";
-  isCover?: boolean;
   file?: File;
+  isCover?: boolean;
 };
 
 export type CreateListingFormValues = {

@@ -2,25 +2,28 @@ import { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import styles from "./Step1Photos.module.css";
 import { type PhotoItem } from "@/types/listing";
-import { mockInitialPhotos } from "@/mocks/listing";
 import { UploadIcon } from "@/components/common/icon";
+import { getCloudinaryUrl } from "@/utils/image";
+import { useImageUpload } from "../../hooks/useImageUpload";
 
 const MAX_SIZE_MB = 10;
 const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
 
 const Step1Photos = () => {
   const { setValue, getValues, trigger } = useFormContext();
+  const { uploadImages, progress } = useImageUpload();
 
   const [photos, setPhotos] = useState<PhotoItem[]>(() => {
     const existing = getValues("images");
-    return existing && existing.length > 0 ? existing : mockInitialPhotos;
+    return existing && existing.length > 0 ? existing : [];
   });
 
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     setValue("images", photos);
-    if (photos.length > 0) {
+    const isUploading = photos.some((p) => p.status === "uploading");
+    if (photos.length > 0 && !isUploading) {
       trigger("images");
     }
   }, [photos, setValue, trigger]);
@@ -28,22 +31,12 @@ const Step1Photos = () => {
   useEffect(() => {
     return () => {
       photos.forEach((photo) => {
-        if (photo.file && photo.url.startsWith("blob:")) {
+        if (photo.url.startsWith("blob:")) {
           URL.revokeObjectURL(photo.url);
         }
       });
     };
   }, []);
-
-  const isDuplicateFile = (file: File, currentPhotos: PhotoItem[]) => {
-    return currentPhotos.some(
-      (photo) =>
-        photo.file &&
-        photo.file.name === file.name &&
-        photo.file.size === file.size &&
-        photo.file.lastModified === file.lastModified
-    );
-  };
 
   const validateFile = (file: File): boolean => {
     if (file.size > MAX_SIZE_BYTES) return false;
@@ -51,71 +44,84 @@ const Step1Photos = () => {
     return true;
   };
 
-  const processFiles = (files: FileList | null) => {
-    if (!files || files.length === 0) return;
+  const processFiles = async (fileList: FileList | null) => {
+    if (!fileList || fileList.length === 0) return;
 
-    const fileArray = Array.from(files);
-
-    const uniqueFiles = fileArray.filter(
-      (file) => !isDuplicateFile(file, photos)
-    );
-
-    if (uniqueFiles.length < fileArray.length) {
-      console.log("Đã bỏ qua một số file trùng lặp.");
-    }
+    const fileArray = Array.from(fileList);
+    const uniqueFiles = fileArray.filter((file) => {
+      return !photos.some(
+        (p) => p.file && p.file.name === file.name && p.file.size === file.size
+      );
+    });
 
     if (uniqueFiles.length === 0) return;
 
-    const newPhotos: PhotoItem[] = uniqueFiles.map((file) => {
-      const isValid = validateFile(file);
-      return {
+    const validItems: PhotoItem[] = [];
+    const invalidItems: PhotoItem[] = [];
+    const filesToUpload: File[] = [];
+
+    uniqueFiles.forEach((file) => {
+      const newItem: PhotoItem = {
         id: crypto.randomUUID(),
         url: URL.createObjectURL(file),
-        status: isValid ? "success" : "error",
+        status: validateFile(file) ? "uploading" : "error",
         file: file,
         isCover: false,
       };
+
+      if (validateFile(file)) {
+        validItems.push(newItem);
+        filesToUpload.push(file);
+      } else {
+        invalidItems.push(newItem);
+      }
     });
 
     setPhotos((prev) => {
-      const combined = [...prev, ...newPhotos];
+      const combined = [...prev, ...validItems, ...invalidItems];
       const hasCover = combined.some((p) => p.isCover);
       if (!hasCover && combined.length > 0) {
-        const firstValid = combined.find((p) => p.status === "success");
+        const firstValid = combined.find((p) => p.status !== "error");
         if (firstValid) firstValid.isCover = true;
       }
       return combined;
     });
-  };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    processFiles(e.target.files);
-    e.target.value = "";
-  };
+    if (filesToUpload.length > 0) {
+      const result = await uploadImages(filesToUpload);
 
-  const handleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  };
+      if (result.success && result.data) {
+        const serverResults = result.data;
 
-  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-  };
+        setPhotos((prev) => {
+          return prev.map((p) => {
+            const indexInBatch = validItems.findIndex(
+              (item) => item.id === p.id
+            );
 
-  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!isDragging) setIsDragging(true);
-  };
+            if (indexInBatch !== -1 && serverResults[indexInBatch]) {
+              const resItem = serverResults[indexInBatch];
+              const finalUrl = getCloudinaryUrl(resItem.url);
 
-  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    processFiles(e.dataTransfer.files);
+              return {
+                ...p,
+                status: "success",
+                url: finalUrl,
+                publicId: resItem.url,
+              };
+            }
+            return p;
+          });
+        });
+      } else {
+        setPhotos((prev) =>
+          prev.map((p) => {
+            const isItemInBatch = validItems.some((item) => item.id === p.id);
+            return isItemInBatch ? { ...p, status: "error" } : p;
+          })
+        );
+      }
+    }
   };
 
   const removePhoto = (id: string, url: string) => {
@@ -126,7 +132,9 @@ const Step1Photos = () => {
       const newList = prev.filter((p) => p.id !== id);
       const wasCover = prev.find((p) => p.id === id)?.isCover;
       if (wasCover && newList.length > 0) {
-        const firstValid = newList.find((p) => p.status === "success");
+        const firstValid = newList.find(
+          (p) => p.status === "success" || p.status === "uploading"
+        );
         if (firstValid) firstValid.isCover = true;
       }
       return newList;
@@ -140,6 +148,67 @@ const Step1Photos = () => {
         isCover: p.id === id,
       }))
     );
+  };
+
+  const handleRetry = async (e: React.MouseEvent, photo: PhotoItem) => {
+    e.stopPropagation();
+    if (!photo.file) return;
+    if (!validateFile(photo.file)) return;
+
+    setPhotos((prev) =>
+      prev.map((p) => (p.id === photo.id ? { ...p, status: "uploading" } : p))
+    );
+
+    const result = await uploadImages([photo.file]);
+
+    if (result.success && result.data && result.data[0]) {
+      const resItem = result.data[0];
+      const finalUrl = getCloudinaryUrl(resItem.url) || resItem.url;
+
+      setPhotos((prev) =>
+        prev.map((p) =>
+          p.id === photo.id
+            ? {
+                ...p,
+                status: "success",
+                url: finalUrl,
+                publicId: resItem.url,
+              }
+            : p
+        )
+      );
+    } else {
+      setPhotos((prev) =>
+        prev.map((p) => (p.id === photo.id ? { ...p, status: "error" } : p))
+      );
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    processFiles(e.target.files);
+    e.target.value = "";
+  };
+
+  const handleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isDragging) setIsDragging(true);
+  };
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    processFiles(e.dataTransfer.files);
   };
 
   return (
@@ -189,40 +258,56 @@ const Step1Photos = () => {
             }`}
             onClick={() => photo.status === "success" && setCover(photo.id)}
           >
-            {photo.status !== "error" ? (
+            {photo.status !== "error" && (
               <img src={photo.url} alt="property" className={styles.img} />
-            ) : (
+            )}
+
+            {photo.status === "error" && (
               <div className={styles.errorPlaceholder}>
                 <div className={styles.errorIcon}>!</div>
                 <span className={styles.errorText}>Tải lên thất bại</span>
-                <span className={styles.errorSub}>File quá lớn</span>
+                <span className={styles.errorSub}>
+                  {photo.file && photo.file.size > MAX_SIZE_BYTES
+                    ? "File quá lớn"
+                    : "Lỗi mạng"}
+                </span>
                 <button
                   className={styles.retryBtn}
                   onClick={(e) => {
-                    e.stopPropagation();
-                    removePhoto(photo.id, photo.url);
+                    if (photo.file && photo.file.size > MAX_SIZE_BYTES) {
+                      e.stopPropagation();
+                      removePhoto(photo.id, photo.url);
+                    } else {
+                      handleRetry(e, photo);
+                    }
                   }}
                 >
-                  Xóa
+                  {photo.file && photo.file.size > MAX_SIZE_BYTES
+                    ? "Xóa"
+                    : "Thử lại"}
                 </button>
               </div>
             )}
 
-            {photo.isCover && photo.status === "success" && (
-              <div className={styles.coverBadge}>
-                <span className={styles.starIcon}>★</span> Ảnh bìa
-              </div>
-            )}
+            {photo.isCover &&
+              (photo.status === "success" || photo.status === "uploading") && (
+                <div className={styles.coverBadge}>
+                  <span className={styles.starIcon}>★</span> Ảnh bìa
+                </div>
+              )}
 
             {photo.status === "uploading" && (
               <div className={styles.loadingOverlay}>
                 <div className={styles.progressBar}>
                   <div
                     className={styles.progressFill}
-                    style={{ width: "60%" }}
+                    style={{
+                      width: `${progress}%`,
+                      transition: "width 0.2s ease",
+                    }}
                   />
                 </div>
-                <span className={styles.loadingText}>Đang tải lên...</span>
+                <span className={styles.loadingText}>{progress}%</span>
               </div>
             )}
 
