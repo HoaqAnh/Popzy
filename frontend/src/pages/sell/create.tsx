@@ -3,16 +3,22 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styles from "./create.module.css";
 import { type CreateListingFormValues } from "@/types/listing";
+
 import Step1Photos from "@/features/sell/components/create/Step1Photos";
 import Step2Details from "@/features/sell/components/create/Step2Details";
 import Step3Location from "@/features/sell/components/create/Step3Location";
 import Step4Specs from "@/features/sell/components/create/Step4Specs";
 import Step5Features from "@/features/sell/components/create/Step5Features";
 import Step6Review from "@/features/sell/components/create/Step6Review";
+import {
+  listingService,
+  type CreatePostRequest,
+} from "@/features/sell/services/listingService";
 
 const CreateListingPage = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const methods = useForm<CreateListingFormValues>({
     mode: "onBlur",
@@ -24,8 +30,8 @@ const CreateListingPage = () => {
       district: "",
       price: 0,
       area: 0,
-      bedrooms: 2,
-      bathrooms: 1,
+      bedrooms: 0,
+      bathrooms: 0,
     },
   });
 
@@ -64,13 +70,59 @@ const CreateListingPage = () => {
         setStep((prev) => prev + 1);
         window.scrollTo(0, 0);
       } else {
-        const finalData = methods.getValues();
-        console.log("Submitting Post:", finalData);
         if (confirm("Bạn có chắc chắn muốn đăng tin này không?")) {
-          alert("Đăng tin thành công!");
-          navigate("/");
+          handleSubmitPost();
         }
       }
+    }
+  };
+
+  const handleSubmitPost = async () => {
+    try {
+      setIsSubmitting(true);
+      const values = methods.getValues();
+
+      const payload: CreatePostRequest = {
+        name: values.title,
+        description: values.description,
+        price: values.price,
+        properties: {
+          area: values.area,
+          frontage: values.frontage || null,
+          accessRoad: values.accessRoad || null,
+          floors: values.floors || null,
+          bedrooms: values.bedrooms || null,
+          bathroom: values.bathrooms || null,
+          houseDirection: values.houseDirection || null,
+          balconyDirection: values.balconyDirection || null,
+          legalStatus: values.legalStatus || null,
+          furniture: values.furniture || null,
+          district: values.district,
+          city: values.city,
+        },
+        images: values.images.map((img) => ({
+          url: img.publicId || img.url,
+        })),
+        videos: [],
+      };
+
+      console.log("Submitting Payload:", payload);
+
+      const response = await listingService.createPost(payload);
+
+      if (response.data && response.data.statusCode === 200) {
+        alert("Đăng tin thành công!");
+        navigate("/");
+      } else {
+        throw new Error(response.data.message || "Có lỗi xảy ra");
+      }
+    } catch (error: any) {
+      console.error("Error creating post:", error);
+      const msg =
+        error.response?.data?.message || error.message || "Lỗi kết nối server";
+      alert(`Đăng tin thất bại: ${msg}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -119,8 +171,16 @@ const CreateListingPage = () => {
         <button onClick={handleBack} className={styles.backBtn}>
           Quay lại
         </button>
-        <button onClick={handleNext} className={styles.nextBtn}>
-          {step === totalSteps ? "Xuất bản tin" : "Tiếp tục"}
+        <button
+          onClick={handleNext}
+          className={styles.nextBtn}
+          disabled={isSubmitting}
+        >
+          {isSubmitting
+            ? "Đang xử lý..."
+            : step === totalSteps
+            ? "Xuất bản tin"
+            : "Tiếp tục"}
         </button>
       </footer>
     </div>

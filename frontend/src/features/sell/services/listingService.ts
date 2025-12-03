@@ -1,6 +1,29 @@
 import axiosClient from "@/services/axiosClient";
-import { type CreateListingFormValues } from "@/types/listing";
 import { type AxiosProgressEvent } from "axios";
+
+export interface PostProperty {
+  area: number;
+  frontage?: number | null;
+  accessRoad?: number | null;
+  floors?: number | null;
+  bedrooms?: number | null;
+  bathroom?: number | null;
+  houseDirection?: string | null;
+  balconyDirection?: string | null;
+  legalStatus?: string | null;
+  furniture?: string | null;
+  district: string;
+  city: string;
+}
+
+export interface CreatePostRequest {
+  name: string;
+  description: string;
+  price: number;
+  properties: PostProperty;
+  images: { url: string }[];
+  videos: { url: string }[];
+}
 
 export interface ImageUploadResult {
   name: string;
@@ -12,6 +35,13 @@ export interface UploadImageResponse {
   error?: string;
   message: string;
   data: ImageUploadResult[];
+}
+
+export interface CreatePostResponse {
+  statusCode: number;
+  error: string | null;
+  message: string;
+  data: any;
 }
 
 export const listingService = {
@@ -34,7 +64,8 @@ export const listingService = {
       },
     });
   },
-  createPost(data: CreateListingFormValues) {
-    return axiosClient.post("/posts", data);
+
+  createPost(data: CreatePostRequest) {
+    return axiosClient.post<CreatePostResponse>("/posts", data);
   },
 };
