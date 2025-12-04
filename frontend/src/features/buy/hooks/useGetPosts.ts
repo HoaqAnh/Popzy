@@ -7,8 +7,18 @@ export type CleanListingItem = {
   user: User;
 };
 
+const memoryCache: {
+  data: CleanListingItem[] | null;
+  fetchedAt: number;
+} = {
+  data: null,
+  fetchedAt: 0,
+};
+
+const CACHE_DURATION = 5 * 60 * 1000; // 5 phút
+
 export const useGetPosts = () => {
-  const [data, setData] = useState<CleanListingItem[]>([]);
+  const [data, setData] = useState<CleanListingItem[]>(memoryCache.data || []);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -58,6 +68,9 @@ export const useGetPosts = () => {
           }
         );
 
+        memoryCache.data = mappedData;
+        memoryCache.fetchedAt = Date.now();
+
         setData(mappedData);
       } else {
         throw new Error(response.data?.message || "Lấy dữ liệu thất bại");
@@ -71,8 +84,20 @@ export const useGetPosts = () => {
   };
 
   useEffect(() => {
-    fetchPosts();
+    const now = Date.now();
+    const isCacheValid = memoryCache.data && now - memoryCache.fetchedAt < CACHE_DURATION;
+
+    if (isCacheValid) {
+      setIsLoading(false);
+    } else {
+      fetchPosts();
+    }
   }, []);
 
-  return { data, isLoading, error, refetch: fetchPosts };
+  const forceRefetch = () => {
+    memoryCache.data = null;
+    fetchPosts();
+  };
+
+  return { data, isLoading, error, refetch: forceRefetch };
 };
