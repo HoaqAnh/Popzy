@@ -1,6 +1,7 @@
 package com.propzy.propzy.service;
 
 import com.propzy.propzy.domain.*;
+import com.propzy.propzy.domain.response.ImageDTO;
 import com.propzy.propzy.domain.response.PostDTO;
 import com.propzy.propzy.repository.*;
 import com.propzy.propzy.util.SecurityUtil;
@@ -123,6 +124,17 @@ public class PostService {
         for (Post post : postList) {
             Properties properties = post.getProperties();
             User user = post.getUser();
+            List<Image> images = post.getImages();
+            List<ImageDTO> imageDTOList = new ArrayList<>();
+            if (images != null) {
+                for (Image img : images) {
+                    ImageDTO imgDTO = ImageDTO.builder()
+                            .id(img.getId())
+                            .url(img.getUrl())
+                            .build();
+                    imageDTOList.add(imgDTO);
+                }
+            }
             PostDTO postDTO = PostDTO.builder()
                     //Post
                     .id(post.getId())
@@ -130,15 +142,20 @@ public class PostService {
                     .description(post.getDescription())
                     .price(post.getPrice())
                     //Properties
+                    .id_user(properties.getId())
                     .area(properties.getArea())
                     .bedrooms(properties.getBedrooms())
                     .bathroom(properties.getBathroom())
                     .district(properties.getDistrict())
                     .city(properties.getCity())
                     //User
+                    .id_user(user.getId())
                     .fullname(user.getFullname())
                     .imageUrl(user.getImageUrl())
+                    //Media
+                    .listImage(imageDTOList)
                     .build();
+
             postDTOList.add(postDTO);
         }
 
