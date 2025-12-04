@@ -1,5 +1,5 @@
 export type User = {
-  id: string;
+  id: number;
   fullname: string;
   email: string;
   age?: number;
@@ -27,7 +27,7 @@ export type Post = {
   address: Address;
   images: string[];
   description: string;
-  userId: string;
+  userId: number;
   likes: number;
   marketPrice: number;
   priceHistoryPercent: number;

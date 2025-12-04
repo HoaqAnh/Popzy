@@ -23,8 +23,8 @@ const PropertyHeader = ({
       <div className={styles.price}>
         {formatPrice(price)}
         <div className={styles.mainSpecs}>
-          <span>{beds}</span> beds &nbsp;
-          <span>{baths}</span> baths &nbsp;
+          <span>{beds}</span> PN &nbsp;
+          <span>{baths}</span> PT &nbsp;
           <span>{area}</span> m²
         </div>
       </div>

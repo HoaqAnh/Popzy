@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { buyService, type BuyPostItem } from "../services/buyService";
 import type { Post, User } from "@/types/realestate";
 import { getCloudinaryUrl } from "@/utils/image";
+import { getAvatarLabel } from "@/utils/format";
 
 export type CleanListingItem = {
   post: Post;
@@ -39,7 +40,7 @@ export const useGetPosts = () => {
 
           const userAvatar = item.imageUrl
             ? getCloudinaryUrl(item.imageUrl)
-            : "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200";
+            : getAvatarLabel(item.fullname);
 
           const post: Post = {
             id: item.id,
@@ -54,7 +55,7 @@ export const useGetPosts = () => {
             },
             description: item.description,
             images: postImages,
-            userId: item.id_user.toString(),
+            userId: item.id_user,
             likes: 0,
             created_at: new Date().toISOString(),
             marketPrice: item.price * 1.05,
@@ -62,7 +63,7 @@ export const useGetPosts = () => {
           };
 
           const user: User = {
-            id: item.id_user.toString(),
+            id: item.id_user,
             imageUrl: userAvatar,
             fullname: item.fullname,
             email: "contact@popzy.com",

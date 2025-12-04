@@ -33,7 +33,19 @@ export interface GetPostsResponse {
   data: BuyPostItem[];
 }
 
+// -- Detail
+
+export interface PostDetailUser {
+  id: number;
+  email: string;
+  phone: string;
+  fullname: string;
+  imageUrl: string | null;
+}
+
 export interface PostDetailProperties {
+  id: number;
+  post: number;
   area: number;
   frontage?: number | null;
   accessRoad?: number | null;
@@ -61,6 +73,7 @@ export interface PostDetailData {
   price: number;
   createAt: string;
   updateAt: string;
+  user: PostDetailUser;
   properties: PostDetailProperties;
   images: PostDetailImage[];
   videos: any[];

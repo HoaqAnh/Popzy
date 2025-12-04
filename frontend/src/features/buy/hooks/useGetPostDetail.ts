@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { buyService } from "../services/buyService";
 import type { Post, User } from "@/types/realestate";
 import { getCloudinaryUrl } from "@/utils/image";
+import { getAvatarLabel } from "@/utils/format";
 
 type CacheEntry = {
   post: Post;
@@ -14,12 +15,11 @@ const detailCache: Record<string, CacheEntry> = {};
 const CACHE_DURATION = 5 * 60 * 1000; // 5 phút
 
 export const useGetPostDetail = (id: number | undefined) => {
+  // Helper check cache
   const getCachedData = (postId?: number) => {
     if (!postId || !detailCache[postId]) return null;
-
     const entry = detailCache[postId];
     const isFresh = Date.now() - entry.fetchedAt < CACHE_DURATION;
-
     return isFresh ? entry : null;
   };
 
@@ -46,11 +46,12 @@ export const useGetPostDetail = (id: number | undefined) => {
       setError(null);
 
       try {
-        const response = await buyService.getPostDetail(id);
+        const response = await buyService.getPostDetail(Number(id));
 
         if (response.data && response.data.statusCode === 200) {
           const rawData = response.data.data;
           const props = rawData.properties;
+          const rawUser = rawData.user;
 
           const mappedPost: Post = {
             id: rawData.id,
@@ -76,35 +77,37 @@ export const useGetPostDetail = (id: number | undefined) => {
             balcony_direction: props.balconyDirection ?? undefined,
             legal_status: props.legalStatus ?? undefined,
             furniture: props.furniture ?? undefined,
-            userId: "mock-user-id",
+            userId: rawUser.id,
             likes: 0,
             marketPrice: rawData.price * 1.02,
             priceHistoryPercent: 1.5,
+            views: 0,
           };
 
-          const mockUser: User = {
-            id: "mock-user-id",
-            fullname: "Người đăng tin",
-            imageUrl:
-              "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200",
-            email: "contact@popzy.com",
-            phone: "0900000000",
+          const mappedUser: User = {
+            id: rawUser.id,
+            fullname: rawUser.fullname,
+            email: rawUser.email,
+            phone: rawUser.phone,
+            imageUrl: rawUser.imageUrl
+              ? getCloudinaryUrl(rawUser.imageUrl)
+              : getAvatarLabel(rawUser.fullname),
           };
 
           detailCache[id] = {
             post: mappedPost,
-            user: mockUser,
+            user: mappedUser,
             fetchedAt: Date.now(),
           };
 
           setPost(mappedPost);
-          setUser(mockUser);
+          setUser(mappedUser);
         } else {
           throw new Error(response.data?.message || "Không tìm thấy bài viết");
         }
       } catch (err: any) {
         console.error("Fetch detail error:", err);
-        setError(err.message || "Có lỗi xảy ra");
+        setError(err.message || "Có lỗi xảy ra khi tải chi tiết tin đăng");
       } finally {
         setIsLoading(false);
       }
