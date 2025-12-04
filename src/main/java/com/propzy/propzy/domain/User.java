@@ -2,6 +2,7 @@ package com.propzy.propzy.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.propzy.propzy.util.SecurityUtil;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,14 +27,14 @@ public class User {
     @Column(nullable = false, length = 190)
     private String email;
 
-    @Column(nullable = false, length = 11)
+    @Column(length = 11)
     private String phone;
 
     @Column(length = 3)
     private String age;
 
     @Column(nullable = false)
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Column(length = 120)
