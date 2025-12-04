@@ -3,13 +3,15 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import styles from "./create.module.css";
 import { type CreateListingFormValues } from "@/types/listing";
-
+// Component Step
 import Step1Photos from "@/features/sell/components/create/Step1Photos";
 import Step2Details from "@/features/sell/components/create/Step2Details";
 import Step3Location from "@/features/sell/components/create/Step3Location";
 import Step4Specs from "@/features/sell/components/create/Step4Specs";
 import Step5Features from "@/features/sell/components/create/Step5Features";
 import Step6Review from "@/features/sell/components/create/Step6Review";
+
+// Service
 import {
   listingService,
   type CreatePostRequest,
@@ -35,6 +37,14 @@ const CreateListingPage = () => {
     },
   });
 
+  const images = methods.watch("images") || [];
+  const validImagesCount = images.filter(
+    (img) => img.status === "success"
+  ).length;
+  const isUploading = images.some((img) => img.status === "uploading");
+  const isNextDisabled =
+    isSubmitting || (step === 1 && (validImagesCount < 5 || isUploading));
+
   const totalSteps = 6;
   const progressPercent = (step / totalSteps) * 100;
 
@@ -42,11 +52,6 @@ const CreateListingPage = () => {
     let isValid = false;
 
     if (step === 1) {
-      const images = methods.getValues("images");
-      if (images.length < 1) {
-        alert("Vui lòng tải lên ít nhất 1 ảnh.");
-        return;
-      }
       isValid = true;
     } else if (step === 2) {
       isValid = await methods.trigger(["title", "description"]);
@@ -106,8 +111,6 @@ const CreateListingPage = () => {
         videos: [],
       };
 
-      console.log("Submitting Payload:", payload);
-
       const response = await listingService.createPost(payload);
 
       if (response.data && response.data.statusCode === 200) {
@@ -117,10 +120,8 @@ const CreateListingPage = () => {
         throw new Error(response.data.message || "Có lỗi xảy ra");
       }
     } catch (error: any) {
-      console.error("Error creating post:", error);
-      const msg =
-        error.response?.data?.message || error.message || "Lỗi kết nối server";
-      alert(`Đăng tin thất bại: ${msg}`);
+      console.error(error);
+      alert("Đăng tin thất bại");
     } finally {
       setIsSubmitting(false);
     }
@@ -168,16 +169,25 @@ const CreateListingPage = () => {
       </FormProvider>
 
       <footer className={styles.footer}>
-        <button onClick={handleBack} className={styles.backBtn}>
+        <button
+          onClick={handleBack}
+          className={styles.backBtn}
+          disabled={isSubmitting}
+        >
           Quay lại
         </button>
+
         <button
           onClick={handleNext}
           className={styles.nextBtn}
-          disabled={isSubmitting}
+          disabled={isNextDisabled}
         >
           {isSubmitting
             ? "Đang xử lý..."
+            : step === 1 && validImagesCount < 5
+            ? `Cần thêm ${5 - validImagesCount} ảnh`
+            : step === 1 && isUploading
+            ? "Đang tải ảnh..."
             : step === totalSteps
             ? "Xuất bản tin"
             : "Tiếp tục"}
