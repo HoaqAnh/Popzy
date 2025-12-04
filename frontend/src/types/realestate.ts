@@ -18,7 +18,7 @@ export type Address = {
 };
 
 export type Post = {
-  id: string;
+  id: number;
   title: string;
   price: number;
   areaM2: number;
