@@ -1,5 +1,10 @@
 import axiosClient from "@/services/axiosClient";
 
+export interface PostImage {
+  id: number;
+  url: string;
+}
+
 export interface BuyPostItem {
   id: number;
   name: string;
@@ -10,8 +15,15 @@ export interface BuyPostItem {
   bathroom: number | null;
   district: string;
   city: string;
+  id_properties?: number | null;
+
+  // User
+  id_user: number;
   fullname: string;
   imageUrl: string | null;
+
+  // Danh sách ảnh
+  listImage: PostImage[];
 }
 
 export interface GetPostsResponse {

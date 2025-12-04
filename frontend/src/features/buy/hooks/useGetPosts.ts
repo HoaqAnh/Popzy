@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { buyService, type BuyPostItem } from "../services/buyService";
 import type { Post, User } from "@/types/realestate";
+import { getCloudinaryUrl } from "@/utils/image";
 
 export type CleanListingItem = {
   post: Post;
@@ -30,43 +31,46 @@ export const useGetPosts = () => {
       const response = await buyService.getPosts();
 
       if (response.data && response.data.statusCode === 200) {
-        const mappedData: CleanListingItem[] = response.data.data.map(
-          (item: BuyPostItem, index: number) => {
-            const mockUserId = `user-${index}`;
+        const mappedData: CleanListingItem[] = response.data.data.map((item: BuyPostItem) => {
+          const postImages =
+            item.listImage && item.listImage.length > 0
+              ? item.listImage.map((img) => getCloudinaryUrl(img.url))
+              : ["https://picsum.photos/seed/realestate/600/400"];
 
-            const post: Post = {
-              id: item.id,
-              title: item.name,
-              price: item.price,
-              areaM2: item.area,
-              beds: item.bedrooms ?? 0,
-              baths: item.bathroom ?? 0,
-              address: {
-                district: item.district,
-                city: item.city,
-              },
-              description: item.description,
-              images: ["https://picsum.photos/seed/realestate/600/400"],
-              userId: mockUserId,
-              likes: 0,
-              created_at: new Date().toISOString(),
-              marketPrice: item.price * 1.05,
-              priceHistoryPercent: 2.5,
-            };
+          const userAvatar = item.imageUrl
+            ? getCloudinaryUrl(item.imageUrl)
+            : "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200";
 
-            const user: User = {
-              id: mockUserId,
-              imageUrl: item.imageUrl
-                ? item.imageUrl
-                : "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200",
-              fullname: item.fullname,
-              email: "contact@popzy.com",
-              phone: "",
-            };
+          const post: Post = {
+            id: item.id,
+            title: item.name,
+            price: item.price,
+            areaM2: item.area,
+            beds: item.bedrooms ?? 0,
+            baths: item.bathroom ?? 0,
+            address: {
+              district: item.district,
+              city: item.city,
+            },
+            description: item.description,
+            images: postImages,
+            userId: item.id_user.toString(),
+            likes: 0,
+            created_at: new Date().toISOString(),
+            marketPrice: item.price * 1.05,
+            priceHistoryPercent: 2.5,
+          };
 
-            return { post, user };
-          }
-        );
+          const user: User = {
+            id: item.id_user.toString(),
+            imageUrl: userAvatar,
+            fullname: item.fullname,
+            email: "contact@popzy.com",
+            phone: "",
+          };
+
+          return { post, user };
+        });
 
         memoryCache.data = mappedData;
         memoryCache.fetchedAt = Date.now();
