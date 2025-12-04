@@ -120,10 +120,10 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--foreground);
+  background: var(--muted);
   display: grid;
   place-items: center;
-  border: 2px solid var(--ring);
+  border: 1px solid var(--ring);
 }
 
 .name {

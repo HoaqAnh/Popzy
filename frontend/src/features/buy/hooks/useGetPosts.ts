@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { buyService, type BuyPostItem } from "../services/buyService";
 import type { Post, User } from "@/types/realestate";
 import { getCloudinaryUrl } from "@/utils/image";
-import { getAvatarLabel } from "@/utils/format";
 
 export type CleanListingItem = {
   post: Post;
@@ -38,9 +37,7 @@ export const useGetPosts = () => {
               ? item.listImage.map((img) => getCloudinaryUrl(img.url))
               : ["https://picsum.photos/seed/realestate/600/400"];
 
-          const userAvatar = item.imageUrl
-            ? getCloudinaryUrl(item.imageUrl)
-            : getAvatarLabel(item.fullname);
+          const userAvatar = item.imageUrl ? getCloudinaryUrl(item.imageUrl) : "";
 
           const post: Post = {
             id: item.id,

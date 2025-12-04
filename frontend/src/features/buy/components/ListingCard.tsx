@@ -1,6 +1,6 @@
 import styles from "./ListingCard.module.css";
 import type { Post, User } from "@/types/realestate";
-import { formatPrice } from "@/utils/format";
+import { formatPrice, getAvatarLabel } from "@/utils/format";
 import { ListingSidebar } from "./ListingSidebar";
 import { useNavigate } from "react-router-dom";
 
@@ -32,13 +32,10 @@ const ListingCard = ({ post, user }: { post: Post; user: User }) => {
 
           <div className={styles.footer}>
             <div className={styles.user}>
-              <img
-                src={
-                  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200"
-                }
-                alt="Avatar"
-                className={styles.avatar}
-              />
+              {(user.imageUrl && (
+                <img src={user.imageUrl} alt="Avatar" className={styles.avatar} />
+              )) || <div className={styles.avatar}>{getAvatarLabel(user.fullname)}</div>}
+
               <span className={styles.name}>{user.fullname}</span>
             </div>
 

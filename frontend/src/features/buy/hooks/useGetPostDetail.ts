@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { buyService } from "../services/buyService";
 import type { Post, User } from "@/types/realestate";
 import { getCloudinaryUrl } from "@/utils/image";
-import { getAvatarLabel } from "@/utils/format";
 
 type CacheEntry = {
   post: Post;
@@ -89,9 +88,7 @@ export const useGetPostDetail = (id: number | undefined) => {
             fullname: rawUser.fullname,
             email: rawUser.email,
             phone: rawUser.phone,
-            imageUrl: rawUser.imageUrl
-              ? getCloudinaryUrl(rawUser.imageUrl)
-              : getAvatarLabel(rawUser.fullname),
+            imageUrl: rawUser.imageUrl ? getCloudinaryUrl(rawUser.imageUrl) : "",
           };
 
           detailCache[id] = {

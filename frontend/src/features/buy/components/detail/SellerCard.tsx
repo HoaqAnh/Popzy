@@ -6,7 +6,9 @@ const SellerCard = ({ user }: { user: User }) => {
   return (
     <div className={styles.sellerCard}>
       <div className={styles.sellerHeader}>
-        <div className={styles.sellerAvatar}>{getAvatarLabel(user.fullname)}</div>
+        {(user.imageUrl && <img src={user.imageUrl} alt="Avatar" className={styles.avatar} />) || (
+          <div className={styles.avatar}>{getAvatarLabel(user.fullname)}</div>
+        )}
         <div>
           <div className={styles.sellerName}>{user.fullname}</div>
           <div className={styles.sellerRole}>Môi giới uy tín</div>
