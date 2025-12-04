@@ -66,7 +66,7 @@ export const buyService = {
     return axiosClient.get<GetPostsResponse>("/posts");
   },
 
-  getPostDetail(id: string) {
+  getPostDetail(id: number) {
     return axiosClient.get<GetPostDetailResponse>(`/posts/${id}`);
   },
 };

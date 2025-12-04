@@ -3,14 +3,43 @@ import { buyService } from "../services/buyService";
 import type { Post, User } from "@/types/realestate";
 import { getCloudinaryUrl } from "@/utils/image";
 
-export const useGetPostDetail = (id: string | undefined) => {
-  const [post, setPost] = useState<Post | null>(null);
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+type CacheEntry = {
+  post: Post;
+  user: User;
+  fetchedAt: number;
+};
+
+const detailCache: Record<string, CacheEntry> = {};
+
+const CACHE_DURATION = 5 * 60 * 1000; // 5 phút
+
+export const useGetPostDetail = (id: number | undefined) => {
+  const getCachedData = (postId?: number) => {
+    if (!postId || !detailCache[postId]) return null;
+
+    const entry = detailCache[postId];
+    const isFresh = Date.now() - entry.fetchedAt < CACHE_DURATION;
+
+    return isFresh ? entry : null;
+  };
+
+  const cachedEntry = getCachedData(id);
+
+  const [post, setPost] = useState<Post | null>(cachedEntry?.post || null);
+  const [user, setUser] = useState<User | null>(cachedEntry?.user || null);
+  const [isLoading, setIsLoading] = useState(!cachedEntry);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!id) return;
+
+    const validCache = getCachedData(id);
+    if (validCache) {
+      setPost(validCache.post);
+      setUser(validCache.user);
+      setIsLoading(false);
+      return;
+    }
 
     const fetchDetail = async () => {
       setIsLoading(true);
@@ -22,11 +51,6 @@ export const useGetPostDetail = (id: string | undefined) => {
         if (response.data && response.data.statusCode === 200) {
           const rawData = response.data.data;
           const props = rawData.properties;
-
-          const processedImages =
-            rawData.images.length > 0
-              ? rawData.images.map((img) => getCloudinaryUrl(img.url))
-              : ["https://picsum.photos/seed/realestate/800/600"];
 
           const mappedPost: Post = {
             id: rawData.id,
@@ -40,7 +64,10 @@ export const useGetPostDetail = (id: string | undefined) => {
               district: props.district,
               city: props.city,
             },
-            images: processedImages,
+            images:
+              rawData.images.length > 0
+                ? rawData.images.map((img) => getCloudinaryUrl(img.url))
+                : ["https://picsum.photos/seed/realestate/800/600"],
             created_at: rawData.createAt,
             floors: props.floors ?? undefined,
             frontage: props.frontage ?? undefined,
@@ -49,7 +76,6 @@ export const useGetPostDetail = (id: string | undefined) => {
             balcony_direction: props.balconyDirection ?? undefined,
             legal_status: props.legalStatus ?? undefined,
             furniture: props.furniture ?? undefined,
-
             userId: "mock-user-id",
             likes: 0,
             marketPrice: rawData.price * 1.02,
@@ -63,6 +89,12 @@ export const useGetPostDetail = (id: string | undefined) => {
               "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200",
             email: "contact@popzy.com",
             phone: "0900000000",
+          };
+
+          detailCache[id] = {
+            post: mappedPost,
+            user: mockUser,
+            fetchedAt: Date.now(),
           };
 
           setPost(mappedPost);
