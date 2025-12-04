@@ -33,6 +33,7 @@ public class User {
     private String age;
 
     @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(length = 120)
@@ -48,7 +49,6 @@ public class User {
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    @JsonBackReference(value = "post_user")
     private List<Post> posts = new ArrayList<>();
 
     @PrePersist
