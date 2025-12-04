@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 public class PostDTO {
     //Post
+    private long id;
     private String name;
     private String description;
     private Float price;

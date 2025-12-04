@@ -125,6 +125,7 @@ public class PostService {
             User user = post.getUser();
             PostDTO postDTO = PostDTO.builder()
                     //Post
+                    .id(post.getId())
                     .name(post.getName())
                     .description(post.getDescription())
                     .price(post.getPrice())
