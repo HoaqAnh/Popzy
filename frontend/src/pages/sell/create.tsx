@@ -10,17 +10,14 @@ import Step3Location from "@/features/sell/components/create/Step3Location";
 import Step4Specs from "@/features/sell/components/create/Step4Specs";
 import Step5Features from "@/features/sell/components/create/Step5Features";
 import Step6Review from "@/features/sell/components/create/Step6Review";
-
-// Service
-import {
-  listingService,
-  type CreatePostRequest,
-} from "@/features/sell/services/listingService";
+//api
+import { useCreatePost } from "@/features/sell/hooks/useCreatePost";
+import { type CreatePostRequest } from "@/features/sell/services/listingService";
 
 const CreateListingPage = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { createPost, isLoading } = useCreatePost();
 
   const methods = useForm<CreateListingFormValues>({
     mode: "onBlur",
@@ -38,12 +35,9 @@ const CreateListingPage = () => {
   });
 
   const images = methods.watch("images") || [];
-  const validImagesCount = images.filter(
-    (img) => img.status === "success"
-  ).length;
+  const validImagesCount = images.filter((img) => img.status === "success").length;
   const isUploading = images.some((img) => img.status === "uploading");
-  const isNextDisabled =
-    isSubmitting || (step === 1 && (validImagesCount < 5 || isUploading));
+  const isNextDisabled = isLoading || (step === 1 && (validImagesCount < 5 || isUploading));
 
   const totalSteps = 6;
   const progressPercent = (step / totalSteps) * 100;
@@ -58,12 +52,7 @@ const CreateListingPage = () => {
     } else if (step === 3) {
       isValid = await methods.trigger(["city", "district"]);
     } else if (step === 4) {
-      isValid = await methods.trigger([
-        "price",
-        "area",
-        "bedrooms",
-        "bathrooms",
-      ]);
+      isValid = await methods.trigger(["price", "area", "bedrooms", "bathrooms"]);
     } else if (step === 5) {
       isValid = await methods.trigger(["frontage", "accessRoad", "floors"]);
     } else {
@@ -83,47 +72,39 @@ const CreateListingPage = () => {
   };
 
   const handleSubmitPost = async () => {
-    try {
-      setIsSubmitting(true);
-      const values = methods.getValues();
+    const values = methods.getValues();
 
-      const payload: CreatePostRequest = {
-        name: values.title,
-        description: values.description,
-        price: values.price,
-        properties: {
-          area: values.area,
-          frontage: values.frontage || null,
-          accessRoad: values.accessRoad || null,
-          floors: values.floors || null,
-          bedrooms: values.bedrooms || null,
-          bathroom: values.bathrooms || null,
-          houseDirection: values.houseDirection || null,
-          balconyDirection: values.balconyDirection || null,
-          legalStatus: values.legalStatus || null,
-          furniture: values.furniture || null,
-          district: values.district,
-          city: values.city,
-        },
-        images: values.images.map((img) => ({
-          url: img.publicId || img.url,
-        })),
-        videos: [],
-      };
+    const payload: CreatePostRequest = {
+      name: values.title,
+      description: values.description,
+      price: values.price,
+      properties: {
+        area: values.area,
+        frontage: values.frontage || null,
+        accessRoad: values.accessRoad || null,
+        floors: values.floors || null,
+        bedrooms: values.bedrooms || null,
+        bathroom: values.bathrooms || null,
+        houseDirection: values.houseDirection || null,
+        balconyDirection: values.balconyDirection || null,
+        legalStatus: values.legalStatus || null,
+        furniture: values.furniture || null,
+        district: values.district,
+        city: values.city,
+      },
+      images: values.images.map((img) => ({
+        url: img.publicId || img.url,
+      })),
+      videos: [],
+    };
 
-      const response = await listingService.createPost(payload);
+    const result = await createPost(payload);
 
-      if (response.data && response.data.statusCode === 200) {
-        alert("Đăng tin thành công!");
-        navigate("/");
-      } else {
-        throw new Error(response.data.message || "Có lỗi xảy ra");
-      }
-    } catch (error: any) {
-      console.error(error);
-      alert("Đăng tin thất bại");
-    } finally {
-      setIsSubmitting(false);
+    if (result.success) {
+      alert("Đăng tin thành công!");
+      navigate("/");
+    } else {
+      alert(`Đăng tin thất bại: ${result.error}`);
     }
   };
 
@@ -144,16 +125,11 @@ const CreateListingPage = () => {
             Bước {step}/{totalSteps}: {getStepName(step)}
           </span>
           <span className={styles.nextLabel}>
-            {step < totalSteps
-              ? `Tiếp tục: ${getStepName(step + 1)}`
-              : "Hoàn thành"}
+            {step < totalSteps ? `Tiếp tục: ${getStepName(step + 1)}` : "Hoàn thành"}
           </span>
         </div>
         <div className={styles.progressBarBg}>
-          <div
-            className={styles.progressBarFill}
-            style={{ width: `${progressPercent}%` }}
-          />
+          <div className={styles.progressBarFill} style={{ width: `${progressPercent}%` }} />
         </div>
       </header>
 
@@ -169,20 +145,12 @@ const CreateListingPage = () => {
       </FormProvider>
 
       <footer className={styles.footer}>
-        <button
-          onClick={handleBack}
-          className={styles.backBtn}
-          disabled={isSubmitting}
-        >
+        <button onClick={handleBack} className={styles.backBtn} disabled={isLoading}>
           Quay lại
         </button>
 
-        <button
-          onClick={handleNext}
-          className={styles.nextBtn}
-          disabled={isNextDisabled}
-        >
-          {isSubmitting
+        <button onClick={handleNext} className={styles.nextBtn} disabled={isNextDisabled}>
+          {isLoading
             ? "Đang xử lý..."
             : step === 1 && validImagesCount < 5
             ? `Cần thêm ${5 - validImagesCount} ảnh`
