@@ -1,60 +1,34 @@
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import styles from "./Step3Location.module.css";
 import { type CreateListingFormValues } from "@/types/listing";
-import { cities, districts } from "@/mocks/locations";
 
 const Step3Location = () => {
   const {
     register,
-    watch,
-    setValue,
     formState: { errors },
   } = useFormContext<CreateListingFormValues>();
-
-  const selectedCity = watch("city");
-
-  useEffect(() => {}, [selectedCity]);
-
-  const handleCityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue("city", e.target.value);
-    setValue("district", "");
-  };
-
-  const currentDistricts = selectedCity ? districts[selectedCity] || [] : [];
 
   return (
     <div className={styles.wrapper}>
       <h1 className={styles.title}>Bất động sản của bạn ở đâu?</h1>
       <p className={styles.subtitle}>
-        Bắt đầu bằng cách chọn thành phố và sau đó là quận/huyện. Điều này giúp
-        người mua dễ dàng tìm thấy danh sách bất động sản của bạn.
+        Nhập chính xác địa chỉ để người mua dễ dàng tìm thấy bất động sản của
+        bạn.
       </p>
 
       <div className={styles.formGroup}>
         <label htmlFor="city" className={styles.label}>
-          Thành phố
+          Thành phố / Tỉnh
         </label>
-        <div className={styles.selectWrapper}>
-          <select
-            id="city"
-            className={`${styles.select} ${
-              errors.city ? styles.inputError : ""
-            }`}
-            {...register("city", {
-              required: "Vui lòng chọn Tỉnh / Thành phố",
-              onChange: handleCityChange,
-            })}
-          >
-            <option value="">Chọn Thành phố</option>
-            {cities.map((city) => (
-              <option key={city.code} value={city.code}>
-                {city.name}
-              </option>
-            ))}
-          </select>
-          <span className={styles.arrow}>▼</span>
-        </div>
+        <input
+          id="city"
+          type="text"
+          placeholder="Ví dụ: Hà Nội, TP. Hồ Chí Minh..."
+          className={`${styles.input} ${errors.city ? styles.inputError : ""}`}
+          {...register("city", {
+            required: "Vui lòng nhập Tỉnh / Thành phố",
+          })}
+        />
         {errors.city && (
           <p className={styles.errorMsg}>{errors.city.message}</p>
         )}
@@ -64,26 +38,17 @@ const Step3Location = () => {
         <label htmlFor="district" className={styles.label}>
           Quận / Huyện
         </label>
-        <div className={styles.selectWrapper}>
-          <select
-            id="district"
-            className={`${styles.select} ${
-              errors.district ? styles.inputError : ""
-            }`}
-            disabled={!selectedCity}
-            {...register("district", {
-              required: "Vui lòng chọn Quận / Huyện",
-            })}
-          >
-            <option value="">Chọn Quận / Huyện</option>
-            {currentDistricts.map((dist) => (
-              <option key={dist.code} value={dist.code}>
-                {dist.name}
-              </option>
-            ))}
-          </select>
-          <span className={styles.arrow}>▼</span>
-        </div>
+        <input
+          id="district"
+          type="text"
+          placeholder="Ví dụ: Cầu Giấy, Quận 1..."
+          className={`${styles.input} ${
+            errors.district ? styles.inputError : ""
+          }`}
+          {...register("district", {
+            required: "Vui lòng nhập Quận / Huyện",
+          })}
+        />
         {errors.district && (
           <p className={styles.errorMsg}>{errors.district.message}</p>
         )}

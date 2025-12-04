@@ -28,12 +28,7 @@
   display: block;
 }
 
-.selectWrapper {
-  position: relative;
-  width: 100%;
-}
-
-.select {
+.input {
   width: 100%;
   padding: 12px 14px;
   border-radius: 8px;
@@ -42,30 +37,18 @@
   outline: none;
   transition: border-color 0.2s;
   background-color: #fff;
-  appearance: none;
-  cursor: pointer;
   color: var(--foreground);
 }
 
-.select:focus {
+.input:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-.select:disabled {
+.input:disabled {
   background-color: var(--secondary);
   color: var(--muted-foreground);
   cursor: not-allowed;
-}
-
-.selectWrapper .arrow {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
-  color: var(--muted-foreground);
-  pointer-events: none;
 }
 
 .inputError {
