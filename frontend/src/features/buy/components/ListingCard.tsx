@@ -9,11 +9,7 @@ const ListingCard = ({ post, user }: { post: Post; user: User }) => {
   const navigator = useNavigate();
   return (
     <div className={styles.cardWrapper}>
-      <article
-        className={styles.card}
-        role="article"
-        onClick={() => navigator(`${post.id}`)}
-      >
+      <article className={styles.card} role="article" onClick={() => navigator(`${post.id}`)}>
         <div className={styles.thumb}>
           <img src={img} alt={post.title} loading="lazy" />
           <div className={styles.photoCount}>{post.images.length}</div>
@@ -48,10 +44,7 @@ const ListingCard = ({ post, user }: { post: Post; user: User }) => {
 
             <div className={styles.footerRight}>
               <button className={styles.footerBtn}>Liên hệ</button>
-              <button
-                className={styles.footerBtn}
-                onClick={() => navigator(`${post.id}`)}
-              >
+              <button className={styles.footerBtn} onClick={() => navigator(`${post.id}`)}>
                 Xem thêm
               </button>
               <button className={styles.like} title="Yêu thích">

@@ -1,6 +1,4 @@
-import { useParams, Navigate } from "react-router-dom";
-import { posts } from "@/mocks/posts";
-import { users } from "@/mocks/users";
+import { useParams, useNavigate } from "react-router-dom";
 import styles from "./detail.module.css";
 import HeroGallery from "@/features/buy/components/detail/HeroGallery";
 import PropertyHeader from "@/features/buy/components/detail/PropertyHeader";
@@ -9,18 +7,43 @@ import Description from "@/features/buy/components/detail/Description";
 import SellerCard from "@/features/buy/components/detail/SellerCard";
 import MobileStickyActions from "@/features/buy/components/detail/MobileStickyActions";
 import { ListingSidebar } from "@/features/buy/components/ListingSidebar";
+import { useGetPostDetail } from "@/features/buy/hooks/useGetPostDetail";
 
 const DetailPage = () => {
   const { id } = useParams();
-  const post = posts.find((p) => p.id === id);
+  const navigate = useNavigate();
 
-  if (!post) {
-    return <Navigate to="/buy" replace />;
+  const { post, user, isLoading, error } = useGetPostDetail(id);
+
+  if (isLoading) {
+    return (
+      <div style={{ minHeight: "80vh", display: "grid", placeItems: "center" }}>
+        Đang tải thông tin chi tiết...
+      </div>
+    );
   }
 
-  const user = users.find((u) => u.id === post.userId) || {
+  if (error || !post) {
+    return (
+      <div style={{ textAlign: "center", marginTop: "40px" }}>
+        <h2>Không tìm thấy tin đăng</h2>
+        <button
+          onClick={() => navigate("/buy")}
+          style={{ marginTop: "16px", padding: "8px 16px", cursor: "pointer" }}
+        >
+          Quay lại danh sách
+        </button>
+      </div>
+    );
+  }
+
+  const safeUser = user || {
     id: "unknown",
-    name: "Người dùng Popzy",
+    fullname: "Người dùng Popzy",
+    imageUrl:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200",
+    email: "contact@popzy.com",
+    phone: "0900000000",
   };
 
   return (
@@ -57,7 +80,7 @@ const DetailPage = () => {
         </div>
 
         <aside className={styles.sidebarWrapper}>
-          <SellerCard user={user} />
+          <SellerCard user={safeUser} />
         </aside>
       </div>
 

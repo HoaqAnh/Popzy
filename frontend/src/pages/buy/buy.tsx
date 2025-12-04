@@ -5,7 +5,6 @@ import { useGetPosts } from "@/features/buy/hooks/useGetPosts";
 
 const Buy = () => {
   const { data, isLoading, error } = useGetPosts();
-
   return (
     <div className={styles.pageWrapper}>
       <SearchHeader />
@@ -23,9 +22,9 @@ const Buy = () => {
           </div>
         )}
 
-        {!isLoading &&
-          !error &&
-          data.map(({ post, user }) => <ListingCard key={post.id} post={post} user={user} />)}
+        {data.map(({ post, user }) => (
+          <ListingCard key={post.id} post={post} user={user} />
+        ))}
 
         {!isLoading && !error && data.length === 0 && (
           <div className={styles.emptyState}>Không có bài viết phù hợp.</div>
