@@ -4,6 +4,7 @@ import com.propzy.propzy.domain.User;
 import com.propzy.propzy.domain.request.ReqDTO;
 import com.propzy.propzy.domain.request.ResLoginDTO;
 import com.propzy.propzy.domain.request.UserResetPass;
+import com.propzy.propzy.domain.response.InfoUserDTO;
 import com.propzy.propzy.domain.response.UserDTO;
 import com.propzy.propzy.service.SessionService;
 import com.propzy.propzy.service.UserService;
@@ -209,5 +210,11 @@ public class AuthController {
         return ResponseEntity.noContent()
                 .header(HttpHeaders.SET_COOKIE, del.toString())
                 .build();
+    }
+    @GetMapping("/auth/info")
+    public ResponseEntity<InfoUserDTO> info() {
+        User user=this.userService.findByEmail(SecurityUtil.getCurrentUserLogin().get());
+        InfoUserDTO infoUserDTO = userService.getInfoUser(user);
+        return ResponseEntity.ok(infoUserDTO);
     }
 }

@@ -2,6 +2,7 @@ package com.propzy.propzy.service;
 
 
 import com.propzy.propzy.domain.User;
+import com.propzy.propzy.domain.response.InfoUserDTO;
 import com.propzy.propzy.domain.response.UserDTO;
 import com.propzy.propzy.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -39,5 +40,16 @@ public class UserService {
         userDTO.setEmail(UserDTO.getEmail());
         userDTO.setFullname(UserDTO.getFullname());
         return userDTO;
+    }
+    public InfoUserDTO getInfoUser(User user) {
+        InfoUserDTO infoUserDTO = InfoUserDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .fullname(user.getFullname())
+                .phone(user.getPhone())
+                .imageUrl(user.getImageUrl())
+                .age(user.getAge())
+                .build();
+        return infoUserDTO;
     }
 }
