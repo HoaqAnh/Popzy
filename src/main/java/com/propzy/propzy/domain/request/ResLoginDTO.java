@@ -14,6 +14,7 @@ public class ResLoginDTO {
 
     private UserLogin userLogin;
 
+    private String imageUrl;
 
     @Getter
     @Setter

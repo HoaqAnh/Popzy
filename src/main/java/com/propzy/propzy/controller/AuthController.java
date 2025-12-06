@@ -124,6 +124,7 @@ public class AuthController {
 
         String accessToken = securityUtil.createAcessToken(authentication.getName(), res);
         res.setAccessToken(accessToken);
+        res.setImageUrl(user.getImageUrl());
 
         String refreshToken = securityUtil.createRefreshToken(user.getEmail(), res);
 
