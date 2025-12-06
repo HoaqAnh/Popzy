@@ -120,11 +120,10 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         var res = new ResLoginDTO();
-        res.setUserLogin(new ResLoginDTO.UserLogin(user.getId(), user.getEmail(), user.getFullname()));
+        res.setUserLogin(new ResLoginDTO.UserLogin(user.getId(), user.getEmail(), user.getFullname(), user.getImageUrl()));
 
         String accessToken = securityUtil.createAcessToken(authentication.getName(), res);
         res.setAccessToken(accessToken);
-        res.setImageUrl(user.getImageUrl());
 
         String refreshToken = securityUtil.createRefreshToken(user.getEmail(), res);
 
@@ -178,7 +177,7 @@ public class AuthController {
 
         var res = new ResLoginDTO();
         res.setUserLogin(new ResLoginDTO.UserLogin(session.getUser().getId(),
-                jwt.getSubject(), session.getUser().getFullname()));
+                jwt.getSubject(), session.getUser().getFullname(), session.getUser().getImageUrl()));
 
         String newAccess = securityUtil.createAcessToken(jwt.getSubject(), res);
         res.setAccessToken(newAccess);

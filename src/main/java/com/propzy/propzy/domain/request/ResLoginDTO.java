@@ -14,7 +14,7 @@ public class ResLoginDTO {
 
     private UserLogin userLogin;
 
-    private String imageUrl;
+
 
     @Getter
     @Setter
@@ -24,6 +24,7 @@ public class ResLoginDTO {
         private long id;
         private String email;
         private String name;
+        private String imageUrl;
     }
     @Getter
     @Setter
