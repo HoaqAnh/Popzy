@@ -20,10 +20,7 @@ export const useLogin = () => {
       if (resData.statusCode === 200 && resData.data) {
         localStorage.setItem(JWT_KEY, resData.data.access_token);
 
-        localStorage.setItem(
-          "popzy-user",
-          JSON.stringify(resData.data.userLogin)
-        );
+        localStorage.setItem("popzy-user", JSON.stringify(resData.data.userLogin));
 
         alert("Đăng nhập thành công!");
         navigate("/");

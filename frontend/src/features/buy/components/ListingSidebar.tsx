@@ -18,30 +18,20 @@ export const ListingSidebar = ({ post }: { post: Post }) => {
         </div>
 
         <div className={styles.item}>
-          <span className={styles.label}>So với giá đăng</span>
-          <span
-            className={`${styles.value} ${
-              isOverpriced ? styles.decrease : styles.increase
-            }`}
-          >
+          <span className={styles.label}>Giá trị dự báo</span>
+          <span className={`${styles.value} ${isOverpriced ? styles.decrease : styles.increase}`}>
             {isOverpriced ? "▲" : "▼"} {formatPrice(Math.abs(priceDiff))}
           </span>
         </div>
 
         <div className={styles.item}>
-          <span className={styles.label}>Tăng trưởng (tháng)</span>
-          <span
-            className={`${styles.value} ${
-              isIncrease ? styles.increase : styles.decrease
-            }`}
-          >
+          <span className={styles.label}>Tăng trưởng</span>
+          <span className={`${styles.value} ${isIncrease ? styles.increase : styles.decrease}`}>
             {isIncrease ? "▲" : "▼"} {Math.abs(priceHistoryPercent)}%
           </span>
         </div>
 
-        <p className={styles.disclaimer}>
-          Dữ liệu dự đoán chỉ mang tính chất tham khảo.
-        </p>
+        <p className={styles.disclaimer}>Dữ liệu dự đoán chỉ mang tính chất tham khảo.</p>
       </div>
     </aside>
   );
