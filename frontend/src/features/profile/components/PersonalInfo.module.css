@@ -68,23 +68,6 @@
   text-transform: uppercase;
 }
 
-.loader {
-  font-size: 14px;
-  animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.5;
-  }
-}
-
 .editAvatarBtn {
   position: absolute;
   bottom: 0;

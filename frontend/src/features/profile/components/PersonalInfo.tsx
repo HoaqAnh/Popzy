@@ -1,7 +1,6 @@
-import { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { useRef } from "react";
+import { useFormContext } from "react-hook-form";
 import styles from "./PersonalInfo.module.css";
-import type { User } from "@/types/realestate";
 import { EditIcon } from "@/components/common/icon";
 import { useGetProfile } from "../hooks/useGetProfile";
 import { useImageUpload } from "@/features/sell/hooks/useImageUpload";
@@ -10,20 +9,13 @@ import { getCloudinaryUrl } from "@/utils/image";
 import { Quantum } from "@/components/common/loader";
 
 const PersonalInfo = () => {
-  const { user, isLoading, error } = useGetProfile();
+  const { user } = useGetProfile();
   const { uploadImages, isUploading } = useImageUpload();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { register, reset, setValue, watch } = useForm<User>({
-    defaultValues: user || {},
-  });
+
+  const { register, setValue, watch } = useFormContext();
 
   const watchedImageUrl = watch("imageUrl");
-
-  useEffect(() => {
-    if (user) {
-      reset(user);
-    }
-  }, [user, reset]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -45,25 +37,6 @@ const PersonalInfo = () => {
     fileInputRef.current?.click();
   };
 
-  if (isLoading) {
-    return (
-      <div
-        className={styles.section}
-        style={{ textAlign: "center", color: "var(--muted-foreground)" }}
-      >
-        Đang tải thông tin...
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className={styles.section} style={{ color: "var(--destructive)", textAlign: "center" }}>
-        Lỗi: {error}
-      </div>
-    );
-  }
-
   const currentImageSource = watchedImageUrl || user?.imageUrl;
   const hasImage = !!currentImageSource;
 
@@ -82,9 +55,8 @@ const PersonalInfo = () => {
               ref={fileInputRef}
               onChange={handleFileChange}
               style={{ display: "none" }}
-              accept="image/png, image/jpeg, image/jpg, image/webp"
+              accept="image/*"
             />
-
             <div className={styles.avatarWrapper}>
               {isUploading ? (
                 <div className={`${styles.avatar} ${styles.avatarPlaceholder}`}>
@@ -101,18 +73,15 @@ const PersonalInfo = () => {
                   {getAvatarLabel(user?.fullname || "")}
                 </div>
               )}
-
               <button
                 className={styles.editAvatarBtn}
                 type="button"
                 onClick={handleTriggerUpload}
                 disabled={isUploading}
-                title="Đổi ảnh đại diện"
               >
                 <EditIcon />
               </button>
             </div>
-
             <div className={styles.userMeta}>
               <h3>{user?.fullname}</h3>
               <span>{user?.email}</span>
@@ -123,29 +92,29 @@ const PersonalInfo = () => {
             <div className={styles.formGroup}>
               <label className={styles.label}>Họ tên</label>
               <input
-                {...register("fullname")}
+                {...register("fullname", { required: "Vui lòng nhập họ tên" })}
                 className={styles.input}
-                placeholder="Chưa cập nhật"
+                placeholder="--"
               />
             </div>
-
             <div className={styles.formGroup}>
               <label className={styles.label}>Email</label>
               <input {...register("email")} className={styles.input} readOnly disabled />
             </div>
-
             <div className={styles.formGroup}>
               <label className={styles.label}>Số điện thoại</label>
-              <input {...register("phone")} className={styles.input} placeholder="Chưa cập nhật" />
+              <input
+                {...register("phone")}
+                className={styles.input}
+                /* readOnly disabled */ placeholder="--"
+              />
             </div>
-
             <div className={styles.formGroup}>
               <label className={styles.label}>Tuổi</label>
               <input
-                {...register("age", { valueAsNumber: true })}
-                type="number"
+                {...register("age")}
                 className={styles.input}
-                placeholder="--"
+                /* readOnly disabled */ placeholder="--"
               />
             </div>
           </div>
