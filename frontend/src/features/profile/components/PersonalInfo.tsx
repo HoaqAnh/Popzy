@@ -1,13 +1,71 @@
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./PersonalInfo.module.css";
-import { users } from "@/mocks/users";
 import type { User } from "@/types/realestate";
 import { EditIcon } from "@/components/common/icon";
-
-const defaultValues = users.find((user) => user.id === "u1");
+import { useGetProfile } from "../hooks/useGetProfile";
+import { useImageUpload } from "@/features/sell/hooks/useImageUpload";
+import { getAvatarLabel } from "@/utils/format";
+import { getCloudinaryUrl } from "@/utils/image";
+import { Quantum } from "@/components/common/loader";
 
 const PersonalInfo = () => {
-  const { register } = useForm<User>({ defaultValues });
+  const { user, isLoading, error } = useGetProfile();
+  const { uploadImages, isUploading } = useImageUpload();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { register, reset, setValue, watch } = useForm<User>({
+    defaultValues: user || {},
+  });
+
+  const watchedImageUrl = watch("imageUrl");
+
+  useEffect(() => {
+    if (user) {
+      reset(user);
+    }
+  }, [user, reset]);
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      const fileToUpload = files[0];
+      const result = await uploadImages([fileToUpload]);
+
+      if (result.success && result.data && result.data.length > 0) {
+        const newImagePublicId = result.data[0].url;
+        setValue("imageUrl", newImagePublicId, { shouldDirty: true });
+      } else {
+        alert("Upload ảnh thất bại: " + result.error);
+      }
+    }
+    e.target.value = "";
+  };
+
+  const handleTriggerUpload = () => {
+    fileInputRef.current?.click();
+  };
+
+  if (isLoading) {
+    return (
+      <div
+        className={styles.section}
+        style={{ textAlign: "center", color: "var(--muted-foreground)" }}
+      >
+        Đang tải thông tin...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.section} style={{ color: "var(--destructive)", textAlign: "center" }}>
+        Lỗi: {error}
+      </div>
+    );
+  }
+
+  const currentImageSource = watchedImageUrl || user?.imageUrl;
+  const hasImage = !!currentImageSource;
 
   return (
     <section className={styles.section}>
@@ -19,39 +77,66 @@ const PersonalInfo = () => {
 
         <div className={styles.formColumn}>
           <div className={styles.avatarRow}>
+            <input
+              type="file"
+              ref={fileInputRef}
+              onChange={handleFileChange}
+              style={{ display: "none" }}
+              accept="image/png, image/jpeg, image/jpg, image/webp"
+            />
+
             <div className={styles.avatarWrapper}>
-              <img
-                src={
-                  defaultValues?.imageUrl ||
-                  "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200"
-                }
-                alt="Profile"
-                className={styles.avatar}
-              />
-              <button className={styles.editAvatarBtn} type="button">
+              {isUploading ? (
+                <div className={`${styles.avatar} ${styles.avatarPlaceholder}`}>
+                  <Quantum />
+                </div>
+              ) : hasImage ? (
+                <img
+                  src={getCloudinaryUrl(currentImageSource)}
+                  alt="Profile"
+                  className={styles.avatar}
+                />
+              ) : (
+                <div className={`${styles.avatar} ${styles.avatarPlaceholder}`}>
+                  {getAvatarLabel(user?.fullname || "")}
+                </div>
+              )}
+
+              <button
+                className={styles.editAvatarBtn}
+                type="button"
+                onClick={handleTriggerUpload}
+                disabled={isUploading}
+                title="Đổi ảnh đại diện"
+              >
                 <EditIcon />
               </button>
             </div>
+
             <div className={styles.userMeta}>
-              <h3>{defaultValues?.fullname}</h3>
-              <span>{defaultValues?.email}</span>
+              <h3>{user?.fullname}</h3>
+              <span>{user?.email}</span>
             </div>
           </div>
 
           <div className={styles.inputGrid}>
             <div className={styles.formGroup}>
               <label className={styles.label}>Họ tên</label>
-              <input {...register("fullname")} className={styles.input} />
+              <input
+                {...register("fullname")}
+                className={styles.input}
+                placeholder="Chưa cập nhật"
+              />
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.label}>Email</label>
-              <input {...register("email")} className={styles.input} readOnly />
+              <input {...register("email")} className={styles.input} readOnly disabled />
             </div>
 
             <div className={styles.formGroup}>
               <label className={styles.label}>Số điện thoại</label>
-              <input {...register("phone")} className={styles.input} />
+              <input {...register("phone")} className={styles.input} placeholder="Chưa cập nhật" />
             </div>
 
             <div className={styles.formGroup}>
@@ -60,6 +145,7 @@ const PersonalInfo = () => {
                 {...register("age", { valueAsNumber: true })}
                 type="number"
                 className={styles.input}
+                placeholder="--"
               />
             </div>
           </div>
