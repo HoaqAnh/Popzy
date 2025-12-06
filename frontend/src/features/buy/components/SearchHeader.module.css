@@ -1,6 +1,7 @@
 .searchHeader {
   position: sticky;
-  top: 8vh;
+  top: 6vh;
+  top: 6dvh;
   z-index: 50;
   background-color: var(--card);
   padding: 0.5rem;

@@ -8,6 +8,45 @@ export const homeMockData = {
     "https://picsum.photos/seed/support/200/200",
   ],
 
+  featuredListings: [
+    {
+      id: 1,
+      image:
+        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1470&auto=format&fit=crop",
+      price: 35_000_000_000,
+      address: "Biệt thự ven Hồ Tây đẳng cấp, sân vườn rộng",
+      beds: 4,
+      baths: 3,
+      area: 2500,
+      tag: "Đang bán",
+      tagColor: "#3b82f6",
+    },
+    {
+      id: 2,
+      image:
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1470&auto=format&fit=crop",
+      price: 34_500_000_000,
+      address: "Căn hộ 2PN The Matrix One, view công viên, Mễ Trì",
+      beds: 2,
+      baths: 2,
+      area: 1100,
+      tag: "Mới đăng",
+      tagColor: "#22c55e",
+    },
+    {
+      id: 3,
+      image:
+        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1453&auto=format&fit=crop",
+      price: 4_400_000_000,
+      address: "Nhà riêng 5 tầng Kim Liên, Đống Đa, ngõ thông",
+      beds: 3,
+      baths: 2,
+      area: 1800,
+      tag: "Thịnh hành",
+      tagColor: "#a855f7",
+    },
+  ],
+
   cardRowImages: [
     {
       id: "h1",

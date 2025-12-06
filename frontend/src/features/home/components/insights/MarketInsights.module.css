@@ -1,0 +1,134 @@
+.section {
+  max-width: 1200px;
+  margin: 0 auto 64px;
+  padding: 0 16px;
+}
+
+.container {
+  display: grid;
+  gap: 48px;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    grid-template-columns: 1fr 1.2fr;
+  }
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tag {
+  background: #e0f2fe;
+  color: #0ea5e9;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  width: fit-content;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--foreground);
+}
+
+.desc {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.checkIcon {
+  color: #22c55e;
+  background: #dcfce7;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+}
+
+.readMore {
+  color: #0ea5e9;
+  font-weight: 700;
+  text-decoration: none;
+  margin-top: 16px;
+  display: inline-block;
+}
+
+/* Chart CSS Mockup */
+.chartCard {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.chartHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.chartTitle h3 {
+  margin: 0;
+  font-size: 18px;
+}
+.chartTitle span {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+
+.chartBars {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 200px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.barCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.bar {
+  width: 40px;
+  border-radius: 6px 6px 0 0;
+  transition: height 1s ease-out;
+}
+
+.barLabel {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  font-weight: 600;
+}
