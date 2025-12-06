@@ -1,19 +1,18 @@
 .header {
   position: sticky;
+  display: flex;
+  align-items: center;
   top: 0;
   z-index: 10;
   background: var(--background);
   border-bottom: 1px solid var(--border);
-  height: 8vh;
-  height: 8dvh;
+  height: 6vh;
+  height: 6dvh;
+  padding: 0 16px;
 }
 .inner {
-  max-width: 1200px;
-  height: 9vh;
-  height: 9dvh;
-  margin: 0 auto;
-  padding: 10px 16px;
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: space-between;
   gap: 12px;

@@ -1,14 +1,14 @@
 .pageWrapper {
-  min-height: 92vh;
-  min-height: 92dvh;
-  padding: 24px;
-  padding-top: 0;
+  padding-bottom: 24px;
+  width: 100%;
+  min-height: 93vh;
+  min-height: 93dvh;
 }
 
 .main {
-  max-width: 1000px;
+  max-width: 950px;
+  padding: 0 16px;
   margin: 0 auto;
-  min-height: 0;
 }
 
 .actions {
