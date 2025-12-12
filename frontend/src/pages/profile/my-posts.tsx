@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./my-posts.module.css";
-import { myPosts } from "@/mocks/myPosts"; // Sử dụng mock data có sẵn
 import { SearchIcon, AddIcon } from "@/components/common/icon";
 import MyListingCard from "@/features/profile/components/MyListingCard";
+import { useMyPosts } from "@/features/profile/hooks/useMyPosts";
 
 const MyPostsPage = () => {
+  const { posts, isLoading, error, deletePost } = useMyPosts();
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filter logic giả lập (chỉ ở phía client cho giao diện)
-  const filteredPosts = myPosts.filter((post) =>
+  const handleDelete = async (id: number) => {
+    const result = await deletePost(id);
+    if (!result.success) {
+      alert(result.message);
+    }
+  };
+
+  const filteredPosts = posts.filter((post) =>
     post.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
@@ -41,13 +48,28 @@ const MyPostsPage = () => {
       </div>
 
       <div className={styles.list}>
-        {filteredPosts.length > 0 ? (
-          filteredPosts.map((post) => <MyListingCard key={post.id} post={post} />)
-        ) : (
-          <div className={styles.emptyState}>
-            <p>Không tìm thấy tin đăng nào.</p>
+        {isLoading && (
+          <div style={{ textAlign: "center", padding: "40px", color: "var(--muted-foreground)" }}>
+            Đang tải dữ liệu...
           </div>
         )}
+
+        {error && (
+          <div style={{ textAlign: "center", padding: "20px", color: "var(--destructive)" }}>
+            Lỗi: {error}
+          </div>
+        )}
+
+        {!isLoading && !error && filteredPosts.length > 0
+          ? filteredPosts.map((post) => (
+              <MyListingCard key={post.id} post={post} onDelete={handleDelete} />
+            ))
+          : !isLoading &&
+            !error && (
+              <div className={styles.emptyState}>
+                <p>Không tìm thấy tin đăng nào.</p>
+              </div>
+            )}
       </div>
     </div>
   );

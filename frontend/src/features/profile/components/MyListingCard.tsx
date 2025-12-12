@@ -5,10 +5,21 @@ import { EditIcon, TrashIcon } from "@/components/common/icon";
 
 type Props = {
   post: Post;
+  onDelete: (id: number) => void;
 };
 
-const MyListingCard = ({ post }: Props) => {
+const MyListingCard = ({ post, onDelete }: Props) => {
   const thumb = post.images?.[0] || "https://picsum.photos/seed/realestate/200/150";
+
+  const handleDeleteClick = () => {
+    if (
+      window.confirm(
+        "Bạn có chắc chắn muốn xóa tin đăng này không? Hành động này không thể hoàn tác."
+      )
+    ) {
+      onDelete(post.id);
+    }
+  };
 
   return (
     <article className={styles.card}>
@@ -28,12 +39,6 @@ const MyListingCard = ({ post }: Props) => {
           <span className={styles.date}>
             {timeSince(post.created_at || new Date().toISOString())}
           </span>
-          {post.views !== undefined && (
-            <>
-              <span style={{ color: "#e5e7eb" }}>|</span>
-              <span>👁 {post.views} lượt xem</span>
-            </>
-          )}
         </div>
       </div>
 
@@ -41,7 +46,7 @@ const MyListingCard = ({ post }: Props) => {
         <button className={`${styles.btnAction} ${styles.btnEdit}`}>
           <EditIcon /> Sửa
         </button>
-        <button className={`${styles.btnAction} ${styles.btnDelete}`}>
+        <button className={`${styles.btnAction} ${styles.btnDelete}`} onClick={handleDeleteClick}>
           <TrashIcon /> Xóa
         </button>
       </div>
