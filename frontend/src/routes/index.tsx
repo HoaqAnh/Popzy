@@ -12,14 +12,11 @@ const LoginPage = lazy(() => import("@/pages/auth/login/login"));
 const RegisterPage = lazy(() => import("@/pages/auth/register/register"));
 const MessagesPage = lazy(() => import("@/pages/messages/messages"));
 const ProfileSettingsPage = lazy(() => import("@/pages/profile/settings"));
-const ForgotPasswordPage = lazy(
-  () => import("@/pages/auth/forgot-password/ForgotPassword")
-);
+const MyPostsPage = lazy(() => import("@/pages/profile/my-posts"));
+const ForgotPasswordPage = lazy(() => import("@/pages/auth/forgot-password/ForgotPassword"));
 
 const PageLoader = () => (
-  <div style={{ display: "grid", placeItems: "center", height: "100vh" }}>
-    Đang tải trang...
-  </div>
+  <div style={{ display: "grid", placeItems: "center", height: "100vh" }}>Đang tải trang...</div>
 );
 
 const AppRouter = () => {
@@ -29,10 +26,7 @@ const AppRouter = () => {
         <Routes>
           <Route path="/auth/login" element={<LoginPage />} />
           <Route path="/auth/register" element={<RegisterPage />} />
-          <Route
-            path="/auth/forgot-password"
-            element={<ForgotPasswordPage />}
-          />
+          <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
 
           <Route element={<LayoutProvider />}>
             <Route path="/" element={<Home />} />
@@ -42,10 +36,8 @@ const AppRouter = () => {
             <Route element={<AuthGate />}>
               <Route path="/sell" element={<Sell />} />
               <Route path="/messages" element={<MessagesPage />} />
-              <Route
-                path="/profile/settings"
-                element={<ProfileSettingsPage />}
-              />
+              <Route path="/profile/settings" element={<ProfileSettingsPage />} />
+              <Route path="/profile/posts" element={<MyPostsPage />} />
             </Route>
           </Route>
 

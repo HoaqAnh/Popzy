@@ -59,8 +59,8 @@ html.dark-theme {
 
 main {
   background-color: var(--background);
-  min-height: 92vh;
-  min-height: 92dvh;
+  min-height: 94vh;
+  min-height: 94dvh;
   transition: background-color 0.3s;
 }
 

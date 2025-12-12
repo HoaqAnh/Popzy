@@ -62,17 +62,17 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             </NavLink>
 
             <NavLink
+              to="/profile/posts"
+              className={({ isActive }) => (isActive ? styles.active : undefined)}
+            >
+              Hồ sơ
+            </NavLink>
+
+            <NavLink
               to="/messages"
               className={({ isActive }) => (isActive ? styles.active : undefined)}
             >
               Tin nhắn
-            </NavLink>
-
-            <NavLink
-              to="/profile/settings"
-              className={({ isActive }) => (isActive ? styles.active : undefined)}
-            >
-              Hồ sơ
             </NavLink>
           </nav>
 
