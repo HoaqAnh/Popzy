@@ -3,7 +3,7 @@
 }
 
 .card {
-  background: var(--muted);
+  background: var(--card);
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
@@ -11,12 +11,12 @@
 @media (min-width: 1024px) {
   .card {
     background: var(--card);
+    border: 1px solid var(--border);
   }
   .sidebar {
     position: sticky;
-    /* 8vh (header) + 1rem (margin) + 65px (search header) */
-    /* 65px là chiều cao ước tính của SearchHeader */
-    top: calc(8vh + 1rem + 65px);
+    /* header + margin + search header */
+    top: calc(6vh + 1rem + 65px);
     align-self: flex-start;
   }
 }

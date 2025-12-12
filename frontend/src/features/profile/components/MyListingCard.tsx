@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./MyListingCard.module.css";
 import { type Post } from "@/types/realestate";
 import { formatPrice, timeSince } from "@/utils/format";
@@ -9,9 +10,16 @@ type Props = {
 };
 
 const MyListingCard = ({ post, onDelete }: Props) => {
+  const navigate = useNavigate();
   const thumb = post.images?.[0] || "https://picsum.photos/seed/realestate/200/150";
 
-  const handleDeleteClick = () => {
+  const handleCardClick = () => {
+    navigate(`/buy/${post.id}`);
+  };
+
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+
     if (
       window.confirm(
         "Bạn có chắc chắn muốn xóa tin đăng này không? Hành động này không thể hoàn tác."
@@ -21,8 +29,13 @@ const MyListingCard = ({ post, onDelete }: Props) => {
     }
   };
 
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log("Click edit post:", post.id);
+  };
+
   return (
-    <article className={styles.card}>
+    <article className={styles.card} onClick={handleCardClick}>
       <div className={styles.thumbWrapper}>
         <img src={thumb} alt={post.title} className={styles.thumb} loading="lazy" />
       </div>
@@ -34,21 +47,25 @@ const MyListingCard = ({ post, onDelete }: Props) => {
         </p>
 
         <div className={styles.metaRow}>
-          <span className={styles.price}>{formatPrice(post.price)}</span>
-          <span style={{ color: "#e5e7eb" }}>|</span>
-          <span className={styles.date}>
-            {timeSince(post.created_at || new Date().toISOString())}
-          </span>
+          <div className={styles.meta}>
+            <span className={styles.price}>{formatPrice(post.price)}</span>
+            <span style={{ color: "#e5e7eb" }}>|</span>
+            <span className={styles.date}>
+              {timeSince(post.created_at || new Date().toISOString())}
+            </span>
+          </div>
+          <div className={styles.actions}>
+            <button className={`${styles.btnAction} ${styles.btnEdit}`} onClick={handleEditClick}>
+              <EditIcon />
+            </button>
+            <button
+              className={`${styles.btnAction} ${styles.btnDelete}`}
+              onClick={handleDeleteClick}
+            >
+              <TrashIcon />
+            </button>
+          </div>
         </div>
-      </div>
-
-      <div className={styles.actions}>
-        <button className={`${styles.btnAction} ${styles.btnEdit}`}>
-          <EditIcon /> Sửa
-        </button>
-        <button className={`${styles.btnAction} ${styles.btnDelete}`} onClick={handleDeleteClick}>
-          <TrashIcon /> Xóa
-        </button>
       </div>
     </article>
   );
