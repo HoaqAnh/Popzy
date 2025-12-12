@@ -71,9 +71,10 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--foreground);
+  background: transparent;
   display: grid;
   place-items: center;
+  object-fit: cover;
   border: 2px solid var(--ring);
 }
 @media (min-width: 768px) {
