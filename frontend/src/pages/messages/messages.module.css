@@ -1,6 +1,8 @@
 .page {
   display: flex;
-  height: 92vh;
+  width: 100%;
+  min-height: 94vh;
+  min-height: 94dvh;
   background: var(--card);
   border-top: 1px solid var(--border);
 }
