@@ -1,6 +1,7 @@
 import { getAvatarLabel } from "@/utils/format";
 import type { User } from "@/types/realestate";
 import styles from "./SellerCard.module.css";
+import { ContactIcon, LikeIcon } from "@/components/common/icon";
 
 const SellerCard = ({ user }: { user: User }) => {
   return (
@@ -16,8 +17,14 @@ const SellerCard = ({ user }: { user: User }) => {
       </div>
 
       <div className={styles.contactBtns}>
-        <button className={`${styles.contactBtn} ${styles.primary}`}>Liên hệ ngay</button>
-        <button className={styles.contactBtn}>Nhắn Zalo</button>
+        <button className={`${styles.contactBtn} ${styles.primary}`}>
+          <ContactIcon />
+          <p>Liên hệ ngay</p>
+        </button>
+        <button className={styles.contactBtn}>
+          <LikeIcon />
+          <p>Yêu thích bản tin này</p>
+        </button>
       </div>
     </div>
   );

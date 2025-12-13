@@ -6,14 +6,15 @@ import AttributeGrid from "@/features/buy/components/detail/AttributeGrid";
 import Description from "@/features/buy/components/detail/Description";
 import SellerCard from "@/features/buy/components/detail/SellerCard";
 import MobileStickyActions from "@/features/buy/components/detail/MobileStickyActions";
-import { ListingSidebar } from "@/features/buy/components/ListingSidebar";
+import PriceAnalysis from "@/features/buy/components/detail/PriceAnalysis";
 import { useGetPostDetail } from "@/features/buy/hooks/useGetPostDetail";
 
 const DetailPage = () => {
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
+  const idParsed = id ? Number(id) : -1;
   const navigate = useNavigate();
 
-  const { post, user, isLoading, error } = useGetPostDetail(id);
+  const { post, user, isLoading, error } = useGetPostDetail(idParsed);
 
   if (isLoading) {
     return (
@@ -38,7 +39,7 @@ const DetailPage = () => {
   }
 
   const safeUser = user || {
-    id: "unknown",
+    id: -1,
     fullname: "Người dùng Popzy",
     imageUrl:
       "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&h=200",
@@ -75,16 +76,18 @@ const DetailPage = () => {
           />
 
           <div className={styles.analysis}>
-            <ListingSidebar post={post} />
+            <hr className={styles.divider} />
+            <PriceAnalysis post={post} />
           </div>
         </div>
 
         <aside className={styles.sidebarWrapper}>
           <SellerCard user={safeUser} />
+          <PriceAnalysis post={post} />
         </aside>
       </div>
 
-      <MobileStickyActions />
+      <MobileStickyActions user={safeUser} />
     </div>
   );
 };

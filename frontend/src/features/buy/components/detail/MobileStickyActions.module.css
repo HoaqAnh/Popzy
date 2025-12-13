@@ -11,31 +11,73 @@
   z-index: 50;
   box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
 }
-.btnContact {
-  flex: 7;
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border: none;
-  border-radius: 8px;
+
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--muted);
+  display: grid;
+  place-items: center;
+  object-fit: cover;
+  border: 1px solid var(--ring);
+}
+
+.sellerInfo {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.sellerInfo > div {
+  margin-left: 0.5rem;
+}
+
+.sellerInfo > div > p {
   font-weight: 700;
   font-size: 16px;
+}
+
+.sellerInfo > div > span {
+  font-size: 13px;
+  color: var(--muted-foreground);
+}
+
+.actions {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px;
+  justify-content: right;
+  gap: 0.5rem;
+}
+
+.btnContact {
+  padding: 0.5rem 2rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  display: grid;
+  place-items: center;
   cursor: pointer;
 }
+
 .btnLike {
-  flex: 3;
+  padding: 0.5rem 1rem;
   background: var(--background);
   border: 1px solid var(--border);
   color: var(--foreground);
   border-radius: 8px;
   display: grid;
   place-items: center;
-  font-size: 24px;
+  font-size: 1rem;
   cursor: pointer;
+}
+
+@media (max-width: 320px) {
+  .sellerInfo > .avatar {
+    display: none;
+  }
 }
 
 @media (min-width: 1024px) {

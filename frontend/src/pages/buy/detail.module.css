@@ -1,14 +1,13 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-bottom: 80px;
+  padding-bottom: 100px;
 }
 
 .contentWrapper {
   padding: 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 
 .divider {
@@ -17,27 +16,40 @@
 }
 
 .sidebarWrapper {
-  display: flex;
-  flex-direction: column;
+  display: none;
 }
 
 .analysis {
-  margin-top: 24px;
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .analysis {
+    display: block;
+  }
 }
 
 @media (min-width: 1024px) {
   .container {
-    padding-top: 24px;
     padding-bottom: 48px;
   }
   .contentWrapper {
     display: grid;
     grid-template-columns: 7fr 3fr; /* 70% - 30% */
     gap: 32px;
+    padding: 0;
     align-items: start;
   }
   .sidebarWrapper {
+    display: flex;
+    flex-direction: column;
     position: sticky;
     top: 100px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .contentWrapper {
+    padding: 0 16px;
   }
 }
