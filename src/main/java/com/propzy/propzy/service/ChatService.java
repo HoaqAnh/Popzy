@@ -4,6 +4,9 @@ package com.propzy.propzy.service;
 import com.propzy.propzy.domain.Conversation;
 import com.propzy.propzy.domain.Message;
 import com.propzy.propzy.domain.User;
+import com.propzy.propzy.domain.request.MessageSimpleDTO;
+import com.propzy.propzy.domain.response.ConversationDTO;
+import com.propzy.propzy.domain.response.ConversationListResponse;
 import com.propzy.propzy.domain.response.MessageResponseDTO;
 import com.propzy.propzy.repository.ConversationRepository;
 import com.propzy.propzy.repository.MessageRepository;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatService {
@@ -23,10 +27,15 @@ public class ChatService {
     private final ConversationRepository conversationRepo;
     private final MessageRepository messageRepo;
     private final UserRepository userRepo;
-    public ChatService(ConversationRepository conversationRepo, MessageRepository messageRepo, UserRepository userRepo) {
+    private final UserRepository userRepository;
+    private final ConversationRepository conversationRepository;
+
+    public ChatService(ConversationRepository conversationRepo, MessageRepository messageRepo, UserRepository userRepo, UserRepository userRepository, ConversationRepository conversationRepository) {
         this.conversationRepo = conversationRepo;
         this.messageRepo = messageRepo;
         this.userRepo = userRepo;
+        this.userRepository = userRepository;
+        this.conversationRepository = conversationRepository;
     }
     @Transactional
     public MessageResponseDTO createMessage(Long conversationId, Long senderId, String content, String image) {
@@ -63,10 +72,37 @@ public class ChatService {
         }
         return peerId;
     }
-    public List<Conversation> getConversations(Long userId) {
-        return this.conversationRepo.findAllForUser(userId);
+
+
+    public List<ConversationListResponse> getUserConversations(Long currentUserId) {
+
+        List<Conversation> conversations =
+                conversationRepository.findAllByUserId(currentUserId);
+
+        return conversations.stream().map(c -> {
+
+            User otherUser =
+                    c.getUser1().getId().equals(currentUserId)
+                            ? c.getUser2()
+                            : c.getUser1();
+
+            Message lastMessage = c.getMessages() == null || c.getMessages().isEmpty()
+                    ? null
+                    : c.getMessages().get(c.getMessages().size() - 1);
+
+            return ConversationListResponse.builder()
+                    .conversationId(c.getId())
+                    .otherUserId(otherUser.getId())
+                    .otherUserName(otherUser.getFullname())
+                    .otherUserAvatar(otherUser.getImageUrl())
+                    .lastMessage(lastMessage != null ? lastMessage.getContent() : "")
+                    .lastMessageTime(lastMessage != null ? lastMessage.getCreatedAt() : c.getUpdatedAt())
+                    .build();
+
+        }).toList();
     }
-    private MessageResponseDTO mapToDTO(Message msg) {
+
+            private MessageResponseDTO mapToDTO(Message msg) {
         return MessageResponseDTO.builder()
                 .id(msg.getId())
                 .conversationId(msg.getConversation().getId())

@@ -45,5 +45,12 @@ public interface ConversationRepository extends JpaRepository<Conversation, Long
             @Param("meId") Long meId,
             @Param("friendId") Long friendId
     );
-
+    @Query("""
+        select distinct c
+        from Conversation c
+        left join fetch c.messages m
+        where c.user1.id = :userId or c.user2.id = :userId
+        order by c.updatedAt desc
+    """)
+    List<Conversation> findAllByUserId(@Param("userId") Long userId);
 }

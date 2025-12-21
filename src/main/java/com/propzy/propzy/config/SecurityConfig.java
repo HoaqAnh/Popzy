@@ -3,6 +3,11 @@ package com.propzy.propzy.config;
 import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.nimbusds.jose.util.Base64;
 import com.propzy.propzy.util.SecurityUtil;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +32,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
-@EnableSpringDataWebSupport(pageSerializationMode = EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO)
 public class SecurityConfig {
 
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
@@ -83,29 +87,77 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
-    {String[] whiteList={
-            "/","/api/v1/auth/login","/api/v1/login","/api/v1/auth/register","/login",
-            "/home","/oauth2/**","/access-token","/api/v1/forget/pass"
-            ,"/api/v1/reset-password","/api/v1/auth/verify","/api/v1/restaurants/approved","/api/v1/login/oauth2/code/google","/api/v1/upload/image","/api/v1/restaurant/load/{id}",
-            "/api/v1/auth/refresh","/swagger-ui/**","/v3/**","/ws/**","/api/v1/course/count/**","/swagger-ui.html","/v3/api-docs","/ws/**","/auth/otp/send","/auth/otp/verify","/api/v1/auth/resetPw","/api/v1/posts/**"
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        String[] whiteList = {
+                "/",
+                "/api/v1/auth/login",
+                "/api/v1/login",
+                "/api/v1/auth/register",
+                "/login",
+                "/home",
+                "/oauth2/**",
+                "/access-token",
+                "/api/v1/forget/pass",
+                "/api/v1/reset-password",
+                "/api/v1/auth/verify",
+                "/api/v1/restaurants/approved",
+                "/api/v1/login/oauth2/code/google",
+                "/api/v1/upload/image",
+                "/api/v1/restaurant/load/{id}",
+                "/api/v1/auth/refresh",
 
-    };
-        http.
+                // Thêm các đường dẫn Swagger vào whitelist
+                "/v3/api-docs/**",
+                "/swagger-ui/**",
+                "/swagger-ui.html",
+                "/swagger-resources/**",
+                "/webjars/**",
+                "/ws/**",
+                "/api/v1/posts"
+        };
 
-                csrf(c->c.disable())
+        http
+                .csrf(c -> c.disable())
                 .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(authz->authz
+                .authorizeHttpRequests(authz -> authz
                         .requestMatchers(whiteList).permitAll()
-                        .requestMatchers(HttpMethod.GET,"api/v1/restaurants/**").permitAll()
-                        .anyRequest().authenticated())
+                        .requestMatchers(HttpMethod.GET, "api/v1/restaurants/**").permitAll()
+                        .anyRequest().authenticated()
+                )
                 .formLogin(Customizer.withDefaults())
                 .oauth2Login(Customizer.withDefaults())
-                .oauth2ResourceServer(oauth2->oauth2.jwt(Customizer.withDefaults())
-                        .authenticationEntryPoint(this.customAuthenticationEntryPoint))
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(Customizer.withDefaults())
+                        .authenticationEntryPoint(this.customAuthenticationEntryPoint)
+                )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
+    }
+
+    // Cấu hình Swagger OpenAPI
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .info(new Info()
+                        .title("Propzy API")
+                        .version("1.0.0")
+                        .description("API Documentation"))
+                .components(new Components()
+                        .addSecuritySchemes("bearerAuth",
+                                new SecurityScheme()
+                                        .type(SecurityScheme.Type.HTTP)
+                                        .scheme("bearer")
+                                        .bearerFormat("JWT")));
+    }
+
+    // Cấu hình GroupedOpenApi để bao gồm tất cả các API
+    @Bean
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+                .group("public")
+                .pathsToMatch("/**")
+                .build();
     }
 
 }
