@@ -29,8 +29,8 @@ export type Post = {
   description: string;
   userId: number;
   likes: number;
-  marketPrice: number;
-  priceHistoryPercent: number;
+  marketPrice?: number;
+  priceHistoryPercent?: number;
   floors?: number;
   frontage?: number;
   access_road?: number;

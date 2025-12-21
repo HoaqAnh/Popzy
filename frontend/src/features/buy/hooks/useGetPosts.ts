@@ -55,8 +55,6 @@ export const useGetPosts = () => {
             userId: item.id_user,
             likes: 0,
             created_at: new Date().toISOString(),
-            marketPrice: item.price * 1.05,
-            priceHistoryPercent: 2.5,
           };
 
           const user: User = {
