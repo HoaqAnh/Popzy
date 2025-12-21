@@ -1,33 +1,25 @@
-import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { modelService } from "../services/modelService";
 
 export const usePredictPrice = (postId: number) => {
-  const [predictedPrice, setPredictedPrice] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["predict-price", postId],
 
-  useEffect(() => {
-    if (!postId) return;
+    queryFn: async () => {
+      const response = await modelService.predictByPostId(postId);
+      
+      const priceInBillions = response.data.predicted_price;
+      return priceInBillions * 1_000_000_000;
+    },
 
-    const fetchPrediction = async () => {
-      setIsLoading(true);
-      setError(null);
-      try {
-        const response = await modelService.predictByPostId(postId);
-        const priceInBillions = response.data.predicted_price;
-        const priceInVND = priceInBillions * 1_000_000_000;
-        
-        setPredictedPrice(priceInVND);
-      } catch (err) {
-        console.error("Lỗi khi dự đoán giá:", err);
-        setError("Không thể lấy dữ liệu dự báo");
-      } finally {
-        setIsLoading(false);
-      }
-    };
+    enabled: !!postId,
+    staleTime: 30 * 60 * 1000,
+    retry: 1,
+  });
 
-    fetchPrediction();
-  }, [postId]);
-
-  return { predictedPrice, isLoading, error };
+  return {
+    predictedPrice: data || null,
+    isLoading,
+    error: error ? (error as Error).message : null,
+  };
 };

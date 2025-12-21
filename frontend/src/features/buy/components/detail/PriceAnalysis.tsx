@@ -82,7 +82,7 @@ export const PriceAnalysis = ({ post }: { post: Post }) => {
           </div>
         ) : error ? (
           <div style={{ display: "grid", placeItems: "center", height: "100%", color: "#ef4444" }}>
-            Không thể dự đoán giá BĐS này
+            Không thể dự báo giá BĐS này
           </div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
