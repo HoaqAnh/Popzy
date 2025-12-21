@@ -31,12 +31,12 @@ Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đ
     - Cách 1: Dùng Command Prompt (Windows) / Terminal
     ```bash
     # Cú pháp: mysql -u [user] -p [tên_database] < [đường_dẫn_file_sql]
-    mysql -u root -p Bds < dataset.sql
+    mysql -u root -p Bds < popzy-bds.sql
     ```
     - Cách 2: Nếu chạy MySQL trên Docker
     ```bash
     # Thay 'mysql-container' bằng tên container thực tế của bạn
-    docker exec -i mysql-container mysql -u root -p[password] Bds < dataset.sql
+    docker exec -i mysql-container mysql -u root -p[password] Bds < popzy-bds.sql
     ```
     - Cách 3: Dùng MySQL Workbench
       + Vào menu Server > Data Import.
