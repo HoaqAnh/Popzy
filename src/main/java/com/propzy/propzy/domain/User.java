@@ -44,6 +44,9 @@ public class User {
     private Instant updatedAt;
     private String createdBy;
     private String updatedBy;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<FavoritePost> favoritePosts = new ArrayList<>();
 
     @Column(name = "image_url", columnDefinition = "TEXT")
     private String imageUrl;

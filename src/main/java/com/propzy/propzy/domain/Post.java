@@ -32,6 +32,10 @@ public class Post {
     @JsonIncludeProperties({"id", "fullname", "imageUrl", "email", "phone"})
     private User user;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<FavoritePost> likedByUsers = new ArrayList<>();
+
     @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Properties properties;
 
