@@ -37,3 +37,4 @@ spring.data.redis.port=6379
 spring.data.redis.host=localhost
 spring.data.redis.password=admin123
 
+spring.main.allow-bean-definition-overriding=true
