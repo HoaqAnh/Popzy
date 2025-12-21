@@ -87,15 +87,21 @@ const Dropdown = ({
   children: React.ReactNode;
 }) => {
   const [open, setOpen] = useState(false);
+  const handleBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setOpen(false);
+    }
+  };
   return (
     <div
       className={`${styles.dropdown} ${open ? styles.open : ""}`}
-      onBlur={() => setOpen(false)}
+      onBlur={handleBlur}
     >
       <button
         className={styles.dropdownBtn}
         onClick={() => setOpen(!open)}
         aria-expanded={open}
+        type="button"
       >
         {label} <span className={styles.caret}>▾</span>
       </button>

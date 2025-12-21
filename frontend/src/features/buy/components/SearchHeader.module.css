@@ -5,6 +5,7 @@
   z-index: 50;
   background-color: var(--card);
   padding: 0.5rem;
+  overflow: visible;
 }
 
 .searchRow {
@@ -83,8 +84,9 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 12px;
-  box-shadow: 0 10px 30px rgba(2, 8, 23, 0.08);
-  z-index: 30;
+  box-shadow: 0 10px 30px rgba(2, 8, 23, 0.15);
+  z-index: 100;
+  animation: slideDown 0.15s ease-out;
 }
 
 .menu {
@@ -130,4 +132,15 @@
 .saveBtn:hover {
   background: #2563eb;
   color: var(--primary-foreground);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

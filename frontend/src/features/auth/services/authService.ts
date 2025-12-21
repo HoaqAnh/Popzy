@@ -39,4 +39,7 @@ export const authService = {
   login(data: LoginRequest) {
     return axiosClient.post<LoginResponse>("/auth/login", data);
   },
+  logout: () => {
+    return axiosClient.post("/auth/logout");
+  },
 };

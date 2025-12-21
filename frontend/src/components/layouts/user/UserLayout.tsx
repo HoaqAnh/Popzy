@@ -1,9 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
+import { Link, NavLink } from "react-router-dom";
 import styles from "./UserLayout.module.css";
 import Logo from "@/assets/Popzy.svg";
 import { getCloudinaryUrl } from "@/utils/image";
 import { getAvatarLabel } from "@/utils/format";
+import { useLogout } from "@/features/auth/hooks/useLogout";
+import {
+  SettingsIcon,
+  LogOutIcon,
+  SearchIcon,
+  AddIcon,
+  UserIcon,
+  MessageIcon,
+} from "@/components/common/icon";
 
 export interface UserLayout {
   imageUrl: string;
@@ -11,11 +20,14 @@ export interface UserLayout {
 }
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
-  const navigator = useNavigate();
+  const { logout, isLoading } = useLogout();
   const [userInfo, setUserInfo] = useState<{ avatarUrl: string | null; label: string }>({
     avatarUrl: null,
     label: "",
   });
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     try {
@@ -39,6 +51,24 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
       console.error("Lỗi khi đọc thông tin user từ localStorage:", error);
     }
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    setIsDropdownOpen(false);
+    logout();
+  };
 
   return (
     <>
@@ -76,11 +106,54 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             </NavLink>
           </nav>
 
-          <div className={styles.auth} onClick={() => navigator("/profile/settings")}>
+          <div
+            className={styles.auth}
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            ref={dropdownRef}
+          >
             {userInfo.avatarUrl ? (
               <img src={userInfo.avatarUrl} alt="Avatar" className={styles.avatar} />
             ) : (
               <div className={styles.avatar}>{userInfo.label}</div>
+            )}
+
+            <p className={styles.username}></p>
+
+            {isDropdownOpen && (
+              <div className={styles.dropdown}>
+                <Link to="/buy" className={`${styles.dropdownItem} ${styles.mobileOnly}`}>
+                  <SearchIcon /> <span>Thông tin nhà đất</span>
+                </Link>
+                <Link to="/sell" className={`${styles.dropdownItem} ${styles.mobileOnly}`}>
+                  <AddIcon /> <span>Đăng tin</span>
+                </Link>
+                <Link to="/profile/posts" className={`${styles.dropdownItem} ${styles.mobileOnly}`}>
+                  <UserIcon /> <span>Hồ sơ</span>
+                </Link>
+                <Link to="/messages" className={`${styles.dropdownItem} ${styles.mobileOnly}`}>
+                  <MessageIcon /> <span>Tin nhắn</span>
+                </Link>
+
+                <div className={`${styles.dropdownDivider} ${styles.mobileOnly}`}></div>
+
+                <Link to="/profile/settings" className={styles.dropdownItem}>
+                  <SettingsIcon /> <span>Cài đặt tài khoản</span>
+                </Link>
+
+                <div className={styles.dropdownDivider}></div>
+
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleLogout();
+                  }}
+                  className={styles.dropdownItem}
+                  disabled={isLoading}
+                >
+                  <LogOutIcon />
+                  <span>{isLoading ? "Đang xử lý..." : "Đăng xuất"}</span>
+                </button>
+              </div>
             )}
           </div>
         </div>
