@@ -1,6 +1,5 @@
 import axiosClient from "@/services/axiosClient";
 
-// Interface for the conversation item
 export interface Conversation {
   conversationId: number;
   otherUserId: number;
@@ -30,12 +29,10 @@ export interface User {
 export interface Message {
   id: number;
   content: string;
-  createdAt: string;
-  updatedAt: string;
-  image: null | string;
-  sender: User;
-  receiver: User;
+  image: string | null;
   read: boolean;
+  createdAt: string;
+  sender: User;
 }
 
 // Interface for Conversation Detail
@@ -56,9 +53,37 @@ export interface MessageConversationResponse {
   data: ConversationDetail;
 }
 
+// Interface for Send Message Request
+export interface SendMessageRequest {
+  conversationId: number;
+  senderId: number;
+  content: string;
+  image?: string;
+}
+
+// Interface for Send Message Response
+export interface SendMessageResponse {
+  statusCode: number;
+  error: null | string;
+  message: string;
+  data: any; // Có thể là message object hoặc success message
+}
+
 export const conversationService = {
   listConversations() {
     return axiosClient.get<ListConversationResponse>("/listConversation");
+  },
+
+  // Tạo hoặc lấy conversation với user khác
+  createOrGetConversation(otherUserId: number) {
+    return axiosClient.get<MessageConversationResponse>(
+      `/messageConversation`,
+      {
+        params: {
+          userId: otherUserId,
+        },
+      }
+    );
   },
 };
 
@@ -84,5 +109,8 @@ export const messageService = {
         },
       }
     );
+  },
+  sendMessage(data: SendMessageRequest) {
+    return axiosClient.post<SendMessageResponse>("/sendMessage", data);
   },
 };

@@ -13,7 +13,8 @@ const DetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const idParsed = id ? Number(id) : -1;
   const navigate = useNavigate();
-
+  const currentPostUrl =
+    typeof window !== "undefined" ? window.location.href : "";
   const { post, user, isLoading, error } = useGetPostDetail(idParsed);
 
   if (isLoading) {
@@ -82,7 +83,12 @@ const DetailPage = () => {
         </div>
 
         <aside className={styles.sidebarWrapper}>
-          <SellerCard user={safeUser} />
+          <SellerCard
+            user={safeUser}
+            postId={post.id}
+            postTitle={post.title}
+            postUrl={currentPostUrl}
+          />
           <PriceAnalysis post={post} />
         </aside>
       </div>

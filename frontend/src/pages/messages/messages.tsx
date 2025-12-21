@@ -30,6 +30,25 @@ const MessagesPage = () => {
   const [messageInput, setMessageInput] = useState("");
   const [wsConnected, setWsConnected] = useState(false);
   const messageListRef = useRef<HTMLDivElement>(null);
+  const linkify = (text: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+
+    return text.split(urlRegex).map((part, index) =>
+      urlRegex.test(part) ? (
+        <a
+          key={index}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#1d4ed8", textDecoration: "underline" }}
+        >
+          {part}
+        </a>
+      ) : (
+        part
+      )
+    );
+  };
 
   // Khởi tạo WebSocket connection
   useEffect(() => {
@@ -384,7 +403,8 @@ const MessagesPage = () => {
                         }}
                       />
                     )}
-                    <p>{msg.text}</p>
+                    <p>{linkify(msg.text)}</p>
+
                     <span className={styles.timestamp}>{msg.timestamp}</span>
                   </div>
                 ))

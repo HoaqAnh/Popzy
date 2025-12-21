@@ -21,7 +21,10 @@ export interface UserLayout {
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const { logout, isLoading } = useLogout();
-  const [userInfo, setUserInfo] = useState<{ avatarUrl: string | null; label: string }>({
+  const [userInfo, setUserInfo] = useState<{
+    avatarUrl: string | null;
+    label: string;
+  }>({
     avatarUrl: null,
     label: "",
   });
@@ -54,7 +57,10 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsDropdownOpen(false);
       }
     };
@@ -80,27 +86,38 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
           </Link>
 
           <nav className={styles.nav}>
-            <NavLink to="/buy" className={({ isActive }) => (isActive ? styles.active : undefined)}>
+            <NavLink
+              to="/buy"
+              className={({ isActive }) =>
+                isActive ? styles.active : undefined
+              }
+            >
               Thông tin nhà đất
             </NavLink>
 
             <NavLink
               to="/sell"
-              className={({ isActive }) => (isActive ? styles.active : undefined)}
+              className={({ isActive }) =>
+                isActive ? styles.active : undefined
+              }
             >
               Đăng tin
             </NavLink>
 
             <NavLink
               to="/profile/posts"
-              className={({ isActive }) => (isActive ? styles.active : undefined)}
+              className={({ isActive }) =>
+                isActive ? styles.active : undefined
+              }
             >
               Hồ sơ
             </NavLink>
 
             <NavLink
               to="/messages"
-              className={({ isActive }) => (isActive ? styles.active : undefined)}
+              className={({ isActive }) =>
+                isActive ? styles.active : undefined
+              }
             >
               Tin nhắn
             </NavLink>
@@ -112,7 +129,11 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
             ref={dropdownRef}
           >
             {userInfo.avatarUrl ? (
-              <img src={userInfo.avatarUrl} alt="Avatar" className={styles.avatar} />
+              <img
+                src={userInfo.avatarUrl}
+                alt="Avatar"
+                className={styles.avatar}
+              />
             ) : (
               <div className={styles.avatar}>{userInfo.label}</div>
             )}
@@ -121,20 +142,39 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
 
             {isDropdownOpen && (
               <div className={styles.dropdown}>
-                <Link to="/buy" className={`${styles.dropdownItem} ${styles.mobileOnly}`}>
+                <Link
+                  to="/buy"
+                  className={`${styles.dropdownItem} ${styles.mobileOnly}`}
+                >
                   <SearchIcon /> <span>Thông tin nhà đất</span>
                 </Link>
-                <Link to="/sell" className={`${styles.dropdownItem} ${styles.mobileOnly}`}>
+                <Link
+                  to="/sell"
+                  className={`${styles.dropdownItem} ${styles.mobileOnly}`}
+                >
                   <AddIcon /> <span>Đăng tin</span>
                 </Link>
-                <Link to="/profile/posts" className={`${styles.dropdownItem} ${styles.mobileOnly}`}>
+                <Link
+                  to="/profile/posts"
+                  className={`${styles.dropdownItem} ${styles.mobileOnly}`}
+                >
                   <UserIcon /> <span>Hồ sơ</span>
                 </Link>
-                <Link to="/messages" className={`${styles.dropdownItem} ${styles.mobileOnly}`}>
+                <Link
+                  to="/messages"
+                  className={`${styles.dropdownItem} ${styles.mobileOnly}`}
+                >
                   <MessageIcon /> <span>Tin nhắn</span>
                 </Link>
 
-                <div className={`${styles.dropdownDivider} ${styles.mobileOnly}`}></div>
+                <div
+                  className={`${styles.dropdownDivider} ${styles.mobileOnly}`}
+                ></div>
+                <Link to="/favorites" className={styles.dropdownItem}>
+                  <span>Bài viết yêu thích</span>
+                </Link>
+
+                <div className={styles.dropdownDivider}></div>
 
                 <Link to="/profile/settings" className={styles.dropdownItem}>
                   <SettingsIcon /> <span>Cài đặt tài khoản</span>
