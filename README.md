@@ -13,7 +13,7 @@ Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đ
 
 * **Java JDK 17+** (cho Backend).
 * **Node.js & npm** (cho Frontend).
-* **Python 3.8+** (cho Model).
+* **Python 3.10** (cho Model).
 * **MySQL Server**: Đang chạy ở cổng `3306`.
 * **Redis**: Đang chạy ở cổng `6379` (Password mặc định cấu hình là `admin123`).
 
@@ -62,7 +62,7 @@ Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đ
 
 ---
 
-### BƯỚC 3: Thiết lập AI Model (Python)
+### BƯỚC 3: Thiết lập AI Model (Python 3.10)
 
 1.  Di chuyển vào thư mục model:
     ```bash
@@ -72,11 +72,11 @@ Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đ
 2.  (Khuyên dùng) Tạo và kích hoạt môi trường ảo:
     ```bash
     # Windows
-    python -m venv venv
+    py -3.10 -m venv venv
     .\venv\Scripts\activate
 
     # Mac/Linux
-    python3 -m venv venv
+    python3.10 -m venv venv
     source venv/bin/activate
     ```
 
