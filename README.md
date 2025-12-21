@@ -27,7 +27,24 @@ Trước khi bắt đầu, hãy đảm bảo máy tính của bạn đã cài đ
     ```sql
     CREATE DATABASE Bds;
     ```
-2.  Đảm bảo Redis server đang chạy. Nếu bạn dùng Docker, có thể chạy nhanh bằng lệnh:
+2.  Import Dataset (Dữ liệu mẫu):
+    - Cách 1: Dùng Command Prompt (Windows) / Terminal
+    ```bash
+    # Cú pháp: mysql -u [user] -p [tên_database] < [đường_dẫn_file_sql]
+    mysql -u root -p Bds < dataset.sql
+    ```
+    - Cách 2: Nếu chạy MySQL trên Docker
+    ```bash
+    # Thay 'mysql-container' bằng tên container thực tế của bạn
+    docker exec -i mysql-container mysql -u root -p[password] Bds < dataset.sql
+    ```
+    - Cách 3: Dùng MySQL Workbench
+      + Vào menu Server > Data Import.
+      + Chọn Import from Self-Contained File > Chọn đường dẫn đến file .sql.
+      + Tại phần Default Target Schema, chọn Bds.
+      + Nhấn Start Import.
+      
+4.  Đảm bảo Redis server đang chạy. Nếu bạn dùng Docker, có thể chạy nhanh bằng lệnh:
     ```bash
     docker run --name my-redis -p 6379:6379 -d redis redis-server --requirepass "admin123"
     ```
