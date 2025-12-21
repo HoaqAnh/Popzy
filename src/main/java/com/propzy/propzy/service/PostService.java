@@ -74,7 +74,7 @@ public class PostService {
         return post;
     }
 
-    public Post update(Integer id, Post request) {
+    public Post update(Long id, Post request) {
 
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
@@ -111,7 +111,7 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post getById(Integer id) {
+    public Post getById(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
     }
@@ -162,7 +162,7 @@ public class PostService {
         return postDTOList;
     }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         postRepository.deleteById(id);
     }
 

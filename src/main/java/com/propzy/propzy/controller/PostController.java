@@ -23,13 +23,13 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> update(@PathVariable Integer id,
+    public ResponseEntity<Post> update(@PathVariable Long id,
                                        @RequestBody Post request) {
         return ResponseEntity.ok(postService.update(id, request));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Post> getById(@PathVariable Integer id) {
+    public ResponseEntity<Post> getById(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getById(id));
     }
 
@@ -39,7 +39,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Integer id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         postService.delete(id);
         return ResponseEntity.ok("Deleted successfully");
     }
